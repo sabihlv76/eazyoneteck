@@ -3,15 +3,19 @@ import { MongoClient } from 'mongodb';
 import { defaultAdminSettings } from '../../src/lib/localStore.js';
 import { products as defaultProducts } from '../../src/productsData.js';
 
-const uri = process.env.MONGODB_URI;
-const dbName = process.env.MONGODB_DB || process.env.MONGODB_DB_NAME;
+function getMongoConfig() {
+  const uri = process.env.MONGODB_URI;
+  const dbName = process.env.MONGODB_DB || process.env.MONGODB_DB_NAME;
 
-if (!uri) {
-  throw new Error('Missing MONGODB_URI environment variable.');
-}
+  if (!uri) {
+    throw new Error('Server database is not configured: missing MONGODB_URI.');
+  }
 
-if (!dbName) {
-  throw new Error('Missing MONGODB_DB or MONGODB_DB_NAME environment variable.');
+  if (!dbName) {
+    throw new Error('Server database is not configured: missing MONGODB_DB or MONGODB_DB_NAME.');
+  }
+
+  return { uri, dbName };
 }
 
 const globalCache = globalThis.__eazyMongoCache || {
@@ -28,6 +32,7 @@ async function getClient() {
   }
 
   if (!globalCache.clientPromise) {
+    const { uri } = getMongoConfig();
     const client = new MongoClient(uri);
     globalCache.clientPromise = client.connect();
   }
@@ -37,6 +42,7 @@ async function getClient() {
 }
 
 export async function getDb() {
+  const { dbName } = getMongoConfig();
   const client = await getClient();
   const db = client.db(dbName);
 
