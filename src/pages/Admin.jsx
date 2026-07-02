@@ -261,7 +261,7 @@ const Admin = ({
             <Plus size={18} />
             Add product
           </button>
-          <button type="button" className="btn-outline" onClick={handleLogout}>
+          <button type="button" className="btn-outline admin-logout-button" onClick={handleLogout}>
             <LogOut size={18} />
             Log out
           </button>
@@ -422,7 +422,7 @@ const Admin = ({
             <form className="settings-card stack-list" onSubmit={handleSaveProduct}>
               <div className="form-grid">
                 <div className="form-group span-2">
-                  <label htmlFor="product-name">Product name</label>
+                  <label htmlFor="product-name">Product title</label>
                   <input
                     id="product-name"
                     type="text"
@@ -448,7 +448,7 @@ const Admin = ({
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="product-price">Price</label>
+                  <label htmlFor="product-price">Price in RWF</label>
                   <input
                     id="product-price"
                     type="number"
@@ -459,7 +459,7 @@ const Admin = ({
                 </div>
 
                 <div className="form-group span-2">
-                  <label htmlFor="product-size">Variant / size</label>
+                  <label htmlFor="product-size">Model, size, or version</label>
                   <input
                     id="product-size"
                     type="text"
@@ -470,7 +470,7 @@ const Admin = ({
                 </div>
 
                 <div className="form-group span-2">
-                  <label htmlFor="product-badge">Badge</label>
+                  <label htmlFor="product-badge">Product tag</label>
                   <input
                     id="product-badge"
                     type="text"
@@ -481,10 +481,10 @@ const Admin = ({
                 </div>
 
                 <div className="form-group span-2">
-                  <label htmlFor="product-image">Primary image from phone</label>
+                  <label htmlFor="product-image">Main product image</label>
                   <label className="upload-field" htmlFor="product-image">
                     <ImagePlus size={18} />
-                    <span>Choose image</span>
+                    <span>Choose main image</span>
                   </label>
                   <input
                     id="product-image"
@@ -497,10 +497,10 @@ const Admin = ({
                 </div>
 
                 <div className="form-group span-2">
-                  <label htmlFor="product-gallery">Extra gallery images</label>
+                  <label htmlFor="product-gallery">Additional product images</label>
                   <label className="upload-field" htmlFor="product-gallery">
                     <ImagePlus size={18} />
-                    <span>Select multiple images</span>
+                    <span>Select more images</span>
                   </label>
                   <input
                     id="product-gallery"
@@ -531,7 +531,7 @@ const Admin = ({
                 </div>
 
                 <div className="form-group span-2">
-                  <label htmlFor="product-benefits">Key features</label>
+                  <label htmlFor="product-benefits">Key product features</label>
                   <textarea
                     id="product-benefits"
                     rows="4"
@@ -542,7 +542,7 @@ const Admin = ({
                 </div>
 
                 <div className="form-group span-2">
-                  <label htmlFor="product-ingredients">Materials / build</label>
+                  <label htmlFor="product-ingredients">Material or build quality</label>
                   <input
                     id="product-ingredients"
                     type="text"
@@ -552,7 +552,7 @@ const Admin = ({
                 </div>
 
                 <div className="form-group span-2">
-                  <label htmlFor="product-notes">Availability / notes</label>
+                  <label htmlFor="product-notes">Stock notes or delivery notes</label>
                   <textarea
                     id="product-notes"
                     rows="3"

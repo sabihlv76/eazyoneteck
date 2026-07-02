@@ -1360,6 +1360,18 @@ img {
   margin: 0;
 }
 
+.admin-logout-button {
+  background: #fff;
+  border-color: #fff;
+  color: #171717;
+}
+
+.admin-logout-button:hover {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.92);
+  color: #171717;
+}
+
 .admin-metrics {
   display: grid;
   grid-template-columns: 1fr;
