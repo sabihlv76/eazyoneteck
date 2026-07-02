@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Eye, Heart, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import customerShoppingImage from '../assets/ChatGPT Image Jul 2, 2026, 11_00_01 AM.png';
 import { applyProductImageFallback } from '../lib/productImageFallbacks';
 
 const heroSlides = [
@@ -85,6 +86,8 @@ const quickCategories = [
 ];
 
 const totalHeroSlides = heroSlides.length;
+const categoryBackdrop =
+  'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80';
 
 function formatRwf(price) {
   return `${Number(price).toLocaleString()} RWF`;
@@ -193,7 +196,10 @@ const Home = ({
         </div>
 
         <aside className="hero-side-panel">
-          <div className="hero-panel-card">
+          <div
+            className="hero-panel-card"
+            style={{ '--category-bg': `url("${categoryBackdrop}")` }}
+          >
             <span className="eyebrow">Categories</span>
             <h2>Quick browse</h2>
             <div className="category-quick-grid">
@@ -214,14 +220,22 @@ const Home = ({
       </section>
 
       <section className="container promo-strip">
-        <article className="promo-card">
+        <article className="promo-card promo-card-featured">
           <img
-            src="https://images.unsplash.com/photo-1512054502232-10a0a035d672?auto=format&fit=crop&w=1200&q=80"
-            alt="Tech showcase"
+            src={customerShoppingImage}
+            alt="Customers shopping for electronics"
           />
           <div className="promo-copy">
-            <span className="eyebrow">Polished mobile storefront</span>
-            <h3>Cleaner navigation, stronger visuals, better conversion flow</h3>
+            <div className="promo-marquee-track">
+              <div className="promo-marquee-set">
+                <span className="eyebrow">Polished mobile storefront</span>
+                <h3>Cleaner navigation, stronger visuals, better conversion flow</h3>
+              </div>
+              <div className="promo-marquee-set" aria-hidden="true">
+                <span className="eyebrow">Polished mobile storefront</span>
+                <h3>Cleaner navigation, stronger visuals, better conversion flow</h3>
+              </div>
+            </div>
           </div>
         </article>
         <article className="promo-card">
@@ -230,8 +244,16 @@ const Home = ({
             alt="Smartwatch collection"
           />
           <div className="promo-copy">
-            <span className="eyebrow">Always reachable</span>
-            <h3>Wishlist, cart, phone contact and account actions now stay visible</h3>
+            <div className="promo-marquee-track">
+              <div className="promo-marquee-set">
+                <span className="eyebrow">Always reachable</span>
+                <h3>Wishlist, cart, phone contact and account actions now stay visible</h3>
+              </div>
+              <div className="promo-marquee-set" aria-hidden="true">
+                <span className="eyebrow">Always reachable</span>
+                <h3>Wishlist, cart, phone contact and account actions now stay visible</h3>
+              </div>
+            </div>
           </div>
         </article>
       </section>
