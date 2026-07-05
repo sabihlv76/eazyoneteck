@@ -4,6 +4,7 @@ import {
   ImagePlus,
   KeyRound,
   Laptop,
+  LayoutGrid,
   ListPlus,
   LogOut,
   Mail,
@@ -21,6 +22,7 @@ import {
   Watch,
 } from 'lucide-react';
 import { adminSignIn, getAdminSessionToken } from '../lib/api';
+import logoImg from '../assets/logo.svg';
 
 function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
@@ -157,15 +159,17 @@ const Admin = ({
   const [statusMessage, setStatusMessage] = useState('');
   const [settingsForm, setSettingsForm] = useState(adminSettings);
   const [isSaving, setIsSaving] = useState(false);
+  const [isPhoneDropupOpen, setIsPhoneDropupOpen] = useState(false);
 
-  const activeCategory =
-    adminCategories.find((category) => category.id === activeCategoryId) || adminCategories[0];
+  const activeCategory = activeCategoryId === 'all'
+    ? { id: 'all', label: 'All Devices', category: 'Catalog', colors: [] }
+    : adminCategories.find((category) => category.id === activeCategoryId) || adminCategories[0];
 
   const filteredProducts = useMemo(() => {
     const query = searchQuery.toLowerCase();
     return products.filter((product) => {
       const productAdminCategory = getCategoryForProduct(product, adminCategories);
-      const isActiveCategory = productAdminCategory?.id === activeCategoryId;
+      const isActiveCategory = activeCategoryId === 'all' ? true : productAdminCategory?.id === activeCategoryId;
       const matchesQuery =
         product.name.toLowerCase().includes(query) ||
         product.category.toLowerCase().includes(query) ||
@@ -396,16 +400,60 @@ const Admin = ({
     );
   }
 
+  const renderProductCard = (product) => (
+    <article key={product.id} className="admin-product-card">
+      <img src={product.image} alt={product.name} />
+      <div className="admin-product-copy">
+        <div>
+          <h3>{product.name}</h3>
+          <p>{product.subcategory || product.category}{product.color ? `, ${product.color}` : ''}</p>
+        </div>
+        <strong>{Number(product.price).toLocaleString()} RWF</strong>
+      </div>
+      <div className="admin-product-actions">
+        <button type="button" className="btn-icon btn-icon-outline" onClick={() => openEditModal(product)} aria-label={`Edit ${product.name}`}>
+          <Pencil size={16} />
+        </button>
+        <button
+          type="button"
+          className="btn-icon btn-icon-primary danger"
+          onClick={async () => {
+            try {
+              await onDeleteProduct(product.id);
+              if (editingId === product.id) {
+                resetProductForm();
+              }
+              showStatus('Product deleted.');
+            } catch (error) {
+              showStatus(error.message || 'Unable to delete the product.');
+            }
+          }}
+          aria-label={`Delete ${product.name}`}
+        >
+          <Trash2 size={16} />
+        </button>
+      </div>
+    </article>
+  );
+
   return (
     <div className="admin-page">
       <header className="admin-topbar">
-        <div>
-          <strong>{settingsForm.storeName || 'Eazy1teck'}</strong>
-          <span>Inventory desk</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <img src={logoImg} alt="Eazy1teck" style={{ width: 60, height: 60, objectFit: 'contain' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.1rem' }}>
+            <strong style={{ fontSize: '1.05rem' }}>{settingsForm.storeName || 'Eazy1teck'}</strong>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-soft)' }}>Inventory desk</span>
+          </div>
         </div>
-        <button type="button" className="btn-outline" onClick={onRefreshProducts}>
-          Refresh
-        </button>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button type="button" className="btn-icon btn-icon-outline" onClick={() => setActiveView('settings')} aria-label="Settings">
+            <Settings size={18} />
+          </button>
+          <button type="button" className="btn-icon btn-icon-outline" onClick={handleLogout} aria-label="Log out">
+            <LogOut size={18} />
+          </button>
+        </div>
       </header>
 
       {statusMessage && <div className="status-banner success">{statusMessage}</div>}
@@ -541,18 +589,19 @@ const Admin = ({
               </section>
 
               <section className="admin-entry-grid">
-                <form className="admin-product-form" onSubmit={handleSaveProduct}>
-                  <div className="admin-form-title">
-                    <div>
-                      <h2>{editingId ? 'Edit product' : 'Add product'}</h2>
-                      <p>{activeCategory.label} will appear in {activeCategory.category}.</p>
+                {activeCategoryId !== 'all' && (
+                  <form className="admin-product-form" onSubmit={handleSaveProduct}>
+                    <div className="admin-form-title">
+                      <div>
+                        <h2>{editingId ? 'Edit product' : 'Add product'}</h2>
+                        <p>{activeCategory.label} will appear in {activeCategory.category}.</p>
+                      </div>
+                      {editingId && (
+                        <button type="button" className="btn-outline" onClick={resetProductForm}>
+                          New item
+                        </button>
+                      )}
                     </div>
-                    {editingId && (
-                      <button type="button" className="btn-outline" onClick={resetProductForm}>
-                        New item
-                      </button>
-                    )}
-                  </div>
 
                   <div className="admin-form-grid">
                     <div className="form-group span-2">
@@ -696,13 +745,14 @@ const Admin = ({
                     </div>
                   </div>
 
-                  <button type="submit" className="btn-accent admin-save-button">
-                    <Plus size={18} />
-                    {isSaving ? 'Saving...' : editingId ? 'Save changes' : 'Save product'}
-                  </button>
-                </form>
+                    <button type="submit" className="btn-accent admin-save-button">
+                      <Plus size={18} />
+                      {isSaving ? 'Saving...' : editingId ? 'Save changes' : 'Save product'}
+                    </button>
+                  </form>
+                )}
 
-                <section className="admin-list-panel">
+                <section className="admin-list-panel" style={activeCategoryId === 'all' ? { gridColumn: '1 / -1' } : {}}>
                   <div className="admin-toolbar">
                     <div className="search-field">
                       <Search size={18} />
@@ -713,21 +763,6 @@ const Admin = ({
                         onChange={(event) => setSearchQuery(event.target.value)}
                       />
                     </div>
-                    <button
-                      type="button"
-                      className="btn-outline"
-                      onClick={async () => {
-                        try {
-                          await onResetCatalog();
-                          resetProductForm();
-                          showStatus('Catalog reset to the seed data.');
-                        } catch (error) {
-                          showStatus(error.message || 'Unable to reset the catalog.');
-                        }
-                      }}
-                    >
-                      Reset
-                    </button>
                   </div>
 
                   <div className="admin-product-list">
@@ -738,41 +773,39 @@ const Admin = ({
                       </div>
                     )}
 
-                    {filteredProducts.map((product) => (
-                      <article key={product.id} className="admin-product-card">
-                        <img src={product.image} alt={product.name} />
-                        <div className="admin-product-copy">
-                          <div>
-                            <h3>{product.name}</h3>
-                            <p>{product.subcategory || product.category}{product.color ? `, ${product.color}` : ''}</p>
-                          </div>
-                          <strong>{Number(product.price).toLocaleString()} RWF</strong>
+                    {activeCategoryId === 'all' ? (
+                      <>
+                        <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.8rem', marginBottom: '1rem', borderBottom: '1px solid var(--border)' }}>
+                          {adminCategories.map(cat => {
+                            const catProducts = filteredProducts.filter(p => getCategoryForProduct(p, adminCategories)?.id === cat.id);
+                            if (catProducts.length === 0) return null;
+                            return (
+                              <a 
+                                key={`nav-${cat.id}`} 
+                                href={`#cat-${cat.id}`} 
+                                style={{ whiteSpace: 'nowrap', padding: '0.4rem 0.8rem', background: 'var(--surface-muted)', borderRadius: '999px', fontSize: '0.8rem', color: 'var(--text)', textDecoration: 'none', fontWeight: 600 }}
+                              >
+                                {cat.label}
+                              </a>
+                            );
+                          })}
                         </div>
-                        <div className="admin-product-actions">
-                          <button type="button" className="btn-icon btn-icon-outline" onClick={() => openEditModal(product)} aria-label={`Edit ${product.name}`}>
-                            <Pencil size={16} />
-                          </button>
-                          <button
-                            type="button"
-                            className="btn-icon btn-icon-primary danger"
-                            onClick={async () => {
-                              try {
-                                await onDeleteProduct(product.id);
-                                if (editingId === product.id) {
-                                  resetProductForm();
-                                }
-                                showStatus('Product deleted.');
-                              } catch (error) {
-                                showStatus(error.message || 'Unable to delete the product.');
-                              }
-                            }}
-                            aria-label={`Delete ${product.name}`}
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </article>
-                    ))}
+                        {adminCategories.map(cat => {
+                          const catProducts = filteredProducts.filter(p => getCategoryForProduct(p, adminCategories)?.id === cat.id);
+                          if (catProducts.length === 0) return null;
+                          return (
+                            <div key={cat.id} id={`cat-${cat.id}`} style={{ marginBottom: '1.5rem', scrollMarginTop: '100px' }}>
+                              <h3 style={{ marginBottom: '0.8rem', fontSize: '1rem', color: 'var(--gold-deep)' }}>{cat.label}</h3>
+                              <div style={{ display: 'grid', gap: '0.8rem' }}>
+                                {catProducts.map(renderProductCard)}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </>
+                    ) : (
+                      filteredProducts.map(renderProductCard)
+                    )}
                   </div>
                 </section>
               </section>
@@ -780,6 +813,48 @@ const Admin = ({
           )}
         </main>
       </div>
+
+      <nav className="admin-mobile-bottom-nav">
+        <div className="bottom-nav-item">
+          <button 
+            type="button" 
+            className={`bottom-nav-btn ${isPhoneDropupOpen ? 'active' : ''}`}
+            onClick={() => setIsPhoneDropupOpen(!isPhoneDropupOpen)}
+          >
+            <Smartphone size={20} />
+            <span>Phone</span>
+          </button>
+          {isPhoneDropupOpen && (
+            <div className="admin-phone-dropup">
+              {adminCategories.filter(c => ['iphones', 'androids', 'smartwatches'].includes(c.id)).map(cat => {
+                const Icon = cat.icon || Tags;
+                return (
+                  <button 
+                    key={cat.id} 
+                    type="button" 
+                    onClick={() => { selectCategory(cat.id); setIsPhoneDropupOpen(false); }}
+                  >
+                    <Icon size={16} />
+                    <span>{cat.label}</span>
+                  </button>
+                )
+              })}
+            </div>
+          )}
+        </div>
+        <button type="button" className={`bottom-nav-btn ${activeCategoryId === 'laptops' ? 'active' : ''}`} onClick={() => { selectCategory('laptops'); setIsPhoneDropupOpen(false); }}>
+          <Laptop size={20} />
+          <span>PC</span>
+        </button>
+        <button type="button" className={`bottom-nav-btn ${activeCategoryId === 'speakers' ? 'active' : ''}`} onClick={() => { selectCategory('speakers'); setIsPhoneDropupOpen(false); }}>
+          <Speaker size={20} />
+          <span>Accessories</span>
+        </button>
+        <button type="button" className={`bottom-nav-btn ${activeCategoryId === 'all' ? 'active' : ''}`} onClick={() => { selectCategory('all'); setIsPhoneDropupOpen(false); }}>
+          <LayoutGrid size={20} />
+          <span>My Devices</span>
+        </button>
+      </nav>
     </div>
   );
 };
