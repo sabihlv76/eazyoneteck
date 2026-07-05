@@ -1,15 +1,24 @@
 import { useMemo, useState } from 'react';
 import {
+  Check,
   ImagePlus,
   KeyRound,
+  Laptop,
+  ListPlus,
   LogOut,
   Mail,
+  Palette,
   Pencil,
   Phone,
   Plus,
   Search,
+  Settings,
   ShieldCheck,
+  Smartphone,
+  Speaker,
+  Tags,
   Trash2,
+  Watch,
 } from 'lucide-react';
 import { adminSignIn, getAdminSessionToken } from '../lib/api';
 
@@ -24,10 +33,10 @@ function fileToDataUrl(file) {
 
 const initialForm = {
   name: '',
-  category: 'Smartphones',
   price: '',
   size: '',
   badge: '',
+  color: '',
   image: '',
   extraImages: [],
   description: '',
@@ -35,6 +44,96 @@ const initialForm = {
   ingredients: '',
   instructions: '',
 };
+
+const ADMIN_CATEGORY_KEY = 'e1t_admin_categories';
+
+const defaultAdminCategories = [
+  {
+    id: 'iphones',
+    label: 'iPhones',
+    category: 'Smartphones',
+    subcategory: 'Apple',
+    icon: Smartphone,
+    colors: ['Natural Titanium', 'Black Titanium', 'White Titanium', 'Blue Titanium', 'Deep Purple', 'Gold'],
+  },
+  {
+    id: 'androids',
+    label: 'Androids',
+    category: 'Smartphones',
+    subcategory: 'Android',
+    icon: Smartphone,
+    colors: ['Phantom Black', 'Titanium Gray', 'Cream', 'Violet', 'Green', 'Graphite'],
+  },
+  {
+    id: 'smartwatches',
+    label: 'Smartwatches',
+    category: 'Watches',
+    subcategory: 'Smart Watches',
+    icon: Watch,
+    colors: ['Midnight', 'Starlight', 'Silver', 'Pink', 'Graphite', 'Titanium'],
+  },
+  {
+    id: 'laptops',
+    label: 'Laptops',
+    category: 'Computers',
+    subcategory: 'Laptops',
+    icon: Laptop,
+    colors: ['Space Black', 'Silver', 'Space Gray', 'Midnight', 'Starlight'],
+  },
+  {
+    id: 'speakers',
+    label: 'Speakers',
+    category: 'Audio',
+    subcategory: 'Speakers',
+    icon: Speaker,
+    colors: ['Black', 'Blue', 'Red', 'Teal', 'White'],
+  },
+];
+
+const badgeOptions = ['New Arrival', 'Best Seller', 'Hot Deal', 'Top Rated', 'Great Value', 'Trending', 'Genuine'];
+
+function readAdminCategories() {
+  try {
+    const saved = window.localStorage.getItem(ADMIN_CATEGORY_KEY);
+    return saved ? JSON.parse(saved) : defaultAdminCategories;
+  } catch {
+    return defaultAdminCategories;
+  }
+}
+
+function saveAdminCategories(categories) {
+  try {
+    window.localStorage.setItem(ADMIN_CATEGORY_KEY, JSON.stringify(categories));
+  } catch (error) {
+    console.warn('Unable to save admin categories', error);
+  }
+}
+
+function getCategoryForProduct(product, categories) {
+  return categories.find((item) => {
+    const sameCategory = product.category === item.category;
+    const productSubcategory = (product.subcategory || '').toLowerCase();
+    const itemSubcategory = item.subcategory.toLowerCase();
+
+    if (!sameCategory) {
+      return false;
+    }
+
+    if (item.id === 'iphones') {
+      return productSubcategory.includes('apple') || product.name.toLowerCase().includes('iphone');
+    }
+
+    if (item.id === 'androids') {
+      return (
+        product.category === 'Smartphones' &&
+        !productSubcategory.includes('apple') &&
+        !product.name.toLowerCase().includes('iphone')
+      );
+    }
+
+    return productSubcategory.includes(itemSubcategory) || product.category === item.category;
+  });
+}
 
 const Admin = ({
   adminSettings,
@@ -49,24 +148,33 @@ const Admin = ({
   const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(getAdminSessionToken()));
   const [credentials, setCredentials] = useState({ email: '', pin: '' });
   const [authError, setAuthError] = useState('');
+  const [adminCategories, setAdminCategories] = useState(readAdminCategories);
+  const [activeCategoryId, setActiveCategoryId] = useState('iphones');
+  const [activeView, setActiveView] = useState('products');
   const [searchQuery, setSearchQuery] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(initialForm);
   const [statusMessage, setStatusMessage] = useState('');
   const [settingsForm, setSettingsForm] = useState(adminSettings);
   const [isSaving, setIsSaving] = useState(false);
 
+  const activeCategory =
+    adminCategories.find((category) => category.id === activeCategoryId) || adminCategories[0];
+
   const filteredProducts = useMemo(() => {
     const query = searchQuery.toLowerCase();
     return products.filter((product) => {
-      return (
+      const productAdminCategory = getCategoryForProduct(product, adminCategories);
+      const isActiveCategory = productAdminCategory?.id === activeCategoryId;
+      const matchesQuery =
         product.name.toLowerCase().includes(query) ||
         product.category.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
-      );
+        (product.subcategory || '').toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query);
+
+      return isActiveCategory && matchesQuery;
     });
-  }, [products, searchQuery]);
+  }, [activeCategoryId, adminCategories, products, searchQuery]);
 
   const showStatus = (message) => {
     setStatusMessage(message);
@@ -103,20 +211,22 @@ const Admin = ({
     setIsAuthenticated(false);
   };
 
-  const openAddModal = () => {
+  const resetProductForm = () => {
     setEditingId(null);
     setForm(initialForm);
-    setIsModalOpen(true);
   };
 
   const openEditModal = (product) => {
+    const nextCategory = getCategoryForProduct(product, adminCategories) || activeCategory;
+    setActiveCategoryId(nextCategory.id);
+    setActiveView('products');
     setEditingId(product.id);
     setForm({
       name: product.name || '',
-      category: product.category || 'Smartphones',
       price: String(product.price || ''),
       size: product.size || '',
       badge: product.badge || '',
+      color: product.color || '',
       image: product.image || '',
       extraImages: product.extraImages || product.extra_images || [],
       description: product.description || '',
@@ -124,7 +234,12 @@ const Admin = ({
       ingredients: product.ingredients || '',
       instructions: product.instructions || '',
     });
-    setIsModalOpen(true);
+  };
+
+  const selectCategory = (categoryId) => {
+    setActiveCategoryId(categoryId);
+    setActiveView('products');
+    resetProductForm();
   };
 
   const handlePrimaryImageUpload = async (event) => {
@@ -153,6 +268,11 @@ const Admin = ({
     setIsSaving(true);
 
     try {
+      const colorValue = form.color.trim();
+      const description =
+        form.description.trim() ||
+        `${form.name.trim()} is available at ${settingsForm.storeName || 'Eazy1teck'}. Contact the store for current stock and booking.`;
+
       await onSaveProduct(
         {
           badge: form.badge.trim(),
@@ -160,21 +280,23 @@ const Admin = ({
             .split('\n')
             .map((item) => item.trim())
             .filter(Boolean),
-          category: form.category,
-          description: form.description.trim(),
+          category: activeCategory.category,
+          color: colorValue,
+          description,
           extraImages: form.extraImages,
           image: form.image,
-          ingredients: form.ingredients.trim(),
-          instructions: form.instructions.trim(),
+          ingredients: form.ingredients.trim() || colorValue,
+          instructions: form.instructions.trim() || 'Confirm color and storage before booking.',
           name: form.name.trim(),
           price: Number(form.price),
           size: form.size.trim(),
+          subcategory: activeCategory.subcategory,
         },
         editingId
       );
 
-      setIsModalOpen(false);
       setForm(initialForm);
+      setEditingId(null);
       showStatus(editingId ? 'Product updated successfully.' : 'Product created successfully.');
     } catch (error) {
       showStatus(error.message || 'Unable to save this product.');
@@ -197,7 +319,36 @@ const Admin = ({
     }
   };
 
+  const handleAddCategory = () => {
+    const label = window.prompt('Category name');
+    if (!label?.trim()) {
+      return;
+    }
+
+    const id = label.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+    if (adminCategories.some((category) => category.id === id)) {
+      showStatus('That category already exists.');
+      return;
+    }
+
+    const nextCategory = {
+      id,
+      label: label.trim(),
+      category: 'Accessories',
+      subcategory: label.trim(),
+      icon: Tags,
+      colors: ['Black', 'White', 'Silver', 'Blue'],
+    };
+    const nextCategories = [...adminCategories, nextCategory];
+    setAdminCategories(nextCategories);
+    saveAdminCategories(nextCategories);
+    setActiveCategoryId(id);
+    setActiveView('products');
+    showStatus('Category added.');
+  };
+
   const totalValue = filteredProducts.reduce((sum, product) => sum + Number(product.price || 0), 0);
+  const allProductCount = products.length;
 
   if (!isAuthenticated) {
     return (
@@ -246,331 +397,389 @@ const Admin = ({
   }
 
   return (
-    <div className="admin-page container">
-      <section className="admin-hero">
+    <div className="admin-page">
+      <header className="admin-topbar">
         <div>
-          <span className="eyebrow">Store management</span>
-          <h1>Professional admin dashboard</h1>
-          <p>
-            Manage inventory, upload product images directly from a phone, and keep
-            admin access settings under your control.
-          </p>
+          <strong>{settingsForm.storeName || 'Eazy1teck'}</strong>
+          <span>Inventory desk</span>
         </div>
-        <div className="inline-actions">
-          <button type="button" className="btn-accent" onClick={openAddModal}>
-            <Plus size={18} />
-            Add product
-          </button>
-          <button type="button" className="btn-outline admin-logout-button" onClick={handleLogout}>
-            <LogOut size={18} />
-            Log out
-          </button>
-        </div>
-      </section>
+        <button type="button" className="btn-outline" onClick={onRefreshProducts}>
+          Refresh
+        </button>
+      </header>
 
       {statusMessage && <div className="status-banner success">{statusMessage}</div>}
 
-      <section className="admin-metrics">
-        <article className="metric-card">
-          <span>Total products</span>
-          <strong>{products.length}</strong>
-        </article>
-        <article className="metric-card">
-          <span>Filtered results</span>
-          <strong>{filteredProducts.length}</strong>
-        </article>
-        <article className="metric-card">
-          <span>Catalog value</span>
-          <strong>{totalValue.toLocaleString()} RWF</strong>
-        </article>
-      </section>
-
-      <section className="admin-layout">
-        <div className="admin-main-card">
-          <div className="admin-toolbar">
-            <div className="search-field">
-              <Search size={18} />
-              <input
-                type="search"
-                placeholder="Search products by name, category or description"
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-              />
-            </div>
-
-            <div className="inline-actions">
-              <button type="button" className="btn-outline" onClick={onRefreshProducts}>
-                Refresh
-              </button>
-              <button
-                type="button"
-                className="btn-outline"
-                onClick={async () => {
-                  try {
-                    await onResetCatalog();
-                    showStatus('Catalog reset to the MongoDB seed data.');
-                  } catch (error) {
-                    showStatus(error.message || 'Unable to reset the catalog.');
-                  }
-                }}
-              >
-                Reset catalog
-              </button>
-            </div>
+      <div className="admin-workbench">
+        <aside className="admin-sidebar">
+          <div className="admin-sidebar-head">
+            <span>Categories</span>
+            <button type="button" className="btn-icon btn-icon-outline" onClick={handleAddCategory} aria-label="Add category">
+              <ListPlus size={16} />
+            </button>
           </div>
 
-          <div className="admin-product-list">
-            {filteredProducts.map((product) => (
-              <article key={product.id} className="admin-product-card">
-                <img src={product.image} alt={product.name} />
-                <div className="admin-product-copy">
-                  <div>
-                    <h3>{product.name}</h3>
-                    <p>{product.category}</p>
+          <nav className="admin-side-nav" aria-label="Product categories">
+            {adminCategories.map((category) => {
+              const Icon = category.icon || Tags;
+              const count = products.filter(
+                (product) => getCategoryForProduct(product, adminCategories)?.id === category.id
+              ).length;
+
+              return (
+                <button
+                  key={category.id}
+                  type="button"
+                  className={activeView === 'products' && activeCategoryId === category.id ? 'active' : ''}
+                  onClick={() => selectCategory(category.id)}
+                >
+                  <Icon size={18} />
+                  <span>{category.label}</span>
+                  <small>{count}</small>
+                </button>
+              );
+            })}
+          </nav>
+
+          <button
+            type="button"
+            className={`admin-settings-link${activeView === 'settings' ? ' active' : ''}`}
+            onClick={() => setActiveView('settings')}
+          >
+            <Settings size={18} />
+            <span>Settings</span>
+          </button>
+
+          <button type="button" className="admin-sidebar-logout" onClick={handleLogout}>
+            <LogOut size={18} />
+            Log out
+          </button>
+        </aside>
+
+        <main className="admin-main-card">
+          {activeView === 'settings' ? (
+            <section className="admin-settings-panel">
+              <div className="admin-section-head">
+                <div>
+                  <h1>Settings</h1>
+                  <p>Keep the contact details and admin access simple.</p>
+                </div>
+              </div>
+
+              <form className="admin-form-grid" onSubmit={handleSaveSettings}>
+                <div className="form-group">
+                  <label htmlFor="settings-store">Store name</label>
+                  <input
+                    id="settings-store"
+                    type="text"
+                    value={settingsForm.storeName || ''}
+                    onChange={updateSettingsField('storeName')}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="settings-email">Recovery email</label>
+                  <div className="field-with-icon">
+                    <Mail size={16} />
+                    <input
+                      id="settings-email"
+                      type="email"
+                      value={settingsForm.email}
+                      onChange={updateSettingsField('email')}
+                      required
+                    />
                   </div>
-                  <strong>{Number(product.price).toLocaleString()} RWF</strong>
                 </div>
-                <div className="admin-product-actions">
-                  <button type="button" className="btn-icon btn-icon-outline" onClick={() => openEditModal(product)}>
-                    <Pencil size={16} />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-icon btn-icon-primary danger"
-                    onClick={async () => {
-                      try {
-                        await onDeleteProduct(product.id);
-                        showStatus('Product deleted.');
-                      } catch (error) {
-                        showStatus(error.message || 'Unable to delete the product.');
-                      }
-                    }}
-                  >
-                    <Trash2 size={16} />
-                  </button>
+
+                <div className="form-group">
+                  <label htmlFor="settings-phone">Business phone</label>
+                  <div className="field-with-icon">
+                    <Phone size={16} />
+                    <input
+                      id="settings-phone"
+                      type="tel"
+                      value={settingsForm.phone}
+                      onChange={updateSettingsField('phone')}
+                      required
+                    />
+                  </div>
                 </div>
-              </article>
-            ))}
-          </div>
-        </div>
 
-        <aside className="settings-card">
-          <div className="settings-card-head">
-            <h2>Admin settings</h2>
-          </div>
-          <form className="stack-list" onSubmit={handleSaveSettings}>
-            <div className="form-group">
-              <label htmlFor="settings-email">Recovery email</label>
-              <div className="field-with-icon">
-                <Mail size={16} />
-                <input
-                  id="settings-email"
-                  type="email"
-                  value={settingsForm.email}
-                  onChange={updateSettingsField('email')}
-                  required
-                />
-              </div>
-            </div>
+                <div className="form-group">
+                  <label htmlFor="settings-pin">Admin PIN</label>
+                  <div className="field-with-icon">
+                    <KeyRound size={16} />
+                    <input
+                      id="settings-pin"
+                      type="password"
+                      value={settingsForm.pin}
+                      onChange={updateSettingsField('pin')}
+                      required
+                    />
+                  </div>
+                </div>
 
-            <div className="form-group">
-              <label htmlFor="settings-phone">Business phone</label>
-              <div className="field-with-icon">
-                <Phone size={16} />
-                <input
-                  id="settings-phone"
-                  type="tel"
-                  value={settingsForm.phone}
-                  onChange={updateSettingsField('phone')}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="settings-pin">Admin PIN</label>
-              <div className="field-with-icon">
-                <KeyRound size={16} />
-                <input
-                  id="settings-pin"
-                  type="password"
-                  value={settingsForm.pin}
-                  onChange={updateSettingsField('pin')}
-                  required
-                />
-              </div>
-            </div>
-
-                <button type="submit" className="btn-accent">
+                <button type="submit" className="btn-accent admin-save-button">
                   <ShieldCheck size={18} />
-                  {isSaving ? 'Saving...' : 'Save admin settings'}
+                  {isSaving ? 'Saving...' : 'Save settings'}
                 </button>
               </form>
-        </aside>
-      </section>
-
-      {isModalOpen && (
-        <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
-          <div className="modal-card" onClick={(event) => event.stopPropagation()}>
-            <div className="modal-head">
-              <h2>{editingId ? 'Edit product' : 'Add new product'}</h2>
-              <button type="button" className="btn-outline" onClick={() => setIsModalOpen(false)}>
-                Close
-              </button>
-            </div>
-
-            <form className="settings-card stack-list" onSubmit={handleSaveProduct}>
-              <div className="form-grid">
-                <div className="form-group span-2">
-                  <label htmlFor="product-name">Product title</label>
-                  <input
-                    id="product-name"
-                    type="text"
-                    value={form.name}
-                    onChange={updateFormField('name')}
-                    required
-                  />
+            </section>
+          ) : (
+            <>
+              <section className="admin-section-head">
+                <div>
+                  <h1>{activeCategory.label}</h1>
+                  <p>Add stock, set the price, upload images and keep the shelf tidy.</p>
                 </div>
-
-                <div className="form-group">
-                  <label htmlFor="product-category">Category</label>
-                  <select
-                    id="product-category"
-                    value={form.category}
-                    onChange={updateFormField('category')}
-                  >
-                    <option value="Smartphones">Smartphones</option>
-                    <option value="Computers">Computers</option>
-                    <option value="Audio">Audio</option>
-                    <option value="Accessories">Accessories</option>
-                    <option value="Watches">Watches</option>
-                  </select>
+                <div className="admin-stat-strip">
+                  <span>{filteredProducts.length} shown</span>
+                  <span>{allProductCount} total</span>
+                  <span>{totalValue.toLocaleString()} RWF</span>
                 </div>
+              </section>
 
-                <div className="form-group">
-                  <label htmlFor="product-price">Price in RWF</label>
-                  <input
-                    id="product-price"
-                    type="number"
-                    value={form.price}
-                    onChange={updateFormField('price')}
-                    required
-                  />
-                </div>
+              <section className="admin-entry-grid">
+                <form className="admin-product-form" onSubmit={handleSaveProduct}>
+                  <div className="admin-form-title">
+                    <div>
+                      <h2>{editingId ? 'Edit product' : 'Add product'}</h2>
+                      <p>{activeCategory.label} will appear in {activeCategory.category}.</p>
+                    </div>
+                    {editingId && (
+                      <button type="button" className="btn-outline" onClick={resetProductForm}>
+                        New item
+                      </button>
+                    )}
+                  </div>
 
-                <div className="form-group span-2">
-                  <label htmlFor="product-size">Model, size, or version</label>
-                  <input
-                    id="product-size"
-                    type="text"
-                    value={form.size}
-                    onChange={updateFormField('size')}
-                    required
-                  />
-                </div>
+                  <div className="admin-form-grid">
+                    <div className="form-group span-2">
+                      <label htmlFor="product-name">Product name</label>
+                      <input
+                        id="product-name"
+                        type="text"
+                        value={form.name}
+                        onChange={updateFormField('name')}
+                        placeholder="iPhone 15 Pro Max 256GB"
+                        required
+                      />
+                    </div>
 
-                <div className="form-group span-2">
-                  <label htmlFor="product-badge">Product tag</label>
-                  <input
-                    id="product-badge"
-                    type="text"
-                    value={form.badge}
-                    onChange={updateFormField('badge')}
-                    placeholder="Best Seller, New Arrival, Hot Deal"
-                  />
-                </div>
+                    <div className="form-group">
+                      <label htmlFor="product-price">Price in RWF</label>
+                      <input
+                        id="product-price"
+                        type="number"
+                        value={form.price}
+                        onChange={updateFormField('price')}
+                        placeholder="1800000"
+                        required
+                      />
+                    </div>
 
-                <div className="form-group span-2">
-                  <label htmlFor="product-image">Main product image</label>
-                  <label className="upload-field" htmlFor="product-image">
-                    <ImagePlus size={18} />
-                    <span>Choose main image</span>
-                  </label>
-                  <input
-                    id="product-image"
-                    type="file"
-                    accept="image/*"
-                    onChange={handlePrimaryImageUpload}
-                    className="hidden-input"
-                  />
-                  {form.image && <img src={form.image} alt="Primary preview" className="upload-preview" />}
-                </div>
+                    <div className="form-group">
+                      <label htmlFor="product-size">Size or version</label>
+                      <input
+                        id="product-size"
+                        type="text"
+                        value={form.size}
+                        onChange={updateFormField('size')}
+                        placeholder="256GB"
+                        required
+                      />
+                    </div>
 
-                <div className="form-group span-2">
-                  <label htmlFor="product-gallery">Additional product images</label>
-                  <label className="upload-field" htmlFor="product-gallery">
-                    <ImagePlus size={18} />
-                    <span>Select more images</span>
-                  </label>
-                  <input
-                    id="product-gallery"
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleExtraImagesUpload}
-                    className="hidden-input"
-                  />
-                  {form.extraImages.length > 0 && (
-                    <div className="upload-preview-grid">
-                      {form.extraImages.map((image) => (
-                        <img key={image} src={image} alt="Extra preview" className="upload-preview" />
+                    <div className="form-group">
+                      <label htmlFor="product-badge">Tag</label>
+                      <div className="field-with-icon">
+                        <Tags size={16} />
+                        <input
+                          id="product-badge"
+                          type="text"
+                          value={form.badge}
+                          onChange={updateFormField('badge')}
+                          list="admin-badge-options"
+                          placeholder="Best Seller"
+                        />
+                      </div>
+                      <datalist id="admin-badge-options">
+                        {badgeOptions.map((badge) => (
+                          <option key={badge} value={badge} />
+                        ))}
+                      </datalist>
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="product-color">Color</label>
+                      <div className="field-with-icon">
+                        <Palette size={16} />
+                        <input
+                          id="product-color"
+                          type="text"
+                          value={form.color}
+                          onChange={updateFormField('color')}
+                          list="admin-color-options"
+                          placeholder={activeCategory.colors[0] || 'Black'}
+                        />
+                      </div>
+                      <datalist id="admin-color-options">
+                        {activeCategory.colors.map((color) => (
+                          <option key={color} value={color} />
+                        ))}
+                      </datalist>
+                    </div>
+
+                    <div className="color-swatch-row span-2">
+                      {activeCategory.colors.map((color) => (
+                        <button
+                          key={color}
+                          type="button"
+                          className={form.color === color ? 'active' : ''}
+                          onClick={() => setForm((current) => ({ ...current, color }))}
+                        >
+                          {form.color === color && <Check size={13} />}
+                          {color}
+                        </button>
                       ))}
                     </div>
-                  )}
-                </div>
 
-                <div className="form-group span-2">
-                  <label htmlFor="product-description">Description</label>
-                  <textarea
-                    id="product-description"
-                    rows="4"
-                    value={form.description}
-                    onChange={updateFormField('description')}
-                    required
-                  />
-                </div>
+                    <div className="form-group span-2">
+                      <label htmlFor="product-image">Images</label>
+                      <div className="admin-upload-grid">
+                        <label className="upload-field" htmlFor="product-image">
+                          <ImagePlus size={18} />
+                          <span>Main image</span>
+                        </label>
+                        <input
+                          id="product-image"
+                          type="file"
+                          accept="image/*"
+                          onChange={handlePrimaryImageUpload}
+                          className="hidden-input"
+                        />
 
-                <div className="form-group span-2">
-                  <label htmlFor="product-benefits">Key product features</label>
-                  <textarea
-                    id="product-benefits"
-                    rows="4"
-                    value={form.benefits}
-                    onChange={updateFormField('benefits')}
-                    placeholder="One feature per line"
-                  />
-                </div>
+                        <label className="upload-field" htmlFor="product-gallery">
+                          <ImagePlus size={18} />
+                          <span>Gallery</span>
+                        </label>
+                        <input
+                          id="product-gallery"
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handleExtraImagesUpload}
+                          className="hidden-input"
+                        />
+                      </div>
 
-                <div className="form-group span-2">
-                  <label htmlFor="product-ingredients">Material or build quality</label>
-                  <input
-                    id="product-ingredients"
-                    type="text"
-                    value={form.ingredients}
-                    onChange={updateFormField('ingredients')}
-                  />
-                </div>
+                      {(form.image || form.extraImages.length > 0) && (
+                        <div className="upload-preview-grid">
+                          {form.image && <img src={form.image} alt="Primary preview" className="upload-preview" />}
+                          {form.extraImages.map((image) => (
+                            <img key={image} src={image} alt="Extra preview" className="upload-preview" />
+                          ))}
+                        </div>
+                      )}
+                    </div>
 
-                <div className="form-group span-2">
-                  <label htmlFor="product-notes">Stock notes or delivery notes</label>
-                  <textarea
-                    id="product-notes"
-                    rows="3"
-                    value={form.instructions}
-                    onChange={updateFormField('instructions')}
-                  />
-                </div>
-              </div>
+                    <div className="form-group span-2">
+                      <label htmlFor="product-description">Short note</label>
+                      <textarea
+                        id="product-description"
+                        rows="3"
+                        value={form.description}
+                        onChange={updateFormField('description')}
+                        placeholder="Optional customer-facing note"
+                      />
+                    </div>
+                  </div>
 
-              <div className="inline-actions end">
-                <button type="submit" className="btn-accent">
-                  {isSaving ? 'Saving...' : 'Save product'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+                  <button type="submit" className="btn-accent admin-save-button">
+                    <Plus size={18} />
+                    {isSaving ? 'Saving...' : editingId ? 'Save changes' : 'Save product'}
+                  </button>
+                </form>
+
+                <section className="admin-list-panel">
+                  <div className="admin-toolbar">
+                    <div className="search-field">
+                      <Search size={18} />
+                      <input
+                        type="search"
+                        placeholder={`Search ${activeCategory.label.toLowerCase()}`}
+                        value={searchQuery}
+                        onChange={(event) => setSearchQuery(event.target.value)}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      className="btn-outline"
+                      onClick={async () => {
+                        try {
+                          await onResetCatalog();
+                          resetProductForm();
+                          showStatus('Catalog reset to the seed data.');
+                        } catch (error) {
+                          showStatus(error.message || 'Unable to reset the catalog.');
+                        }
+                      }}
+                    >
+                      Reset
+                    </button>
+                  </div>
+
+                  <div className="admin-product-list">
+                    {filteredProducts.length === 0 && (
+                      <div className="admin-empty-state">
+                        <strong>No products here yet</strong>
+                        <span>Add the first {activeCategory.label.toLowerCase()} item with the form.</span>
+                      </div>
+                    )}
+
+                    {filteredProducts.map((product) => (
+                      <article key={product.id} className="admin-product-card">
+                        <img src={product.image} alt={product.name} />
+                        <div className="admin-product-copy">
+                          <div>
+                            <h3>{product.name}</h3>
+                            <p>{product.subcategory || product.category}{product.color ? `, ${product.color}` : ''}</p>
+                          </div>
+                          <strong>{Number(product.price).toLocaleString()} RWF</strong>
+                        </div>
+                        <div className="admin-product-actions">
+                          <button type="button" className="btn-icon btn-icon-outline" onClick={() => openEditModal(product)} aria-label={`Edit ${product.name}`}>
+                            <Pencil size={16} />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-icon btn-icon-primary danger"
+                            onClick={async () => {
+                              try {
+                                await onDeleteProduct(product.id);
+                                if (editingId === product.id) {
+                                  resetProductForm();
+                                }
+                                showStatus('Product deleted.');
+                              } catch (error) {
+                                showStatus(error.message || 'Unable to delete the product.');
+                              }
+                            }}
+                            aria-label={`Delete ${product.name}`}
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              </section>
+            </>
+          )}
+        </main>
+      </div>
     </div>
   );
 };
