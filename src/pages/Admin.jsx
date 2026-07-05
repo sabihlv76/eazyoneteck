@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import {
   Check,
+  ChevronDown,
+  ChevronRight,
   ImagePlus,
   KeyRound,
   Laptop,
@@ -160,6 +162,7 @@ const Admin = ({
   const [settingsForm, setSettingsForm] = useState(adminSettings);
   const [isSaving, setIsSaving] = useState(false);
   const [isPhoneDropupOpen, setIsPhoneDropupOpen] = useState(false);
+  const [isDesktopPhoneOpen, setIsDesktopPhoneOpen] = useState(false);
 
   const activeCategory = activeCategoryId === 'all'
     ? { id: 'all', label: 'All Devices', category: 'Catalog', colors: [] }
@@ -461,47 +464,73 @@ const Admin = ({
       <div className="admin-workbench">
         <aside className="admin-sidebar">
           <div className="admin-sidebar-head">
-            <span>Categories</span>
-            <button type="button" className="btn-icon btn-icon-outline" onClick={handleAddCategory} aria-label="Add category">
-              <ListPlus size={16} />
-            </button>
+            <span>Navigation</span>
           </div>
 
           <nav className="admin-side-nav" aria-label="Product categories">
-            {adminCategories.map((category) => {
-              const Icon = category.icon || Tags;
-              const count = products.filter(
-                (product) => getCategoryForProduct(product, adminCategories)?.id === category.id
-              ).length;
 
-              return (
-                <button
-                  key={category.id}
-                  type="button"
-                  className={activeView === 'products' && activeCategoryId === category.id ? 'active' : ''}
-                  onClick={() => selectCategory(category.id)}
-                >
-                  <Icon size={18} />
-                  <span>{category.label}</span>
-                  <small>{count}</small>
-                </button>
-              );
-            })}
+            {/* Phone group — hover flyout */}
+            <div className="admin-phone-hover-group">
+              <button
+                type="button"
+                className={['iphones','androids','smartwatches'].includes(activeCategoryId) && activeView === 'products' ? 'active' : ''}
+              >
+                <Smartphone size={18} />
+                <span>Phone</span>
+                <ChevronRight size={14} />
+              </button>
+
+              <div className="admin-phone-side-flyout">
+                <div className="admin-phone-side-flyout-inner">
+                  {adminCategories.filter(c => ['iphones', 'androids', 'smartwatches'].includes(c.id)).map(cat => {
+                    const Icon = cat.icon || Tags;
+                    return (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        className={activeView === 'products' && activeCategoryId === cat.id ? 'active' : ''}
+                        onClick={() => selectCategory(cat.id)}
+                      >
+                        <Icon size={16} />
+                        <span>{cat.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* PC */}
+            <button
+              type="button"
+              className={activeView === 'products' && activeCategoryId === 'laptops' ? 'active' : ''}
+              onClick={() => selectCategory('laptops')}
+            >
+              <Laptop size={18} />
+              <span>PC</span>
+            </button>
+
+            {/* Accessories */}
+            <button
+              type="button"
+              className={activeView === 'products' && activeCategoryId === 'speakers' ? 'active' : ''}
+              onClick={() => selectCategory('speakers')}
+            >
+              <Speaker size={18} />
+              <span>Accessories</span>
+            </button>
+
+            {/* My Devices — all products */}
+            <button
+              type="button"
+              className={activeCategoryId === 'all' && activeView === 'products' ? 'active' : ''}
+              onClick={() => selectCategory('all')}
+            >
+              <LayoutGrid size={18} />
+              <span>My Devices</span>
+            </button>
+
           </nav>
-
-          <button
-            type="button"
-            className={`admin-settings-link${activeView === 'settings' ? ' active' : ''}`}
-            onClick={() => setActiveView('settings')}
-          >
-            <Settings size={18} />
-            <span>Settings</span>
-          </button>
-
-          <button type="button" className="admin-sidebar-logout" onClick={handleLogout}>
-            <LogOut size={18} />
-            Log out
-          </button>
         </aside>
 
         <main className="admin-main-card">
