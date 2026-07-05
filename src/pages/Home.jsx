@@ -394,6 +394,11 @@ const Home = ({
               />
             ))}
           </div>
+
+          {/* Desktop-only: girls shopping image below navigation */}
+          <div className="left-sidebar-promo-image">
+            <img src={customerShoppingImage} alt="Girls shopping at Eazy1teck" />
+          </div>
         </aside>
 
         <div className="store-center-pane">
@@ -534,21 +539,32 @@ const Home = ({
               </div>
             ) : (
               <div className="category-showcase-stack">
-                {visibleShowcaseGroups.map((group) => (
-                  <CategoryShowcase
-                    key={group.id}
-                    group={group}
-                    products={group.products}
-                    wishlist={wishlist}
-                    onAddToCart={onAddToCart}
-                    onCategoryChange={onCategoryChange}
-                    onToggleWishlist={onToggleWishlist}
-                  />
+                {visibleShowcaseGroups.map((group, index) => (
+                  <>
+                    <CategoryShowcase
+                      key={group.id}
+                      group={group}
+                      products={group.products}
+                      wishlist={wishlist}
+                      onAddToCart={onAddToCart}
+                      onCategoryChange={onCategoryChange}
+                      onToggleWishlist={onToggleWishlist}
+                    />
+                    {/* Mobile-only: insert winShoppingImage between accessories (index 1) and computers */}
+                    {index === 1 && (
+                      <div className="mobile-promo-image mobile-promo-image--between" key="mobile-promo-between">
+                        <img src={winShoppingImage} alt="It is a win shopping with us" />
+                      </div>
+                    )}
+                  </>
                 ))}
               </div>
             )}
 
-            {/* Removed the two promo images from center — they live in the right sidebar */}
+            {/* Mobile-only: bottom promo image before footer */}
+            <div className="mobile-promo-image mobile-promo-image--bottom">
+              <img src={customerShoppingImage} alt="Girls shopping at Eazy1teck" />
+            </div>
           </section>
         </div>
 

@@ -489,7 +489,7 @@ function AppContent() {
                 </span>
                 <span className="brand-copy">
                   <strong>Eazy1teck</strong>
-                  <span>Mobile-first premium tech shopping</span>
+                  <span>Kigali tech deals, ready to book</span>
                 </span>
               </Link>
 
