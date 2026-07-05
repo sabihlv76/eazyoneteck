@@ -297,6 +297,7 @@ const Home = ({
   onToggleWishlist,
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
   const shopRef = useRef(null);
 
   useEffect(() => {
@@ -382,17 +383,40 @@ const Home = ({
               onClick={() => goToShop('All')}
             >
               <strong>All products</strong>
-              <span>{products.length} items</span>
             </button>
-            {showcaseGroups.map((group) => (
-              <LeftCategoryDropdown
-                key={group.id}
-                group={group}
-                products={products}
-                selectedCategory={selectedCategory}
-                onSelect={goToShop}
-              />
-            ))}
+            <div className="left-cat-dropdown">
+              <button
+                type="button"
+                className={`left-cat-trigger ${isCategoriesOpen ? '' : ''}`}
+                onClick={() => setIsCategoriesOpen((v) => !v)}
+                aria-expanded={isCategoriesOpen}
+              >
+                <span className="left-cat-info">
+                  <strong>Categories</strong>
+                </span>
+                <svg
+                  className={`left-cat-chevron ${isCategoriesOpen ? 'open' : ''}`}
+                  width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              {isCategoriesOpen && (
+                <div className="left-master-menu" style={{ display: 'flex', flexDirection: 'column', gap: '2px', paddingLeft: '0.6rem' }}>
+                  {showcaseGroups.map((group) => (
+                    <LeftCategoryDropdown
+                      key={group.id}
+                      group={group}
+                      products={products}
+                      selectedCategory={selectedCategory}
+                      onSelect={goToShop}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Desktop-only: girls shopping image below navigation */}
@@ -610,7 +634,11 @@ function LeftCategoryDropdown({ group, products, selectedCategory, onSelect }) {
   const isActive = selectedCategory === group.category;
 
   return (
-    <div className="left-cat-dropdown">
+    <div 
+      className="left-cat-dropdown"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
       <button
         type="button"
         className={`left-cat-trigger ${isActive ? 'active' : ''}`}
@@ -619,7 +647,6 @@ function LeftCategoryDropdown({ group, products, selectedCategory, onSelect }) {
       >
         <span className="left-cat-info">
           <strong>{group.label}</strong>
-          <span>{products.filter((p) => group.categories.includes(p.category)).length} items</span>
         </span>
         <svg
           className={`left-cat-chevron ${isOpen ? 'open' : ''}`}
@@ -627,7 +654,7 @@ function LeftCategoryDropdown({ group, products, selectedCategory, onSelect }) {
           stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
           aria-hidden="true"
         >
-          <path d="m6 9 6 6 6-6" />
+          <path d="m9 18 6-6-6-6" />
         </svg>
       </button>
 
