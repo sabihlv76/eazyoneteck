@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   BrowserRouter as Router,
   Link,
@@ -9,12 +9,15 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import {
+  ChevronDown,
   Heart,
   Home as HomeIcon,
+  Menu,
   Phone,
   Search,
   ShoppingBag,
   User,
+  X,
 } from 'lucide-react';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
@@ -57,11 +60,84 @@ import './index.css';
 
 const navCategories = [
   'Smartphones',
-  'Computers',
-  'Audio',
   'Accessories',
-  'Watches',
+  'Computers',
 ];
+
+const navCategoryLabels = {
+  Smartphones: 'Phones',
+  Accessories: 'Accessories',
+  Computers: 'Machines',
+};
+
+function useOnClickOutside(ref, handler) {
+  useEffect(() => {
+    const listener = (event) => {
+      if (!ref.current || ref.current.contains(event.target)) return;
+      handler(event);
+    };
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
+    return () => {
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
+    };
+  }, [ref, handler]);
+}
+
+function NavCategoryDropdown({ category, label, products, onSelect }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef(null);
+  useOnClickOutside(ref, () => setIsOpen(false));
+
+  const categoryProducts = products
+    .filter((p) => {
+      if (category === 'Accessories') return ['Accessories', 'Audio', 'Watches'].includes(p.category);
+      return p.category === category;
+    })
+    .slice(0, 6);
+
+  return (
+    <div className="nav-cat-wrap" ref={ref}>
+      <button
+        type="button"
+        className="nav-cat-trigger"
+        onClick={() => setIsOpen((v) => !v)}
+        aria-expanded={isOpen}
+      >
+        {label}
+        <ChevronDown size={13} className={isOpen ? 'nav-cat-chevron open' : 'nav-cat-chevron'} />
+      </button>
+      {isOpen && (
+        <div className="nav-cat-dropdown">
+          <button
+            type="button"
+            className="nav-cat-view-all"
+            onClick={() => { onSelect(category); setIsOpen(false); }}
+          >
+            View all {label}
+          </button>
+          <div className="nav-cat-items">
+            {categoryProducts.map((product) => (
+              <Link
+                key={product.id}
+                to={`/product/${product.id}`}
+                className="nav-cat-item"
+                onClick={() => setIsOpen(false)}
+              >
+                <img src={product.image} alt={product.name} />
+                <span>
+                  <strong>{product.name}</strong>
+                  <small>{Number(product.price).toLocaleString()} RWF</small>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function slugify(value) {
   return value
@@ -156,6 +232,9 @@ function AppContent() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+  const [mobileCatOpen, setMobileCatOpen] = useState(null);
+  const hamburgerRef = useRef(null);
 
   useEffect(() => {
     writeStorage(PRODUCTS_KEY, products);
@@ -414,6 +493,22 @@ function AppContent() {
                 </span>
               </Link>
 
+              <div className="header-search">
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  onFocus={() => {
+                    if (location.pathname !== '/') {
+                      navigate('/');
+                    }
+                  }}
+                  aria-label="Search products"
+                  placeholder="Search products"
+                />
+                <Search size={18} aria-hidden="true" />
+              </div>
+
               <div className="site-header-actions">
                 <HeaderAction
                   label="Wishlist"
@@ -430,25 +525,8 @@ function AppContent() {
               </div>
             </div>
 
-            <div className="site-search-row">
-              <div className="header-search">
-                <input
-                  type="search"
-                  value={searchQuery}
-                  onChange={(event) => setSearchQuery(event.target.value)}
-                  onFocus={() => {
-                    if (location.pathname !== '/') {
-                      navigate('/');
-                    }
-                  }}
-                  aria-label="Search products"
-                  placeholder="Search phones, laptops, accessories and more"
-                />
-                <Search size={18} aria-hidden="true" />
-              </div>
-            </div>
-
-            <div className="site-nav-row">
+            {/* Desktop nav row: hamburger + dropdown categories */}
+            <div className="site-nav-row" ref={hamburgerRef}>
               <nav className="site-nav-links">
                 <button type="button" onClick={() => goHomeAndFilter('All')}>
                   Home
@@ -457,15 +535,83 @@ function AppContent() {
                   Shop
                 </button>
                 {navCategories.map((category) => (
-                  <button
+                  <NavCategoryDropdown
                     key={category}
-                    type="button"
-                    onClick={() => goHomeAndFilter(category)}
-                  >
-                    {category}
-                  </button>
+                    category={category}
+                    label={navCategoryLabels[category] || category}
+                    products={products}
+                    onSelect={goHomeAndFilter}
+                  />
                 ))}
               </nav>
+            </div>
+
+            {/* Mobile hamburger menu */}
+            <div className={`mobile-hamburger-menu ${isHamburgerOpen ? 'open' : ''}`}>
+              <button
+                type="button"
+                className="mobile-hamburger-toggle"
+                onClick={() => setIsHamburgerOpen((v) => !v)}
+                aria-label="Toggle menu"
+                aria-expanded={isHamburgerOpen}
+              >
+                {isHamburgerOpen ? <X size={20} /> : <Menu size={20} />}
+                <span>Categories</span>
+              </button>
+              {isHamburgerOpen && (
+                <div className="mobile-hamburger-dropdown">
+                  <button
+                    type="button"
+                    className="mobile-ham-item"
+                    onClick={() => { goHomeAndFilter('All'); setIsHamburgerOpen(false); }}
+                  >
+                    All products
+                  </button>
+                  {navCategories.map((category) => (
+                    <div key={category} className="mobile-ham-cat">
+                      <button
+                        type="button"
+                        className="mobile-ham-cat-trigger"
+                        onClick={() => setMobileCatOpen(mobileCatOpen === category ? null : category)}
+                      >
+                        <span>{navCategoryLabels[category] || category}</span>
+                        <ChevronDown
+                          size={14}
+                          className={mobileCatOpen === category ? 'mobile-ham-chevron open' : 'mobile-ham-chevron'}
+                        />
+                      </button>
+                      {mobileCatOpen === category && (
+                        <div className="mobile-ham-sublist">
+                          <button
+                            type="button"
+                            className="mobile-ham-sub-all"
+                            onClick={() => { goHomeAndFilter(category); setIsHamburgerOpen(false); }}
+                          >
+                            View all {navCategoryLabels[category]}
+                          </button>
+                          {products
+                            .filter((p) => {
+                              if (category === 'Accessories') return ['Accessories', 'Audio', 'Watches'].includes(p.category);
+                              return p.category === category;
+                            })
+                            .slice(0, 5)
+                            .map((product) => (
+                              <NavLink
+                                key={product.id}
+                                to={`/product/${product.id}`}
+                                className="mobile-ham-product"
+                                onClick={() => setIsHamburgerOpen(false)}
+                              >
+                                <img src={product.image} alt={product.name} />
+                                <span>{product.name}</span>
+                              </NavLink>
+                            ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </header>
@@ -596,23 +742,19 @@ function AppContent() {
               <span className="brand-mark footer-brand-mark">
                 <img src={logoImg} alt="Eazy1teck" className="brand-logo" />
               </span>
-              <p>
-                Premium phones, laptops and accessories for customers who want a
-                clean, trustworthy and mobile-friendly buying experience.
-              </p>
             </div>
 
-            <div>
-              <h4>Shop</h4>
-              <button type="button" onClick={() => goHomeAndFilter('Smartphones')}>
-                Smartphones
-              </button>
-              <button type="button" onClick={() => goHomeAndFilter('Computers')}>
-                Computers
-              </button>
-              <button type="button" onClick={() => goHomeAndFilter('Accessories')}>
-                Accessories
-              </button>
+            <div className="footer-privacy">
+              <h4>Privacy</h4>
+              <a href="https://thenewspecies.com/privacy-policy-2/" target="_blank" rel="noreferrer">
+                Privacy Policy
+              </a>
+              <a href="https://thenewspecies.com/refund_returns/" target="_blank" rel="noreferrer">
+                Refund Policy
+              </a>
+              <a href="https://thenewspecies.com/terms-conditions/" target="_blank" rel="noreferrer">
+                Terms & Conditions
+              </a>
             </div>
 
             <div>
@@ -625,10 +767,12 @@ function AppContent() {
             </div>
 
             <div>
-              <h4>Contact</h4>
+              <h4>Contact Details</h4>
+              <span>{adminSettings.storeName || 'Eazy1teck'}</span>
+              <span>Address: Kigali-Rwanda | Makuza Peace Plaza, KN 84 Street, Kigali</span>
               <a href={`tel:${adminSettings.phone}`}>{adminSettings.phone}</a>
               <a href={`mailto:${adminSettings.email}`}>{adminSettings.email}</a>
-              <span>Kigali, Rwanda</span>
+              <span>Offline Stores</span>
             </div>
           </div>
         </footer>
