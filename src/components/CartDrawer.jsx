@@ -26,7 +26,7 @@ const CartDrawer = ({ cart, isOpen, onClose, onRemoveItem, onUpdateQty, phone })
       )
       .join('\n');
 
-    const message = `New cart request from ${name}\nLocation: ${location}\n\n${lines}\n\nTotal: ${formatRwf(
+    const message = `Hello Eazy1teck, I would like to order these products.\nName: ${name}\nDelivery location: ${location}\n\n${lines}\n\nTotal: ${formatRwf(
       total
     )}`;
 
@@ -50,7 +50,7 @@ const CartDrawer = ({ cart, isOpen, onClose, onRemoveItem, onUpdateQty, phone })
           {cart.length === 0 ? (
             <div className="cart-empty-state">
               <h4>Your cart is empty</h4>
-              <p>Add a product and it will appear here immediately.</p>
+              <p>Choose a product, then tap the bag icon to add it here.</p>
             </div>
           ) : (
             cart.map((item) => (
@@ -105,7 +105,7 @@ const CartDrawer = ({ cart, isOpen, onClose, onRemoveItem, onUpdateQty, phone })
               />
             </div>
             <div className="form-group">
-              <label htmlFor="cart-location">Delivery location</label>
+              <label htmlFor="cart-location">Where should we deliver?</label>
               <input
                 id="cart-location"
                 type="text"

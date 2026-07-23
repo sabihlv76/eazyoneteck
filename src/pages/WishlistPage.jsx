@@ -10,21 +10,20 @@ const WishlistPage = ({ products, onAddToCart, onToggleWishlist }) => {
   return (
     <div className="page-shell container">
       <section className="page-hero-card">
-        <span className="eyebrow">Saved products</span>
+        <span className="eyebrow">Saved for you</span>
         <h1>Your wishlist</h1>
         <p>
-          Everything you love stays here so clients can come back quickly from
-          mobile and continue shopping without searching again.
+          Keep the products you are considering in one place, then compare or add them to your cart when you are ready.
         </p>
       </section>
 
       {products.length === 0 ? (
         <section className="empty-state-card">
           <Heart size={34} />
-          <h2>No wishlist items yet</h2>
-          <p>Tap the heart on any product and it will appear here instantly.</p>
+          <h2>You have not saved a product yet</h2>
+          <p>Tap the heart on any product to keep it here for later.</p>
           <Link to="/" className="btn-accent">
-            Continue shopping
+            Find products to save
           </Link>
         </section>
       ) : (

@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { CheckCircle2, MessageCircle, PhoneCall, Send, X } from 'lucide-react';
 
 const quickMessages = [
-  'Is this product available today?',
-  'Can you confirm the latest price?',
-  'I need delivery details in Kigali.',
+  'I want to order this product today.',
+  'Please confirm this product price.',
+  'Please tell me the delivery options in Kigali.',
 ];
 
 const WhatsAppWidget = ({ phone, products }) => {
@@ -15,7 +15,7 @@ const WhatsAppWidget = ({ phone, products }) => {
   const openWhatsApp = (customMessage = message) => {
     const selectedProduct = products.find((product) => product.id === productId);
     const composedMessage = [
-      'Hello Eazy1teck, I need help with a product.',
+      'Hello Eazy1teck, I am interested in this product.',
       selectedProduct ? `Product: ${selectedProduct.name}` : null,
       customMessage,
     ]
@@ -50,8 +50,8 @@ const WhatsAppWidget = ({ phone, products }) => {
                   <CheckCircle2 size={14} />
                   Available on WhatsApp
                 </span>
-                <h4>Eazy1teck support</h4>
-                <p>Ask about stock, prices or delivery before ordering.</p>
+                <h4>Tell us what you need</h4>
+                <p>Choose a product, then send your question or order request.</p>
               </div>
               <button type="button" className="wa-close-btn" onClick={() => setIsOpen(false)}>
                 <X size={16} />
@@ -61,14 +61,14 @@ const WhatsAppWidget = ({ phone, products }) => {
             <div className="wa-contact-row">
               <PhoneCall size={17} />
               <div>
-                <span>Direct contact</span>
+                <span>Call us</span>
                 <strong>{phone}</strong>
               </div>
             </div>
 
             <form className="wa-form" onSubmit={sendMessage}>
               <div className="form-group">
-                <label htmlFor="wa-product">Product</label>
+                <label htmlFor="wa-product">Choose a product</label>
                 <select
                   id="wa-product"
                   value={productId}
@@ -96,20 +96,20 @@ const WhatsAppWidget = ({ phone, products }) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="wa-message">Custom message</label>
+                <label htmlFor="wa-message">Your message</label>
                 <textarea
                   id="wa-message"
                   rows="3"
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
-                  placeholder="Write your question"
+                  placeholder="Tell us what you need"
                   required
                 />
               </div>
 
               <button type="submit" className="wa-submit-button full-width">
                 <Send size={16} />
-                Open WhatsApp
+                Send on WhatsApp
               </button>
             </form>
           </div>

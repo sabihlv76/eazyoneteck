@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, MessageSquare, ShoppingBag } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { applyProductImageFallback } from '../lib/productImageFallbacks';
@@ -9,20 +9,37 @@ function formatRwf(price) {
 
 const ProductDetail = ({ products, onAddToCart, phone }) => {
   const { id } = useParams();
-  const [activeImage, setActiveImage] = useState('');
+  const [activeImage, setActiveImage] = useState({ productId: '', image: '' });
   const product = useMemo(
     () => products.find((item) => item.id === id) || null,
     [id, products]
   );
+  const similarProducts = useMemo(() => {
+    if (!product) return [];
+
+    return products
+      .filter((item) => item.id !== product.id && item.category === product.category)
+      .sort((first, second) => {
+        const firstMatchesBrand = first.subcategory === product.subcategory ? 0 : 1;
+        const secondMatchesBrand = second.subcategory === product.subcategory ? 0 : 1;
+        if (firstMatchesBrand !== secondMatchesBrand) return firstMatchesBrand - secondMatchesBrand;
+        return Math.abs(Number(first.price) - Number(product.price)) - Math.abs(Number(second.price) - Number(product.price));
+      })
+      .slice(0, 4);
+  }, [product, products]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [id]);
 
   if (!product) {
     return (
       <div className="page-shell container">
         <div className="empty-state-card">
           <h2>Product not found</h2>
-          <p>The product you are looking for is not available.</p>
+          <p>That product is no longer listed. Browse the store to choose another option.</p>
           <Link to="/" className="btn-primary">
-            Return to shop
+            Browse products
           </Link>
         </div>
       </div>
@@ -30,7 +47,8 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
   }
 
   const images = [product.image, ...(product.extraImages || [])].filter(Boolean);
-  const displayImage = images.includes(activeImage) ? activeImage : product.image;
+  const selectedImage = activeImage.productId === id ? activeImage.image : '';
+  const displayImage = images.includes(selectedImage) ? selectedImage : product.image;
 
   const handleWhatsApp = () => {
     const message = `Hello Eazy1teck, I would like to order ${product.name} for ${formatRwf(
@@ -63,7 +81,7 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
                   key={image}
                   type="button"
                   className={`detail-thumb ${displayImage === image ? 'active' : ''}`}
-                  onClick={() => setActiveImage(image)}
+                  onClick={() => setActiveImage({ productId: id, image })}
                 >
                   <img
                     src={image}
@@ -115,6 +133,46 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
           </div>
         </div>
       </section>
+
+      {similarProducts.length > 0 && (
+        <section className="detail-similar" aria-labelledby="similar-products-title">
+          <div className="detail-similar-head">
+            <div>
+              <span className="eyebrow">More options for you</span>
+              <h2 id="similar-products-title">You may also like these {product.category === 'Smartphones' ? 'phones' : 'products'}</h2>
+            </div>
+            <p>Compare similar choices by brand, features and RWF price.</p>
+          </div>
+
+          <div className="detail-similar-grid">
+            {similarProducts.map((item) => (
+              <article key={item.id} className="detail-similar-card">
+                <Link to={`/product/${item.id}`} className="detail-similar-image">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    onError={(event) => applyProductImageFallback(event, item.category)}
+                  />
+                  {item.badge && <span>{item.badge}</span>}
+                </Link>
+                <div className="detail-similar-copy">
+                  <small>{item.subcategory || item.category}</small>
+                  <Link to={`/product/${item.id}`}>
+                    <h3>{item.name}</h3>
+                  </Link>
+                  <p>{item.size}</p>
+                  <div>
+                    <strong>{formatRwf(item.price)}</strong>
+                    <button type="button" onClick={() => onAddToCart(item)} aria-label={`Add ${item.name} to cart`}>
+                      <ShoppingBag size={17} />
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 };

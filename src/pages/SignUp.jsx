@@ -35,7 +35,7 @@ const SignUp = ({ onSignUp }) => {
       });
       navigate('/account');
     } catch (error) {
-      setAuthError(error.message || 'Unable to create the account.');
+      setAuthError(error.message || 'We could not create your account. Check your details and try again.');
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ const SignUp = ({ onSignUp }) => {
             <img src={logoImg} alt="Eazy1teck" className="brand-logo" />
           </span>
           <h1>Create account</h1>
-          <p>Set up a customer profile that feels simple and clean on mobile.</p>
+          <p>Save your contact details and keep your favourite products close whenever you shop.</p>
         </div>
 
         {authError && <p className="form-error">{authError}</p>}

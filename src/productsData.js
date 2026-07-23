@@ -1,3 +1,39 @@
+const generatedAsset = (fileName) =>
+  `/products/${fileName}${/\.[a-z0-9]+$/i.test(fileName) ? '' : '.png'}`;
+
+const catalogueProduct = ({
+  badge,
+  category,
+  color,
+  description,
+  id,
+  image,
+  name,
+  price,
+  size,
+  subcategory,
+}) => ({
+  id,
+  name,
+  category,
+  subcategory,
+  price,
+  size,
+  badge,
+  color,
+  image: generatedAsset(image),
+  extraImages: [],
+  video: null,
+  description,
+  benefits: [
+    `Built for reliable everyday use`,
+    `See the full price in RWF`,
+    `Ask us for the color or configuration you want`,
+  ],
+  ingredients: color,
+  instructions: 'Choose your preferred color and configuration, then add it to your cart or order on WhatsApp.',
+});
+
 export const products = [
   // ========== SMARTPHONES ==========
   {
@@ -23,7 +59,7 @@ export const products = [
       "All-day battery life"
     ],
     ingredients: "Aerospace-grade titanium frame, Ceramic Shield",
-    instructions: "Available for immediate booking. Comes with USB-C cable and documentation."
+    instructions: "Choose your color, then add it to your cart or send your order on WhatsApp."
   },
   {
     id: "iphone-14-pro-128gb",
@@ -47,7 +83,7 @@ export const products = [
       "Surgical-grade stainless steel design"
     ],
     ingredients: "Surgical-grade stainless steel, Ceramic Shield",
-    instructions: "Select your preferred storage and color before booking."
+    instructions: "Choose your preferred storage and color before you order."
   },
   {
     id: "samsung-s24-ultra",
@@ -236,7 +272,7 @@ export const products = [
       "Three Thunderbolt 4 ports + HDMI + SD card"
     ],
     ingredients: "100% recycled aluminum enclosure",
-    instructions: "Configure RAM and SSD before booking. Available in Space Black and Silver."
+    instructions: "Choose your RAM, SSD and finish before you order."
   },
 
   // ========== WATCHES ==========
@@ -248,9 +284,9 @@ export const products = [
     price: 950000,
     size: "49mm | Alpine Loop / Ocean Band / Trail Loop",
     badge: "Adventure Edition",
-    image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=90",
+    image: "/products/apple-watch-ultra-2.jpg",
     extraImages: [
-      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=90"
+      "/products/apple-watch-ultra-2.jpg"
     ],
     video: null,
     description: "The most capable and rugged Apple Watch ever. Designed for endurance athletes and adventurers with a Precision dual-frequency GPS and the brightest outdoor display.",
@@ -262,7 +298,7 @@ export const products = [
       "Rugged aerospace-grade titanium case"
     ],
     ingredients: "Aerospace-grade titanium, Sapphire crystal",
-    instructions: "Select your preferred band style before booking."
+    instructions: "Choose your preferred band style before you order."
   },
   {
     id: "apple-watch-series-9",
@@ -272,7 +308,7 @@ export const products = [
     price: 480000,
     size: "45mm | Midnight / Starlight / Pink / Silver / Red",
     badge: "Popular",
-    image: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=800&q=90",
+    image: "/products/apple-watch-series-9.jpg",
     extraImages: [],
     video: null,
     description: "The Series 9 comes with the new S9 chip and a magical new Double Tap gesture. With the always-on Retina display and advanced health sensors, it's smarter than ever.",
@@ -284,6 +320,55 @@ export const products = [
       "Carbon neutral when paired with Sport Loop"
     ],
     ingredients: "Aluminum case, Ion-X glass or Sapphire crystal",
-    instructions: "Choose your case material and band type before booking."
-  }
+    instructions: "Choose your case material and band type before you order."
+  },
+
+  // Generated catalogue expansion: Rwanda-ready pricing and coordinated imagery.
+  ...[
+    catalogueProduct({ id: 'iphone-16-pro-max-256', name: 'iPhone 16 Pro Max 256GB', category: 'Smartphones', subcategory: 'Apple', price: 2950000, size: '256GB | 6.9-inch', badge: 'Latest Flagship', color: 'Desert Titanium', image: 'titanium-flagship', description: 'Large-screen titanium flagship with pro camera controls, fast performance and all-day battery life.' }),
+    catalogueProduct({ id: 'iphone-16-pro-256', name: 'iPhone 16 Pro 256GB', category: 'Smartphones', subcategory: 'Apple', price: 2550000, size: '256GB | 6.3-inch', badge: 'Pro Choice', color: 'Natural Titanium', image: 'titanium-flagship', description: 'Compact pro flagship with a titanium frame, advanced camera system and high-refresh display.' }),
+    catalogueProduct({ id: 'iphone-16-plus-128', name: 'iPhone 16 Plus 128GB', category: 'Smartphones', subcategory: 'Apple', price: 1950000, size: '128GB | 6.7-inch', badge: 'Big Screen', color: 'Ultramarine', image: 'smartphone-value', description: 'A bright large-screen phone with strong battery life and dependable everyday performance.' }),
+    catalogueProduct({ id: 'iphone-16-128', name: 'iPhone 16 128GB', category: 'Smartphones', subcategory: 'Apple', price: 1650000, size: '128GB | 6.1-inch', badge: 'New Arrival', color: 'Teal', image: 'smartphone-value', description: 'Balanced current-generation phone with an excellent camera, responsive performance and comfortable size.' }),
+    catalogueProduct({ id: 'iphone-15-128', name: 'iPhone 15 128GB', category: 'Smartphones', subcategory: 'Apple', price: 1250000, size: '128GB | 6.1-inch', badge: 'Best Seller', color: 'Blue', image: 'titanium-flagship', description: 'Popular USB-C iPhone with a bright display, dependable battery and excellent everyday camera.' }),
+    catalogueProduct({ id: 'iphone-14-128', name: 'iPhone 14 128GB', category: 'Smartphones', subcategory: 'Apple', price: 950000, size: '128GB | 6.1-inch', badge: 'Great Value', color: 'Midnight', image: 'titanium-flagship', description: 'Reliable dual-camera iPhone with smooth performance and strong long-term software support.' }),
+    catalogueProduct({ id: 'iphone-13-128', name: 'iPhone 13 128GB', category: 'Smartphones', subcategory: 'Apple', price: 720000, size: '128GB | 6.1-inch', badge: 'Popular', color: 'Starlight', image: 'smartphone-value', description: 'A proven everyday iPhone with a sharp OLED display, capable cameras and 5G connectivity.' }),
+    catalogueProduct({ id: 'iphone-12-128', name: 'iPhone 12 128GB', category: 'Smartphones', subcategory: 'Apple', price: 540000, size: '128GB | 6.1-inch', badge: 'Budget Pick', color: 'Blue', image: 'smartphone-value', description: 'Affordable OLED iPhone with 5G performance and a lightweight flat-edge design.' }),
+
+    catalogueProduct({ id: 'galaxy-s25-ultra-512', name: 'Samsung Galaxy S25 Ultra 512GB', category: 'Smartphones', subcategory: 'Samsung', price: 2850000, size: '512GB | 12GB RAM', badge: 'Latest Flagship', color: 'Titanium Silverblue', image: 'android-ultra', description: 'Premium Android flagship with built-in stylus, advanced zoom cameras and a large high-refresh display.' }),
+    catalogueProduct({ id: 'galaxy-s25-plus-256', name: 'Samsung Galaxy S25+ 256GB', category: 'Smartphones', subcategory: 'Samsung', price: 1950000, size: '256GB | 12GB RAM', badge: 'New Arrival', color: 'Navy', image: 'android-ultra', description: 'Large-screen flagship performance in a slim design with fast charging and versatile cameras.' }),
+    catalogueProduct({ id: 'pixel-9-pro-xl-256', name: 'Google Pixel 9 Pro XL 256GB', category: 'Smartphones', subcategory: 'Google', price: 1650000, size: '256GB | 16GB RAM', badge: 'Camera Pick', color: 'Obsidian', image: 'android-ultra', description: 'Photography-focused Android flagship with clean software, AI tools and a bright premium display.' }),
+    catalogueProduct({ id: 'oneplus-13-256', name: 'OnePlus 13 256GB', category: 'Smartphones', subcategory: 'OnePlus', price: 1350000, size: '256GB | 12GB RAM', badge: 'Performance', color: 'Black Eclipse', image: 'android-ultra', description: 'Fast flagship phone with a smooth display, rapid charging and excellent multitasking performance.' }),
+    catalogueProduct({ id: 'galaxy-z-fold-6-512', name: 'Samsung Galaxy Z Fold6 512GB', category: 'Smartphones', subcategory: 'Samsung', price: 2750000, size: '512GB | 12GB RAM', badge: 'Foldable', color: 'Silver Shadow', image: 'foldable-phone', description: 'Book-style foldable with a tablet-sized inner display for productivity, multitasking and entertainment.' }),
+    catalogueProduct({ id: 'galaxy-z-flip-6-256', name: 'Samsung Galaxy Z Flip6 256GB', category: 'Smartphones', subcategory: 'Samsung', price: 1450000, size: '256GB | 12GB RAM', badge: 'Foldable', color: 'Graphite', image: 'foldable-phone', description: 'Pocket-friendly foldable phone with a useful cover screen and flexible hands-free camera modes.' }),
+    catalogueProduct({ id: 'xiaomi-14t-pro-512', name: 'Xiaomi 14T Pro 512GB', category: 'Smartphones', subcategory: 'Xiaomi', price: 1050000, size: '512GB | 12GB RAM', badge: 'Power User', color: 'Titan Gray', image: 'android-ultra', description: 'High-performance Android phone with generous storage, fast charging and a versatile camera setup.' }),
+    catalogueProduct({ id: 'galaxy-a55-256', name: 'Samsung Galaxy A55 5G 256GB', category: 'Smartphones', subcategory: 'Samsung', price: 580000, size: '256GB | 8GB RAM', badge: 'Best Seller', color: 'Awesome Navy', image: 'smartphone-value', description: 'Well-rounded midrange 5G phone with a premium metal frame, strong battery and vivid display.' }),
+    catalogueProduct({ id: 'galaxy-a35-256', name: 'Samsung Galaxy A35 5G 256GB', category: 'Smartphones', subcategory: 'Samsung', price: 445000, size: '256GB | 8GB RAM', badge: 'Great Value', color: 'Iceblue', image: 'smartphone-value', description: 'Dependable midrange phone with optical image stabilization, expandable storage and long battery life.' }),
+    catalogueProduct({ id: 'redmi-note-14-pro-256', name: 'Redmi Note 14 Pro 256GB', category: 'Smartphones', subcategory: 'Xiaomi', price: 395000, size: '256GB | 8GB RAM', badge: 'Value Choice', color: 'Midnight Black', image: 'smartphone-value', description: 'Feature-rich value phone with a sharp camera, vivid display and fast charging.' }),
+    catalogueProduct({ id: 'tecno-camon-30-pro-256', name: 'Tecno Camon 30 Pro 256GB', category: 'Smartphones', subcategory: 'Tecno', price: 345000, size: '256GB | 8GB RAM', badge: 'Camera Value', color: 'Alps Snowy Silver', image: 'smartphone-value', description: 'Affordable camera-focused phone with ample storage, smooth display and stylish finish.' }),
+    catalogueProduct({ id: 'infinix-note-40-pro-256', name: 'Infinix Note 40 Pro 256GB', category: 'Smartphones', subcategory: 'Infinix', price: 310000, size: '256GB | 8GB RAM', badge: 'Budget Pick', color: 'Vintage Green', image: 'smartphone-value', description: 'Accessible everyday smartphone with generous storage, fast charging and a bright curved display.' }),
+
+    catalogueProduct({ id: 'galaxy-watch-ultra-2', name: 'Samsung Galaxy Watch Ultra2', category: 'Watches', subcategory: 'Samsung', price: 950000, size: '47mm | LTE | 64GB', badge: 'Latest Ultra', color: 'Titanium Gray', image: 'galaxy-watch-ultra2.jpg', description: 'Samsung premium adventure watch with dual-frequency GPS, a bright AMOLED display, titanium construction and extended battery life.' }),
+    catalogueProduct({ id: 'apple-watch-series-10-46mm', name: 'Apple Watch Series 10 (46mm)', category: 'Watches', subcategory: 'Apple', price: 595000, size: '46mm | GPS', badge: 'Popular', color: 'Jet Black', image: 'apple-watch-series-10.jpg', description: 'A thin Apple Watch with a wide-angle OLED display, fast charging, health insights and useful everyday notifications.' }),
+    catalogueProduct({ id: 'redmi-watch-5-active', name: 'Redmi Watch 5 Active', category: 'Watches', subcategory: 'Xiaomi', price: 65000, size: '2-inch LCD | Bluetooth Calling', badge: 'Fitness Value', color: 'Midnight Black', image: 'redmi-watch-5-active.jpg', description: 'Affordable Redmi smartwatch with a large display, Bluetooth calling, more than 140 workout modes and up to 18 days of battery life.' }),
+    catalogueProduct({ id: 'apple-watch-se-3-44mm', name: 'Apple Watch SE 3 (44mm)', category: 'Watches', subcategory: 'Apple', price: 375000, size: '44mm | GPS', badge: 'Everyday Pick', color: 'Starlight', image: 'apple-watch-se-3.jpg', description: 'Accessible Apple Watch with an Always-On display, activity and sleep tracking, safety features and fast charging.' }),
+
+    catalogueProduct({ id: 'airbook-13-m3-256', name: 'AirBook 13 M3 8GB / 256GB', category: 'Computers', subcategory: 'Laptops', price: 1550000, size: '13-inch | 8GB RAM | 256GB SSD', badge: 'Everyday Pro', color: 'Midnight', image: 'premium-laptops', description: 'Thin and quiet premium laptop with excellent battery life for study, work and travel.' }),
+    catalogueProduct({ id: 'airbook-15-m3-512', name: 'AirBook 15 M3 16GB / 512GB', category: 'Computers', subcategory: 'Laptops', price: 2250000, size: '15-inch | 16GB RAM | 512GB SSD', badge: 'Creator Pick', color: 'Space Gray', image: 'premium-laptops', description: 'Large-screen lightweight laptop with fast performance for creative and professional workloads.' }),
+    catalogueProduct({ id: 'creator-pro-16-rtx4060', name: 'Creator Pro 16 RTX 4060', category: 'Computers', subcategory: 'Laptops', price: 2450000, size: '16-inch | 32GB RAM | 1TB SSD', badge: 'Creator Pro', color: 'Graphite', image: 'performance-laptops', description: 'High-performance creator laptop with dedicated graphics, color-rich display and generous memory.' }),
+    catalogueProduct({ id: 'gaming-core-15-rtx4070', name: 'Gaming Core 15 RTX 4070', category: 'Computers', subcategory: 'Laptops', price: 2750000, size: '15.6-inch | 16GB RAM | 1TB SSD', badge: 'Gaming', color: 'Shadow Black', image: 'performance-laptops', description: 'Powerful gaming laptop with high-refresh display, dedicated graphics and advanced cooling.' }),
+    catalogueProduct({ id: 'workmate-14-i7-512', name: 'WorkMate 14 Core i7 16GB / 512GB', category: 'Computers', subcategory: 'Laptops', price: 1150000, size: '14-inch | 16GB RAM | 512GB SSD', badge: 'Business Pick', color: 'Silver', image: 'premium-laptops', description: 'Practical business laptop with a compact chassis, fast SSD and comfortable all-day keyboard.' }),
+
+    catalogueProduct({ id: 'studio-buds-anc', name: 'Studio Buds ANC', category: 'Audio', subcategory: 'Earbuds', price: 185000, size: 'ANC | USB-C Case', badge: 'Top Rated', color: 'Matte Black', image: 'wireless-earbuds', description: 'Compact noise-cancelling earbuds with balanced sound, clear calls and pocket-friendly charging case.' }),
+    catalogueProduct({ id: 'freepods-lite', name: 'FreePods Lite', category: 'Audio', subcategory: 'Earbuds', price: 18000, size: '40-hour playtime', badge: 'Budget Audio', color: 'White', image: 'wireless-earbuds', description: 'Affordable wireless earbuds for calls, commuting and everyday listening.' }),
+    catalogueProduct({ id: 'quietmax-headphones', name: 'QuietMax Wireless Headphones', category: 'Audio', subcategory: 'Headphones', price: 260000, size: 'ANC | 45-hour battery', badge: 'Premium Sound', color: 'Warm Silver', image: 'wireless-headphones', description: 'Comfortable over-ear headphones with active noise cancellation and long battery life.' }),
+    catalogueProduct({ id: 'boompod-10w', name: 'BoomPod 10W Speaker', category: 'Audio', subcategory: 'Speakers', price: 48000, size: '10W | IPX6', badge: 'Portable', color: 'Orange', image: 'portable-speakers', description: 'Compact portable speaker with lively sound, splash resistance and easy wireless pairing.' }),
+    catalogueProduct({ id: 'soundbarrel-30w', name: 'SoundBarrel 30W Speaker', category: 'Audio', subcategory: 'Speakers', price: 135000, size: '30W | 18-hour battery', badge: 'Party Ready', color: 'Black', image: 'portable-speakers', description: 'Rugged wireless speaker with deeper bass, long playtime and outdoor-ready construction.' }),
+    catalogueProduct({ id: 'openair-n2', name: 'OpenAir N2 Earbuds', category: 'Audio', subcategory: 'Earbuds', price: 30000, size: 'Open-ear | Bluetooth', badge: 'New Arrival', color: 'Graphite', image: 'wireless-earbuds', description: 'Open-ear wireless buds designed for comfortable listening while staying aware of surroundings.' }),
+
+    catalogueProduct({ id: 'clear-magnetic-case', name: 'Clear Magnetic Protection Case', category: 'Accessories', subcategory: 'Phone Cases', price: 22000, size: 'Current iPhone and Android models', badge: 'Essential', color: 'Clear', image: 'mobile-accessories', description: 'Slim transparent case with magnetic charging support and reinforced corners.' }),
+    catalogueProduct({ id: 'gan-charger-30w', name: 'Compact GaN USB-C Charger 30W', category: 'Accessories', subcategory: 'Chargers', price: 32000, size: '30W | USB-C', badge: 'Fast Charge', color: 'White', image: 'mobile-accessories', description: 'Travel-friendly fast charger for modern phones, earbuds and small tablets.' }),
+    catalogueProduct({ id: 'braided-usbc-cable-2m', name: 'Braided USB-C Cable 2m', category: 'Accessories', subcategory: 'Cables', price: 12000, size: '2 metres | 60W', badge: 'Durable', color: 'Natural', image: 'mobile-accessories', description: 'Long reinforced charging cable with durable woven exterior and fast power support.' }),
+    catalogueProduct({ id: 'powerbank-10000-slim', name: 'Slim Power Bank 10,000mAh', category: 'Accessories', subcategory: 'Power Banks', price: 45000, size: '10,000mAh | USB-C', badge: 'Travel Pick', color: 'White', image: 'mobile-accessories', description: 'Compact everyday backup battery with USB-C charging and clear battery indicators.' }),
+    catalogueProduct({ id: 'powerbank-20000-fast', name: 'Fast Power Bank 20,000mAh', category: 'Accessories', subcategory: 'Power Banks', price: 72000, size: '20,000mAh | 22.5W', badge: 'High Capacity', color: 'Black', image: 'mobile-accessories', description: 'High-capacity portable charger for multiple phone recharges during travel and power interruptions.' }),
+  ]
 ];

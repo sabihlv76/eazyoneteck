@@ -6,19 +6,18 @@ const NotFoundPage = () => {
     <div className="page-shell container">
       <section className="empty-state-card">
         <span className="eyebrow">404 error</span>
-        <h1>Page not found</h1>
+        <h1>We could not find that page</h1>
         <p>
-          The page you are looking for is not available. Head back to the store and
-          continue browsing our products.
+          The link may be old or incorrect. Return to the store to find the product you need.
         </p>
         <div className="inline-actions">
           <Link to="/" className="btn-primary">
             <ArrowLeft size={16} />
-            Return home
+            Go to the store
           </Link>
           <Link to="/" className="btn-outline">
             <Search size={16} />
-            Browse catalog
+            Browse all products
           </Link>
         </div>
       </section>

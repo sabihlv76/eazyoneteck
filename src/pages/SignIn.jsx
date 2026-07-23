@@ -26,7 +26,7 @@ const SignIn = ({ onSignIn }) => {
       });
       navigate('/account');
     } catch (error) {
-      setAuthError(error.message || 'Unable to sign in.');
+      setAuthError(error.message || 'We could not sign you in. Check your email and password, then try again.');
     } finally {
       setLoading(false);
     }
@@ -43,7 +43,7 @@ const SignIn = ({ onSignIn }) => {
             <img src={logoImg} alt="Eazy1teck" className="brand-logo" />
           </span>
           <h1>Sign in</h1>
-          <p>Return to your account and continue shopping from any device.</p>
+          <p>Access your saved products and keep your contact details ready for faster ordering.</p>
         </div>
 
         {authError && <p className="form-error">{authError}</p>}
@@ -88,7 +88,7 @@ const SignIn = ({ onSignIn }) => {
         </form>
 
         <p className="auth-helper-text">
-          Do not have an account? <Link to="/signup">Create one</Link>
+          New to Eazy1teck? <Link to="/signup">Create your account</Link>
         </p>
       </div>
     </div>

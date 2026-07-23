@@ -283,7 +283,7 @@ function AppContent() {
           return;
         }
 
-        setDataError(error.message || 'Unable to load store data from the API.');
+        setDataError(error.message || 'We could not load the products. Check your connection and refresh the page.');
       }
     }
 
@@ -463,16 +463,6 @@ function AppContent() {
     setProducts(normalizeProductImages(nextProducts));
   };
 
-  const handleRefreshProducts = async () => {
-    const nextProducts = await fetchProducts();
-    const nextSettings = await fetchSettings();
-    setProducts(normalizeProductImages(nextProducts));
-    setAdminSettings((current) => ({
-      ...current,
-      ...nextSettings,
-    }));
-  };
-
   const handleAdminAuthExpired = async () => {
     await adminSignOut().catch(() => {});
   };
@@ -481,6 +471,10 @@ function AppContent() {
     <>
       {showStoreChrome && (
         <header className="site-header">
+          <div className="store-announcement">
+            <span>Kigali pickup</span>
+            <strong>See the price. Choose your product. Order directly.</strong>
+          </div>
           <div className="container site-header-shell">
             <div className="site-header-top">
               <Link to="/" className="brand-lockup" onClick={() => goHomeAndFilter('All')}>
@@ -489,7 +483,7 @@ function AppContent() {
                 </span>
                 <span className="brand-copy">
                   <strong>Eazy1teck</strong>
-                  <span>Kigali tech deals, ready to book</span>
+                  <span>Phones, laptops and more in Kigali</span>
                 </span>
               </Link>
 
@@ -504,7 +498,7 @@ function AppContent() {
                     }
                   }}
                   aria-label="Search products"
-                  placeholder="Search products"
+                  placeholder="What are you looking for?"
                 />
                 <Search size={18} aria-hidden="true" />
               </div>
@@ -522,6 +516,11 @@ function AppContent() {
                   onClick={() => setIsCartOpen(true)}
                   icon={ShoppingBag}
                 />
+                <HeaderAction
+                  label={user ? 'Account' : 'Sign in'}
+                  to={user ? '/account' : '/signin'}
+                  icon={User}
+                />
               </div>
             </div>
 
@@ -532,7 +531,7 @@ function AppContent() {
                   Home
                 </button>
                 <button type="button" onClick={() => goHomeAndFilter('All')}>
-                  Shop
+                  All products
                 </button>
                 {navCategories.map((category) => (
                   <NavCategoryDropdown
@@ -618,7 +617,7 @@ function AppContent() {
       )}
 
       {showStoreChrome && (
-        <a className="call-fab" href={`tel:${adminSettings.phone}`} aria-label="Call admin">
+        <a className="call-fab" href={`tel:${adminSettings.phone}`} aria-label="Call Eazy1teck">
           <Phone size={20} />
         </a>
       )}
@@ -723,7 +722,6 @@ function AppContent() {
                 adminSettings={adminSettings}
                 onAdminAuthExpired={handleAdminAuthExpired}
                 onDeleteProduct={handleDeleteProduct}
-                onRefreshProducts={handleRefreshProducts}
                 onResetCatalog={handleResetCatalog}
                 onSaveAdminSettings={handleAdminSettingsSave}
                 onSaveProduct={handleSaveProduct}
@@ -745,7 +743,7 @@ function AppContent() {
             </div>
 
             <div className="footer-privacy">
-              <h4>Privacy</h4>
+              <h4>Shop policies</h4>
               <a href="https://thenewspecies.com/privacy-policy-2/" target="_blank" rel="noreferrer">
                 Privacy Policy
               </a>
@@ -767,12 +765,12 @@ function AppContent() {
             </div>
 
             <div>
-              <h4>Contact Details</h4>
+              <h4>Talk to us</h4>
               <span>{adminSettings.storeName || 'Eazy1teck'}</span>
-              <span>Address: Kigali-Rwanda | Makuza Peace Plaza, KN 84 Street, Kigali</span>
+              <span>Visit us: Makuza Peace Plaza, KN 84 Street, Kigali</span>
               <a href={`tel:${adminSettings.phone}`}>{adminSettings.phone}</a>
               <a href={`mailto:${adminSettings.email}`}>{adminSettings.email}</a>
-              <span>Offline Stores</span>
+              <span>Pickup available in Kigali</span>
             </div>
           </div>
         </footer>

@@ -1,127 +1,41 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, ChevronLeft, ChevronRight, Eye, Heart, ShoppingBag } from 'lucide-react';
+import { useMemo, useRef } from 'react';
+import {
+  ArrowRight,
+  BadgeCheck,
+  Eye,
+  Heart,
+  MapPin,
+  ShieldCheck,
+  ShoppingBag,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
-import customerShoppingImage from '../assets/ChatGPT Image Jul 2, 2026, 11_00_01 AM.png';
-import loadingProductsImage from '../assets/file_00000000aaac7243b7d3126725d610d0.png';
-import winShoppingImage from '../assets/IMG-20260629-WA0101.jpg';
 import { applyProductImageFallback } from '../lib/productImageFallbacks';
+import lifestyleShoppingImage from '../assets/IMG-20260629-WA0101.jpg';
 
-const heroSlides = [
-  {
-    image:
-      'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1600&q=90',
-    title: 'Mobile-first tech shopping that feels premium',
-    eyebrow: 'Fresh arrivals',
-    description:
-      'Showcase flagship phones, laptops and accessories with a cleaner slider, stronger imagery and faster mobile browsing.',
-    category: 'Smartphones',
-    cta: 'Explore phones',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1600&q=90',
-    title: 'Trusted laptops and work devices for every day',
-    eyebrow: 'Work smart',
-    description:
-      'Professional layouts, calm typography and clear actions make shopping easier from small screens up.',
-    category: 'Computers',
-    cta: 'See computers',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&w=1600&q=90',
-    title: 'Accessories and audio that complete the setup',
-    eyebrow: 'Top accessories',
-    description:
-      'Better visual hierarchy, practical product cards and a wishlist that actually works across the site.',
-    category: 'Accessories',
-    cta: 'Shop accessories',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1600&q=90',
-    title: 'Samsung phones ready for work and play',
-    eyebrow: 'Galaxy deals',
-    description:
-      'Big screens, sharp cameras and reliable batteries presented with clear product actions.',
-    category: 'Smartphones',
-    cta: 'View smartphones',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=1600&q=90',
-    title: 'MacBooks and PCs for serious daily performance',
-    eyebrow: 'Laptop lineup',
-    description:
-      'Make the first impression feel fast, polished and trustworthy from the landing page.',
-    category: 'Computers',
-    cta: 'Shop laptops',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1600&q=90',
-    title: 'iPhones customers can compare at a glance',
-    eyebrow: 'Apple favorites',
-    description:
-      'Premium phone visuals with simple navigation help buyers move from browsing to cart faster.',
-    category: 'Smartphones',
-    cta: 'Compare iPhones',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1600&q=90',
-    title: 'Clean desk setups start with the right computer',
-    eyebrow: 'Setup essentials',
-    description:
-      'Strong laptop imagery gives the store a more complete tech-shop feel immediately.',
-    category: 'Computers',
-    cta: 'Browse computers',
-  },
-];
-
-const showcaseGroups = [
+const collectionGroups = [
   {
     id: 'phones',
     label: 'Phones',
     category: 'Smartphones',
     categories: ['Smartphones'],
-    kicker: 'iPhones and Samsungs',
-    description: 'Flagship and daily phones with quick cart, wishlist and detail actions.',
+    strapline: 'Choose the phone that fits you.',
+    description: 'Compare Apple, Samsung and Android phones by storage, colour and RWF price.',
   },
   {
     id: 'accessories',
     label: 'Accessories',
     category: 'Accessories',
     categories: ['Accessories', 'Audio', 'Watches'],
-    kicker: 'Cases, audio and watches',
-    description: 'Useful add-ons grouped together for fast add-to-cart decisions.',
+    strapline: 'Complete your setup.',
+    description: 'Choose the audio, watches, chargers and protection you need for your devices.',
   },
   {
     id: 'machines',
     label: 'Machines',
     category: 'Computers',
     categories: ['Computers'],
-    kicker: 'Laptops and work tools',
-    description: 'Bigger devices and work machines shown with stronger branded visuals.',
-  },
-];
-
-const quickCategories = showcaseGroups.map((group) => group.category);
-const totalHeroSlides = heroSlides.length;
-const categoryBackdrop =
-  'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80';
-
-// promoImages: index 0 = loadingProductsImage, index 1 = winShoppingImage
-const promoImages = [
-  {
-    image: loadingProductsImage,
-    title: 'Something Special for You Is Loading',
-    label: 'Premium gadgets',
-  },
-  {
-    image: winShoppingImage,
-    title: 'It is a win shopping with us',
-    label: 'Eazy1teck shopping',
+    strapline: 'Get the right machine for your work.',
+    description: 'Compare laptops for work, study and creative projects, then order the one you want.',
   },
 ];
 
@@ -133,12 +47,7 @@ function groupMatchesProduct(group, product) {
   return group.categories.includes(product.category);
 }
 
-function ProductCard({
-  product,
-  wishlist,
-  onAddToCart,
-  onToggleWishlist,
-}) {
+function ProductCard({ product, wishlist, onAddToCart, onToggleWishlist }) {
   const inWishlist = wishlist.includes(product.id);
 
   return (
@@ -157,7 +66,6 @@ function ProductCard({
           className={`product-image-wishlist ${inWishlist ? 'wishlisted' : ''}`}
           onClick={() => onToggleWishlist(product.id)}
           aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-          title={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
         >
           <Heart size={17} fill={inWishlist ? 'currentColor' : 'none'} />
         </button>
@@ -169,11 +77,11 @@ function ProductCard({
         <p className="product-card-size">{product.size}</p>
         <div className="product-card-footer">
           <div className="product-price">{formatRwf(product.price)}</div>
-          <div className="card-actions product-card-actions">
+          <div className="product-card-actions">
             <Link
               to={`/product/${product.id}`}
               className="product-action-button product-view-button"
-              title="See product"
+              aria-label={`View ${product.name}`}
             >
               <Eye size={16} />
             </Link>
@@ -181,7 +89,7 @@ function ProductCard({
               type="button"
               className="product-action-button product-cart-button"
               onClick={() => onAddToCart(product)}
-              title="Add to cart"
+              aria-label={`Add ${product.name} to cart`}
             >
               <ShoppingBag size={16} />
             </button>
@@ -189,100 +97,6 @@ function ProductCard({
         </div>
       </div>
     </article>
-  );
-}
-
-function CategoryShowcase({
-  group,
-  products,
-  wishlist,
-  onAddToCart,
-  onCategoryChange,
-  onToggleWishlist,
-}) {
-  const railRef = useRef(null);
-
-  const moveRail = useCallback((direction = 1) => {
-    const rail = railRef.current;
-
-    if (!rail) {
-      return;
-    }
-
-    const cardWidth = rail.querySelector('.product-card')?.getBoundingClientRect().width || 230;
-    const gap = 14;
-    const maxScrollLeft = rail.scrollWidth - rail.clientWidth;
-
-    if (direction > 0 && rail.scrollLeft >= maxScrollLeft - 8) {
-      rail.scrollTo({ left: 0, behavior: 'smooth' });
-      return;
-    }
-
-    if (direction < 0 && rail.scrollLeft <= 8) {
-      rail.scrollTo({ left: maxScrollLeft, behavior: 'smooth' });
-      return;
-    }
-
-    rail.scrollBy({ left: direction * (cardWidth + gap), behavior: 'smooth' });
-  }, []);
-
-  useEffect(() => {
-    if (products.length < 2) {
-      return undefined;
-    }
-
-    const intervalId = window.setInterval(() => moveRail(1), 3600);
-
-    return () => window.clearInterval(intervalId);
-  }, [moveRail, products.length]);
-
-  return (
-    <section className="category-showcase" aria-labelledby={`${group.id}-title`}>
-      <div className="category-showcase-head">
-        <div>
-          <span className="eyebrow">{group.kicker}</span>
-          <h3 id={`${group.id}-title`}>{group.label}</h3>
-        </div>
-        <button
-          type="button"
-          className="btn-outline category-view-button"
-          onClick={() => onCategoryChange(group.category)}
-        >
-          View all
-          <ArrowRight size={15} />
-        </button>
-      </div>
-
-      <div className="category-slider-wrap">
-        <button
-          type="button"
-          className="category-slider-arrow category-slider-arrow-left"
-          onClick={() => moveRail(-1)}
-          aria-label={`Previous ${group.label} products`}
-        >
-          <ChevronLeft size={18} />
-        </button>
-        <div className="category-slider-rail" ref={railRef}>
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              wishlist={wishlist}
-              onAddToCart={onAddToCart}
-              onToggleWishlist={onToggleWishlist}
-            />
-          ))}
-        </div>
-        <button
-          type="button"
-          className="category-slider-arrow category-slider-arrow-right"
-          onClick={() => moveRail(1)}
-          aria-label={`Next ${group.label} products`}
-        >
-          <ChevronRight size={18} />
-        </button>
-      </div>
-    </section>
   );
 }
 
@@ -296,400 +110,267 @@ const Home = ({
   onSearchChange,
   onToggleWishlist,
 }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
-  const shopRef = useRef(null);
-
-  useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setCurrentSlide((current) => (current + 1) % totalHeroSlides);
-    }, 4200);
-
-    return () => window.clearInterval(intervalId);
-  }, []);
+  const catalogRef = useRef(null);
 
   const filteredProducts = useMemo(() => {
-    const query = searchQuery.toLowerCase();
+    const query = searchQuery.trim().toLowerCase();
+    const selectedGroup = collectionGroups.find((group) => group.category === selectedCategory);
+
     return products.filter((product) => {
       const matchesCategory =
-        selectedCategory === 'All' || product.category === selectedCategory;
+        selectedCategory === 'All' ||
+        (selectedGroup
+          ? selectedGroup.categories.includes(product.category)
+          : product.category === selectedCategory);
       const matchesSearch =
         !query ||
         product.name.toLowerCase().includes(query) ||
         product.description.toLowerCase().includes(query) ||
         (product.subcategory || '').toLowerCase().includes(query);
+
       return matchesCategory && matchesSearch;
     });
   }, [products, searchQuery, selectedCategory]);
 
-  const visibleShowcaseGroups = useMemo(
+  const collections = useMemo(
     () =>
-      showcaseGroups
-        .map((group) => ({
+      collectionGroups.map((group) => {
+        const items = products.filter((product) => groupMatchesProduct(group, product));
+        return {
           ...group,
-          products: filteredProducts.filter((product) => groupMatchesProduct(group, product)),
-        }))
-        .filter(
-          (group) =>
-            group.products.length > 0 &&
-            (selectedCategory === 'All' || group.categories.includes(selectedCategory))
-        ),
-    [filteredProducts, selectedCategory]
+          count: items.length,
+          leadProduct: items[0] || null,
+          minPrice: items.length
+            ? Math.min(...items.map((product) => Number(product.price) || 0))
+            : 0,
+        };
+      }),
+    [products]
   );
 
-  const rightRailProducts = filteredProducts.slice(0, 3);
+  const heroProduct =
+    products.find((product) => product.category === 'Smartphones') || products[0] || null;
+  const newArrivals = products.slice(0, 4);
 
-  const goToShop = (category = selectedCategory) => {
+  const showCollection = (category) => {
     onCategoryChange(category);
     window.requestAnimationFrame(() => {
-      shopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      catalogRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   };
 
-  const showPreviousSlide = () => {
-    setCurrentSlide((current) => (current - 1 + totalHeroSlides) % totalHeroSlides);
-  };
-
-  const showNextSlide = () => {
-    setCurrentSlide((current) => (current + 1) % totalHeroSlides);
-  };
-
   return (
-    <div className="home-page">
-      <div className="desktop-store-frame container">
-        {/* ===== LEFT SIDEBAR: now replaced with hamburger nav - handled in App.jsx header ===== */}
-        {/* Left sidebar shows category nav as cards with a search bar on desktop */}
-        <aside className="desktop-left-categories" aria-label="Product categories">
-          {/* Compact search bar */}
-          <div className="left-sidebar-search">
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(event) => onSearchChange(event.target.value)}
-              placeholder="Search…"
-              aria-label="Search products"
-            />
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-            </svg>
-          </div>
-
-          <span className="eyebrow">Categories</span>
-          <h2>Browse</h2>
-          <div className="desktop-category-list">
-            <button
-              type="button"
-              className={selectedCategory === 'All' ? 'active' : ''}
-              onClick={() => goToShop('All')}
-            >
-              <strong>All products</strong>
-            </button>
-            <div className="left-cat-dropdown">
-              <button
-                type="button"
-                className={`left-cat-trigger ${isCategoriesOpen ? '' : ''}`}
-                onClick={() => setIsCategoriesOpen((v) => !v)}
-                aria-expanded={isCategoriesOpen}
-              >
-                <span className="left-cat-info">
-                  <strong>Categories</strong>
-                </span>
-                <svg
-                  className={`left-cat-chevron ${isCategoriesOpen ? 'open' : ''}`}
-                  width="14" height="14" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </button>
-              {isCategoriesOpen && (
-                <div className="left-master-menu" style={{ display: 'flex', flexDirection: 'column', gap: '2px', paddingLeft: '0.6rem' }}>
-                  {showcaseGroups.map((group) => (
-                    <LeftCategoryDropdown
-                      key={group.id}
-                      group={group}
-                      products={products}
-                      selectedCategory={selectedCategory}
-                      onSelect={goToShop}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Desktop-only: girls shopping image below navigation */}
-          <div className="left-sidebar-promo-image">
-            <img src={customerShoppingImage} alt="Girls shopping at Eazy1teck" />
-          </div>
-        </aside>
-
-        <div className="store-center-pane">
-          <section className="home-hero">
-            <div className="hero-slider-card">
-              {heroSlides.map((slide, index) => (
-                <article
-                  key={slide.title}
-                  className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
-                >
-                  <img src={slide.image} alt={slide.title} className="hero-slide-image" />
-                  <div className="hero-slide-overlay" />
-                  <div className="hero-slide-content">
-                    <span className="eyebrow">{slide.eyebrow}</span>
-                    <h1>{slide.title}</h1>
-                    <p>{slide.description}</p>
-                    <button
-                      type="button"
-                      className="btn-accent"
-                      onClick={() => goToShop(slide.category)}
-                    >
-                      {slide.cta}
-                      <ArrowRight size={16} />
-                    </button>
-                  </div>
-                </article>
-              ))}
-
-              <div className="hero-slider-controls">
-                <button type="button" onClick={showPreviousSlide} aria-label="Previous slide">
-                  <ChevronLeft size={18} />
-                </button>
-                <span>{currentSlide + 1} / {totalHeroSlides}</span>
-                <button type="button" onClick={showNextSlide} aria-label="Next slide">
-                  <ChevronRight size={18} />
-                </button>
-              </div>
-
-              <div className="hero-dots">
-                {heroSlides.map((slide, index) => (
-                  <button
-                    key={slide.title}
-                    type="button"
-                    className={index === currentSlide ? 'active' : ''}
-                    onClick={() => setCurrentSlide(index)}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Quick browse panel moved here — below hero slider on mobile, beside it on desktop */}
-            <aside className="hero-side-panel">
-              <div
-                className="hero-panel-card"
-                style={{ '--category-bg': `url("${categoryBackdrop}")` }}
-              >
-                <span className="eyebrow">Categories</span>
-                <h2>Quick browse</h2>
-                <div className="category-quick-grid">
-                  {showcaseGroups.map((group) => (
-                    <button
-                      key={group.id}
-                      type="button"
-                      className="category-quick-card"
-                      onClick={() => goToShop(group.category)}
-                    >
-                      <strong>{group.label}</strong>
-                      <span>Open collection</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </aside>
-          </section>
-
-          {/* Promo strip: replaced girls image with loadingProductsImage */}
-          <section className="promo-strip">
-            <article className="promo-card promo-card-featured">
-              <img
-                src={loadingProductsImage}
-                alt="Premium gadgets loading"
-              />
-              <div className="promo-copy">
-                <div className="promo-marquee-track">
-                  <div className="promo-marquee-set">
-                    <span className="eyebrow">Polished storefront</span>
-                    <h3>Cleaner navigation, stronger visuals, faster shopping flow</h3>
-                  </div>
-                  <div className="promo-marquee-set" aria-hidden="true">
-                    <span className="eyebrow">Polished storefront</span>
-                    <h3>Cleaner navigation, stronger visuals, faster shopping flow</h3>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </section>
-
-          <section id="shop" ref={shopRef} className="page-section">
-            <div className="section-head">
-              <div>
-                <span className="eyebrow">Shop catalog</span>
-                <h2>{selectedCategory === 'All' ? 'Shop by category' : selectedCategory}</h2>
-              </div>
-              <div className="filter-chips">
-                {['All', ...quickCategories].map((category) => (
-                  <button
-                    key={category}
-                    type="button"
-                    className={selectedCategory === category ? 'active' : ''}
-                    onClick={() => onCategoryChange(category)}
-                  >
-                    {category === 'Smartphones'
-                      ? 'Phones'
-                      : category === 'Computers'
-                        ? 'Machines'
-                        : category}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {searchQuery && (
-              <p className="results-caption">
-                {filteredProducts.length} result{filteredProducts.length === 1 ? '' : 's'} for
-                {' '}
-                <strong>{searchQuery}</strong>
+    <div className="home-page reference-home">
+      {heroProduct && (
+        <section className="commerce-hero">
+          <div className="container commerce-hero-layout">
+            <div className="commerce-hero-copy">
+              <p className="commerce-hero-kicker">Your tech, ready in Kigali</p>
+              <h1>Find it.<br />Price it.<br />Make it yours.</h1>
+              <p>
+                Browse all our phones, laptops, watches, audio and accessories. See the RWF price and order directly.
               </p>
-            )}
-
-            {visibleShowcaseGroups.length === 0 ? (
-              <div className="empty-state-card">
-                <h3>No products matched this search</h3>
-                <p>Try another keyword or switch to a different category.</p>
-                <button type="button" className="btn-outline" onClick={() => onSearchChange('')}>
-                  Clear search
+              <div className="commerce-hero-actions">
+                <button type="button" className="btn-primary" onClick={() => showCollection('All')}>
+                  Shop all products
+                  <ArrowRight size={17} />
                 </button>
+                <Link to={`/product/${heroProduct.id}`} className="commerce-text-link">
+                  View featured product
+                  <ArrowRight size={16} />
+                </Link>
               </div>
-            ) : (
-              <div className="category-showcase-stack">
-                {visibleShowcaseGroups.map((group, index) => (
-                  <>
-                    <CategoryShowcase
-                      key={group.id}
-                      group={group}
-                      products={group.products}
-                      wishlist={wishlist}
-                      onAddToCart={onAddToCart}
-                      onCategoryChange={onCategoryChange}
-                      onToggleWishlist={onToggleWishlist}
-                    />
-                    {/* Mobile-only: insert winShoppingImage between accessories (index 1) and computers */}
-                    {index === 1 && (
-                      <div className="mobile-promo-image mobile-promo-image--between" key="mobile-promo-between">
-                        <img src={winShoppingImage} alt="It is a win shopping with us" />
-                      </div>
-                    )}
-                  </>
-                ))}
-              </div>
-            )}
-
-            {/* Mobile-only: bottom promo image before footer */}
-            <div className="mobile-promo-image mobile-promo-image--bottom">
-              <img src={customerShoppingImage} alt="Girls shopping at Eazy1teck" />
             </div>
-          </section>
-        </div>
 
-        {/* ===== RIGHT SIDEBAR ===== */}
-        <aside className="desktop-right-showcase" aria-label="Featured products">
-          {/* Top image */}
-          <article className="right-visual-card">
-            <img src={promoImages[0].image} alt={promoImages[0].title} />
-          </article>
-
-          {/* On Display — placed between the two images */}
-          <div className="right-product-stack">
-            <span className="eyebrow">On display</span>
-            {rightRailProducts.map((product) => (
-              <Link key={product.id} to={`/product/${product.id}`} className="right-product-card">
+            <Link to={`/product/${heroProduct.id}`} className="commerce-hero-product">
+              <div className="commerce-hero-image">
                 <img
-                  src={product.image}
-                  alt={product.name}
-                  onError={(event) => applyProductImageFallback(event, product.category)}
+                  src={heroProduct.image}
+                  alt={heroProduct.name}
+                  onError={(event) => applyProductImageFallback(event, heroProduct.category)}
                 />
-                <span>
-                  <strong>{product.name}</strong>
-                  <small>{formatRwf(product.price)}</small>
-                </span>
-              </Link>
+              </div>
+              <div className="commerce-hero-product-copy">
+                <span>{heroProduct.badge || 'Featured now'}</span>
+                <strong>{heroProduct.name}</strong>
+                <b>{formatRwf(heroProduct.price)}</b>
+              </div>
+            </Link>
+          </div>
+        </section>
+      )}
+
+      <div className="container trust-bar-wrap">
+        <section className="trust-bar" aria-label="Why shop with Eazy1teck">
+          <article>
+            <BadgeCheck aria-hidden="true" />
+            <div><strong>Buy with confidence</strong><span>See real products with clear RWF prices</span></div>
+          </article>
+          <article>
+            <ShieldCheck aria-hidden="true" />
+            <div><strong>Ask us directly</strong><span>Get answers about products, delivery and pickup</span></div>
+          </article>
+          <article>
+            <MapPin aria-hidden="true" />
+            <div><strong>Pick up in Kigali</strong><span>Collect your order at Makuza Peace Plaza</span></div>
+          </article>
+        </section>
+      </div>
+
+      <section className="collection-stage" aria-labelledby="collection-stage-title">
+        <div className="container">
+          <div className="collection-stage-heading">
+            <p>Start with what you need</p>
+            <h2 id="collection-stage-title">Choose your next device.</h2>
+          </div>
+
+          <div className="collection-feature-list">
+            {collections.map((group, index) => (
+              <article
+                key={group.id}
+                className={`collection-feature${index % 2 ? ' collection-feature-reverse' : ''}`}
+              >
+                <div className="collection-feature-media">
+                  {group.leadProduct && (
+                    <img
+                      src={group.leadProduct.image}
+                      alt={group.leadProduct.name}
+                      onError={(event) => applyProductImageFallback(event, group.leadProduct.category)}
+                    />
+                  )}
+                </div>
+                <div className="collection-feature-copy">
+                  <span>
+                    {group.count} product{group.count === 1 ? '' : 's'} · From {formatRwf(group.minPrice)}
+                  </span>
+                  <h3>{group.label}</h3>
+                  <strong>{group.strapline}</strong>
+                  <p>{group.description}</p>
+                  <button type="button" onClick={() => showCollection(group.category)}>
+                    Shop {group.label.toLowerCase()}
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              </article>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Bottom image */}
-          <article className="right-visual-card">
-            <img src={promoImages[1].image} alt={promoImages[1].title} />
-          </article>
-        </aside>
-      </div>
+      <section className="store-lifestyle" aria-labelledby="store-lifestyle-title">
+        <div className="container store-lifestyle-shell">
+          <div className="store-lifestyle-image">
+            <img
+              src={lifestyleShoppingImage}
+              alt="Customer shopping for phones and audio products"
+            />
+            <span>Kigali, Rwanda</span>
+          </div>
+          <div className="store-lifestyle-copy">
+            <p>Shop your way</p>
+            <h2 id="store-lifestyle-title">See the price. Ask us anything. Choose what works for you.</h2>
+            <span>
+              Browse every product with its RWF price. Add what you want to your cart, or message us before you order.
+            </span>
+            <div className="store-lifestyle-points">
+              <strong>See every price</strong>
+              <strong>Ask before you buy</strong>
+              <strong>Pick up in Kigali</strong>
+            </div>
+            <button type="button" onClick={() => showCollection('All')}>
+              Browse all products
+              <ArrowRight size={17} />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="new-arrivals-section" aria-labelledby="new-arrivals-title">
+        <div className="container">
+          <div className="retail-section-head">
+            <div>
+              <p>See what is new</p>
+              <h2 id="new-arrivals-title">Recently added</h2>
+            </div>
+            <button type="button" onClick={() => showCollection('All')}>
+              View all products
+              <ArrowRight size={16} />
+            </button>
+          </div>
+          <div className="new-arrivals-grid">
+            {newArrivals.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                wishlist={wishlist}
+                onAddToCart={onAddToCart}
+                onToggleWishlist={onToggleWishlist}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="store-belief">
+        <div className="container store-belief-inner">
+          <p>Eazy1teck, Kigali</p>
+          <h2>You should never have to guess what a device costs or how to get it.</h2>
+          <span>
+            See the product, check the RWF price, add it to your cart and send your order directly to our Kigali team.
+          </span>
+        </div>
+      </section>
+
+      <section id="shop" ref={catalogRef} className="catalog-section">
+        <div className="container">
+          <div className="retail-section-head catalog-heading">
+            <div>
+              <p>Everything in store</p>
+              <h2>{selectedCategory === 'All' ? 'Choose from all products' : `Shop ${selectedCategory.toLowerCase()}`}</h2>
+            </div>
+            <div className="catalog-filter-chips" aria-label="Filter products">
+              {['All', ...collectionGroups.map((group) => group.category)].map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  className={selectedCategory === category ? 'active' : ''}
+                  onClick={() => onCategoryChange(category)}
+                >
+                  {category === 'Smartphones' ? 'Phones' : category === 'Computers' ? 'Machines' : category}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {searchQuery && (
+            <p className="results-caption">
+              {filteredProducts.length} result{filteredProducts.length === 1 ? '' : 's'} for <strong>{searchQuery}</strong>
+            </p>
+          )}
+
+          {filteredProducts.length === 0 ? (
+            <div className="catalog-empty-state">
+              <h3>We could not find that product.</h3>
+              <p>Try a product name or choose another category.</p>
+              <button type="button" onClick={() => onSearchChange('')}>Show all products</button>
+            </div>
+          ) : (
+            <div className="catalog-product-grid">
+              {filteredProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  wishlist={wishlist}
+                  onAddToCart={onAddToCart}
+                  onToggleWishlist={onToggleWishlist}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 };
-
-/* ===== Left sidebar category item with dropdown showing products ===== */
-function LeftCategoryDropdown({ group, products, selectedCategory, onSelect }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const groupProducts = products.filter((p) => group.categories.includes(p.category)).slice(0, 5);
-  const isActive = selectedCategory === group.category;
-
-  return (
-    <div 
-      className="left-cat-dropdown"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-    >
-      <button
-        type="button"
-        className={`left-cat-trigger ${isActive ? 'active' : ''}`}
-        onClick={() => setIsOpen((v) => !v)}
-        aria-expanded={isOpen}
-      >
-        <span className="left-cat-info">
-          <strong>{group.label}</strong>
-        </span>
-        <svg
-          className={`left-cat-chevron ${isOpen ? 'open' : ''}`}
-          width="14" height="14" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="m9 18 6-6-6-6" />
-        </svg>
-      </button>
-
-      {isOpen && (
-        <div className="left-cat-menu">
-          <button
-            type="button"
-            className="left-cat-menu-all"
-            onClick={() => { onSelect(group.category); setIsOpen(false); }}
-          >
-            View all {group.label}
-            <ArrowRight size={12} />
-          </button>
-          {groupProducts.map((product) => (
-            <Link
-              key={product.id}
-              to={`/product/${product.id}`}
-              className="left-cat-menu-item"
-              onClick={() => setIsOpen(false)}
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                onError={(e) => applyProductImageFallback(e, product.category)}
-              />
-              <span>
-                <strong>{product.name}</strong>
-                <small>{Number(product.price).toLocaleString()} RWF</small>
-              </span>
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default Home;

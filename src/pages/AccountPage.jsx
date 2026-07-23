@@ -17,10 +17,9 @@ const AccountPage = ({ user, onSave, onSignOut }) => {
     return (
       <div className="page-shell container">
         <section className="empty-state-card">
-          <h2>Sign in to manage your account</h2>
+          <h2>Sign in to view your account</h2>
           <p>
-            Customers can keep their contact information ready for faster mobile
-            checkout and support.
+            Keep your contact details ready, save products and send orders faster.
           </p>
           <div className="inline-actions">
             <Link to="/signin" className="btn-primary">
@@ -43,10 +42,10 @@ const AccountPage = ({ user, onSave, onSignOut }) => {
     event.preventDefault();
     try {
       await onSave(form);
-      setMessage('Your account settings have been updated.');
+      setMessage('Your changes are saved.');
       window.setTimeout(() => setMessage(''), 2500);
     } catch (error) {
-      setMessage(error.message || 'Unable to update your account.');
+      setMessage(error.message || 'We could not save your changes. Please try again.');
       window.setTimeout(() => setMessage(''), 2500);
     }
   };
@@ -54,9 +53,9 @@ const AccountPage = ({ user, onSave, onSignOut }) => {
   return (
     <div className="page-shell container">
       <section className="page-hero-card">
-        <span className="eyebrow">Customer profile</span>
-        <h1>Account settings</h1>
-        <p>Keep customer details clean and easy to manage from mobile or desktop.</p>
+        <span className="eyebrow">Your account</span>
+        <h1>Manage your details</h1>
+        <p>Update the contact information we use when you place an order.</p>
       </section>
 
       <section className="settings-grid page-section">

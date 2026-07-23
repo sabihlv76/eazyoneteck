@@ -1,13 +1,11 @@
 import { useMemo, useState } from 'react';
 import {
   Check,
-  ChevronDown,
   ChevronRight,
   ImagePlus,
   KeyRound,
   Laptop,
   LayoutGrid,
-  ListPlus,
   LogOut,
   Mail,
   Palette,
@@ -25,6 +23,7 @@ import {
 } from 'lucide-react';
 import { adminSignIn, getAdminSessionToken } from '../lib/api';
 import logoImg from '../assets/logo.svg';
+import adminLifestyleImage from '../assets/ChatGPT Image Jul 2, 2026, 11_00_01 AM.png';
 
 function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
@@ -143,7 +142,6 @@ const Admin = ({
   adminSettings,
   onAdminAuthExpired,
   onDeleteProduct,
-  onRefreshProducts,
   onResetCatalog,
   onSaveAdminSettings,
   onSaveProduct,
@@ -162,7 +160,11 @@ const Admin = ({
   const [settingsForm, setSettingsForm] = useState(adminSettings);
   const [isSaving, setIsSaving] = useState(false);
   const [isPhoneDropupOpen, setIsPhoneDropupOpen] = useState(false);
-  const [isDesktopPhoneOpen, setIsDesktopPhoneOpen] = useState(false);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [colorFilter, setColorFilter] = useState('all');
+  const [sortOption, setSortOption] = useState('name-asc');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
 
   const activeCategory = activeCategoryId === 'all'
     ? { id: 'all', label: 'All Devices', category: 'Catalog', colors: [] }
@@ -182,6 +184,29 @@ const Admin = ({
       return isActiveCategory && matchesQuery;
     });
   }, [activeCategoryId, adminCategories, products, searchQuery]);
+
+  const availableColors = useMemo(
+    () => [...new Set(filteredProducts.map((product) => product.color).filter(Boolean))].sort(),
+    [filteredProducts]
+  );
+
+  const organizedProducts = useMemo(() => {
+    const nextProducts = colorFilter === 'all'
+      ? [...filteredProducts]
+      : filteredProducts.filter((product) => product.color === colorFilter);
+
+    return nextProducts.sort((first, second) => {
+      if (sortOption === 'price-asc') return Number(first.price) - Number(second.price);
+      if (sortOption === 'price-desc') return Number(second.price) - Number(first.price);
+      if (sortOption === 'name-desc') return second.name.localeCompare(first.name);
+      return first.name.localeCompare(second.name);
+    });
+  }, [colorFilter, filteredProducts, sortOption]);
+
+  const pageSize = 10;
+  const totalPages = Math.max(1, Math.ceil(organizedProducts.length / pageSize));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const paginatedProducts = organizedProducts.slice((safeCurrentPage - 1) * pageSize, safeCurrentPage * pageSize);
 
   const showStatus = (message) => {
     setStatusMessage(message);
@@ -241,12 +266,17 @@ const Admin = ({
       ingredients: product.ingredients || '',
       instructions: product.instructions || '',
     });
+    setIsEditorOpen(true);
   };
 
   const selectCategory = (categoryId) => {
     setActiveCategoryId(categoryId);
     setActiveView('products');
     resetProductForm();
+    setIsEditorOpen(false);
+    setColorFilter('all');
+    setCurrentPage(1);
+    setSelectedProductIds([]);
   };
 
   const handlePrimaryImageUpload = async (event) => {
@@ -278,7 +308,7 @@ const Admin = ({
       const colorValue = form.color.trim();
       const description =
         form.description.trim() ||
-        `${form.name.trim()} is available at ${settingsForm.storeName || 'Eazy1teck'}. Contact the store for current stock and booking.`;
+        `Choose ${form.name.trim()} at ${settingsForm.storeName || 'Eazy1teck'}. Send us a message if you want help with color, configuration or delivery.`;
 
       await onSaveProduct(
         {
@@ -293,7 +323,7 @@ const Admin = ({
           extraImages: form.extraImages,
           image: form.image,
           ingredients: form.ingredients.trim() || colorValue,
-          instructions: form.instructions.trim() || 'Confirm color and storage before booking.',
+          instructions: form.instructions.trim() || 'Choose your color and storage, then add the product to your cart or order on WhatsApp.',
           name: form.name.trim(),
           price: Number(form.price),
           size: form.size.trim(),
@@ -304,6 +334,7 @@ const Admin = ({
 
       setForm(initialForm);
       setEditingId(null);
+      setIsEditorOpen(false);
       showStatus(editingId ? 'Product updated successfully.' : 'Product created successfully.');
     } catch (error) {
       showStatus(error.message || 'Unable to save this product.');
@@ -357,14 +388,65 @@ const Admin = ({
   const totalValue = filteredProducts.reduce((sum, product) => sum + Number(product.price || 0), 0);
   const allProductCount = products.length;
 
+  const toggleProductSelection = (productId) => {
+    setSelectedProductIds((current) => current.includes(productId)
+      ? current.filter((id) => id !== productId)
+      : [...current, productId]);
+  };
+
+  const handleLoadCuratedCatalog = async () => {
+    setIsSaving(true);
+
+    try {
+      await onResetCatalog();
+      showStatus('All 52 store products are loaded.');
+    } catch (error) {
+      showStatus(error.message || 'We could not load the store products. Try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const togglePageSelection = () => {
+    const pageIds = paginatedProducts.map((product) => product.id);
+    const pageIsSelected = pageIds.length > 0 && pageIds.every((id) => selectedProductIds.includes(id));
+    setSelectedProductIds((current) => pageIsSelected
+      ? current.filter((id) => !pageIds.includes(id))
+      : [...new Set([...current, ...pageIds])]);
+  };
+
+  const handleBulkDelete = async () => {
+    if (!selectedProductIds.length || !window.confirm(`Delete ${selectedProductIds.length} selected products?`)) return;
+
+    try {
+      await Promise.all(selectedProductIds.map((productId) => onDeleteProduct(productId)));
+      setSelectedProductIds([]);
+      showStatus('Selected products deleted.');
+    } catch (error) {
+      showStatus(error.message || 'Unable to delete the selected products.');
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="admin-auth-page">
-        <div className="admin-auth-card">
-          <span className="eyebrow">Protected access</span>
-          <h1>Admin panel sign in</h1>
+        <section className="admin-auth-story" aria-label="Eazy1teck inventory workspace">
+          <img src={adminLifestyleImage} alt="Eazy1teck customers shopping for technology" />
+          <div className="admin-auth-story-copy">
+            <img src={logoImg} alt="" className="admin-auth-logo" />
+            <span>Inventory workspace</span>
+            <h1>Keep the shop current.</h1>
+            <p>Products, prices and store details in one focused workspace.</p>
+          </div>
+        </section>
+
+        <section className="admin-auth-card">
+          <div className="admin-auth-heading">
+            <span>Protected access</span>
+            <h2>Welcome back</h2>
+          </div>
           <p>
-            This secure page protects product management, account settings and mobile image uploads.
+            Sign in with your administrator email and PIN to manage Eazy1teck.
           </p>
 
           <form className="auth-form" onSubmit={handleLogin}>
@@ -395,21 +477,30 @@ const Admin = ({
             {authError && <p className="form-error">{authError}</p>}
 
             <button type="submit" className="btn-primary full-width">
-              Access admin panel
+              Enter inventory desk
             </button>
           </form>
-        </div>
+        </section>
       </div>
     );
   }
 
   const renderProductCard = (product) => (
     <article key={product.id} className="admin-product-card">
+      <label className="admin-row-check">
+        <input
+          type="checkbox"
+          checked={selectedProductIds.includes(product.id)}
+          onChange={() => toggleProductSelection(product.id)}
+          aria-label={`Select ${product.name}`}
+        />
+      </label>
       <img src={product.image} alt={product.name} />
       <div className="admin-product-copy">
         <div>
           <h3>{product.name}</h3>
           <p>{product.subcategory || product.category}{product.color ? `, ${product.color}` : ''}</p>
+          <span className="admin-stock-state"><Check size={11} /> Live in store</span>
         </div>
         <strong>{Number(product.price).toLocaleString()} RWF</strong>
       </div>
@@ -426,6 +517,7 @@ const Admin = ({
               if (editingId === product.id) {
                 resetProductForm();
               }
+              setSelectedProductIds((current) => current.filter((id) => id !== product.id));
               showStatus('Product deleted.');
             } catch (error) {
               showStatus(error.message || 'Unable to delete the product.');
@@ -442,14 +534,21 @@ const Admin = ({
   return (
     <div className="admin-page">
       <header className="admin-topbar">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <img src={logoImg} alt="Eazy1teck" style={{ width: 60, height: 60, objectFit: 'contain' }} />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.1rem' }}>
-            <strong style={{ fontSize: '1.05rem' }}>{settingsForm.storeName || 'Eazy1teck'}</strong>
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-soft)' }}>Inventory desk</span>
+        <div className="admin-brand-lockup">
+          <span className="admin-brand-mark">
+            <img src={logoImg} alt="Eazy1teck" />
+          </span>
+          <div>
+            <strong>{settingsForm.storeName || 'Eazy1teck'}</strong>
+            <span>Inventory studio</span>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <div className="admin-topbar-context">
+          <span>Store operations</span>
+          <strong>Catalogue control</strong>
+        </div>
+        <div className="admin-topbar-actions">
+          <span className="admin-session-badge"><ShieldCheck size={15} /> Secure session</span>
           <button type="button" className="btn-icon btn-icon-outline" onClick={() => setActiveView('settings')} aria-label="Settings">
             <Settings size={18} />
           </button>
@@ -473,11 +572,13 @@ const Admin = ({
             <div className="admin-phone-hover-group">
               <button
                 type="button"
-                className={['iphones','androids','smartwatches'].includes(activeCategoryId) && activeView === 'products' ? 'active' : ''}
+                className={['iphones','androids','smartwatches'].includes(activeCategoryId) && activeView === 'products' ? 'group-active' : ''}
+                onClick={() => selectCategory('iphones')}
+                aria-expanded="true"
               >
                 <Smartphone size={18} />
                 <span>Phone</span>
-                <ChevronRight size={14} />
+                <ChevronRight className="admin-phone-chevron" size={14} />
               </button>
 
               <div className="admin-phone-side-flyout">
@@ -528,6 +629,21 @@ const Admin = ({
             >
               <LayoutGrid size={18} />
               <span>My Devices</span>
+              <small>{allProductCount}</small>
+            </button>
+
+            <button type="button" className="admin-add-category" onClick={handleAddCategory}>
+              <Plus size={18} />
+              <span>Add category</span>
+            </button>
+
+            <button
+              type="button"
+              className={activeView === 'settings' ? 'active' : ''}
+              onClick={() => setActiveView('settings')}
+            >
+              <Settings size={18} />
+              <span>Store settings</span>
             </button>
 
           </nav>
@@ -601,35 +717,57 @@ const Admin = ({
                   <ShieldCheck size={18} />
                   {isSaving ? 'Saving...' : 'Save settings'}
                 </button>
+
+                <div className="admin-catalog-sync span-2">
+                  <div>
+                    <strong>Restore all store products</strong>
+                    <span>Reload all 52 products with their images and RWF prices.</span>
+                  </div>
+                  <button type="button" className="btn-outline" onClick={handleLoadCuratedCatalog} disabled={isSaving}>
+                    {isSaving ? 'Loading...' : 'Load 52 products'}
+                  </button>
+                </div>
               </form>
             </section>
           ) : (
             <>
               <section className="admin-section-head">
                 <div>
+                  <span className="admin-section-kicker">Catalogue / {activeCategory.category}</span>
                   <h1>{activeCategory.label}</h1>
                   <p>Add stock, set the price, upload images and keep the shelf tidy.</p>
                 </div>
-                <div className="admin-stat-strip">
-                  <span>{filteredProducts.length} shown</span>
-                  <span>{allProductCount} total</span>
-                  <span>{totalValue.toLocaleString()} RWF</span>
+                <div className="admin-section-actions">
+                  <div className="admin-stat-strip">
+                    <span><b>{organizedProducts.length}</b> shown</span>
+                    <span><b>{allProductCount}</b> total</span>
+                    <span><b>{totalValue.toLocaleString()}</b> RWF</span>
+                  </div>
+                  {activeCategoryId !== 'all' && (
+                    <button
+                      type="button"
+                      className="btn-accent admin-add-product-button"
+                      onClick={() => { resetProductForm(); setIsEditorOpen(true); }}
+                    >
+                      <Plus size={17} /> Add product
+                    </button>
+                  )}
                 </div>
               </section>
 
               <section className="admin-entry-grid">
-                {activeCategoryId !== 'all' && (
-                  <form className="admin-product-form" onSubmit={handleSaveProduct}>
+                {isEditorOpen && activeCategoryId !== 'all' && (
+                  <div className="admin-editor-backdrop" onMouseDown={() => setIsEditorOpen(false)}>
+                  <form className="admin-product-form" onSubmit={handleSaveProduct} onMouseDown={(event) => event.stopPropagation()}>
                     <div className="admin-form-title">
                       <div>
+                        <span className="admin-form-kicker">Product editor</span>
                         <h2>{editingId ? 'Edit product' : 'Add product'}</h2>
                         <p>{activeCategory.label} will appear in {activeCategory.category}.</p>
                       </div>
-                      {editingId && (
-                        <button type="button" className="btn-outline" onClick={resetProductForm}>
-                          New item
-                        </button>
-                      )}
+                      <button type="button" className="btn-outline" onClick={() => setIsEditorOpen(false)}>
+                        Close
+                      </button>
                     </div>
 
                   <div className="admin-form-grid">
@@ -779,9 +917,10 @@ const Admin = ({
                       {isSaving ? 'Saving...' : editingId ? 'Save changes' : 'Save product'}
                     </button>
                   </form>
+                  </div>
                 )}
 
-                <section className="admin-list-panel" style={activeCategoryId === 'all' ? { gridColumn: '1 / -1' } : {}}>
+                <section className="admin-list-panel admin-list-panel-wide">
                   <div className="admin-toolbar">
                     <div className="search-field">
                       <Search size={18} />
@@ -789,53 +928,74 @@ const Admin = ({
                         type="search"
                         placeholder={`Search ${activeCategory.label.toLowerCase()}`}
                         value={searchQuery}
-                        onChange={(event) => setSearchQuery(event.target.value)}
+                        onChange={(event) => { setSearchQuery(event.target.value); setCurrentPage(1); }}
                       />
                     </div>
+                    <select
+                      className="admin-filter-select"
+                      value={colorFilter}
+                      onChange={(event) => { setColorFilter(event.target.value); setCurrentPage(1); }}
+                      aria-label="Filter by color"
+                    >
+                      <option value="all">All colors</option>
+                      {availableColors.map((color) => <option key={color} value={color}>{color}</option>)}
+                    </select>
+                    <select
+                      className="admin-filter-select"
+                      value={sortOption}
+                      onChange={(event) => { setSortOption(event.target.value); setCurrentPage(1); }}
+                      aria-label="Sort products"
+                    >
+                      <option value="name-asc">Name A-Z</option>
+                      <option value="name-desc">Name Z-A</option>
+                      <option value="price-asc">Price low-high</option>
+                      <option value="price-desc">Price high-low</option>
+                    </select>
+                  </div>
+
+                  {selectedProductIds.length > 0 && (
+                    <div className="admin-bulk-bar">
+                      <strong>{selectedProductIds.length} selected</strong>
+                      <button type="button" onClick={handleBulkDelete}><Trash2 size={15} /> Delete selected</button>
+                    </div>
+                  )}
+
+                  <div className="admin-table-head" aria-hidden="true">
+                    <label className="admin-row-check">
+                      <input
+                        type="checkbox"
+                        checked={paginatedProducts.length > 0 && paginatedProducts.every((product) => selectedProductIds.includes(product.id))}
+                        onChange={togglePageSelection}
+                        aria-label="Select this page"
+                      />
+                    </label>
+                    <span>Image</span>
+                    <span>Product details and price</span>
+                    <span>Actions</span>
                   </div>
 
                   <div className="admin-product-list">
-                    {filteredProducts.length === 0 && (
+                    {organizedProducts.length === 0 && (
                       <div className="admin-empty-state">
                         <strong>No products here yet</strong>
-                        <span>Add the first {activeCategory.label.toLowerCase()} item with the form.</span>
+                        <span>Clear the filters or add the first {activeCategory.label.toLowerCase()} item.</span>
                       </div>
                     )}
-
-                    {activeCategoryId === 'all' ? (
-                      <>
-                        <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.8rem', marginBottom: '1rem', borderBottom: '1px solid var(--border)' }}>
-                          {adminCategories.map(cat => {
-                            const catProducts = filteredProducts.filter(p => getCategoryForProduct(p, adminCategories)?.id === cat.id);
-                            if (catProducts.length === 0) return null;
-                            return (
-                              <a 
-                                key={`nav-${cat.id}`} 
-                                href={`#cat-${cat.id}`} 
-                                style={{ whiteSpace: 'nowrap', padding: '0.4rem 0.8rem', background: 'var(--surface-muted)', borderRadius: '999px', fontSize: '0.8rem', color: 'var(--text)', textDecoration: 'none', fontWeight: 600 }}
-                              >
-                                {cat.label}
-                              </a>
-                            );
-                          })}
-                        </div>
-                        {adminCategories.map(cat => {
-                          const catProducts = filteredProducts.filter(p => getCategoryForProduct(p, adminCategories)?.id === cat.id);
-                          if (catProducts.length === 0) return null;
-                          return (
-                            <div key={cat.id} id={`cat-${cat.id}`} style={{ marginBottom: '1.5rem', scrollMarginTop: '100px' }}>
-                              <h3 style={{ marginBottom: '0.8rem', fontSize: '1rem', color: 'var(--gold-deep)' }}>{cat.label}</h3>
-                              <div style={{ display: 'grid', gap: '0.8rem' }}>
-                                {catProducts.map(renderProductCard)}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </>
-                    ) : (
-                      filteredProducts.map(renderProductCard)
-                    )}
+                    {paginatedProducts.map(renderProductCard)}
                   </div>
+
+                  {organizedProducts.length > 0 && (
+                    <div className="admin-pagination">
+                      <span>
+                        {(safeCurrentPage - 1) * pageSize + 1}-{Math.min(safeCurrentPage * pageSize, organizedProducts.length)} of {organizedProducts.length}
+                      </span>
+                      <div>
+                        <button type="button" disabled={safeCurrentPage === 1} onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}>Previous</button>
+                        <strong>Page {safeCurrentPage} of {totalPages}</strong>
+                        <button type="button" disabled={safeCurrentPage === totalPages} onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}>Next</button>
+                      </div>
+                    </div>
+                  )}
                 </section>
               </section>
             </>
