@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
   ArrowRight,
@@ -133,6 +133,16 @@ const Home = ({
       return matchesCategory && matchesSearch;
     });
   }, [products, searchQuery, selectedCategory]);
+
+  const PAGE_SIZE = 12;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [searchQuery, selectedCategory]);
+
+  const visibleProducts = filteredProducts.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredProducts.length;
 
   const collections = useMemo(
     () =>
@@ -351,17 +361,33 @@ const Home = ({
               <button type="button" onClick={() => onSearchChange('')}>Show all products</button>
             </div>
           ) : (
-            <div className="catalog-product-grid">
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  wishlist={wishlist}
-                  onAddToCart={onAddToCart}
-                  onToggleWishlist={onToggleWishlist}
-                />
-              ))}
-            </div>
+            <>
+              <div className="catalog-product-grid">
+                {visibleProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    wishlist={wishlist}
+                    onAddToCart={onAddToCart}
+                    onToggleWishlist={onToggleWishlist}
+                  />
+                ))}
+              </div>
+              {hasMore && (
+                <div className="catalog-load-more">
+                  <button
+                    type="button"
+                    className="btn-outline"
+                    onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                  >
+                    Load more products
+                  </button>
+                  <span>
+                    Showing {visibleProducts.length} of {filteredProducts.length}
+                  </span>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
