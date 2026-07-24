@@ -36,7 +36,6 @@ import {
   PRODUCTS_KEY,
   USER_KEY,
   WISHLIST_KEY,
-  defaultAdminSettings,
   readStorage,
   writeStorage,
 } from './lib/localStore';
@@ -225,7 +224,7 @@ function AppContent() {
   const [wishlist, setWishlist] = useState(() => readStorage(WISHLIST_KEY, []));
   const [user, setUser] = useState(() => readStorage(USER_KEY, null));
   const [adminSettings, setAdminSettings] = useState(() =>
-    readStorage(ADMIN_SETTINGS_KEY, defaultAdminSettings)
+    readStorage(ADMIN_SETTINGS_KEY, {})
   );
   const [dataError, setDataError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');

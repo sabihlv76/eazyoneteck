@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, MessageSquare, ShoppingBag } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { applyProductImageFallback } from '../lib/productImageFallbacks';
@@ -57,8 +58,45 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
     window.open(`https://wa.me/${phone.replace(/[^\d]/g, '')}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
+  const imageForPreview = product.image || 'https://eazy1teck.com/og-image.jpg';
+  const productUrl = `https://eazy1teck.com/product/${product.id}`;
+
   return (
-    <div className="page-shell container">
+    <>
+      <Helmet>
+        <title>{product.name} | Eazy1teck</title>
+        <meta name="description" content={`${product.name} - ${formatRwf(product.price)}. Browse premium electronics in Rwanda on Eazy1teck.`} />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content={productUrl} />
+        <meta property="og:title" content={`${product.name} | Eazy1teck`} />
+        <meta property="og:description" content={`${product.name} - ${formatRwf(product.price)}`} />
+        <meta property="og:image" content={imageForPreview} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content={`${product.name} | Eazy1teck`} />
+        <meta property="twitter:description" content={`${product.name} - ${formatRwf(product.price)}`} />
+        <meta property="twitter:image" content={imageForPreview} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org/',
+            '@type': 'Product',
+            'name': product.name,
+            'image': imageForPreview,
+            'description': `${product.name} - Available at Eazy1teck`,
+            'brand': {
+              '@type': 'Brand',
+              'name': 'Eazy1teck'
+            },
+            'offers': {
+              '@type': 'Offer',
+              'url': productUrl,
+              'priceCurrency': 'RWF',
+              'price': product.price,
+              'availability': 'https://schema.org/InStock'
+            }
+          })}
+        </script>
+      </Helmet>
+      <div className="page-shell container">
       <Link to="/" className="back-link">
         <ArrowLeft size={16} />
         Back to store
@@ -174,6 +212,7 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
         </section>
       )}
     </div>
+    </>
   );
 };
 

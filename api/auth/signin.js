@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { allowMethods, readJson, sendError, sendJson } from '../_lib/http.js';
 import { createSessionToken, getDb, sanitizeUser } from '../_lib/mongodb.js';
 
@@ -18,7 +19,7 @@ export default async function handler(req, res) {
     }
 
     const user = await db.collection('users').findOne({ email });
-    if (!user || user.password !== password) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       sendError(res, 401, 'Incorrect email or password.');
       return;
     }

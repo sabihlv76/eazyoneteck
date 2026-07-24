@@ -1,6 +1,5 @@
 import crypto from 'node:crypto';
 import { MongoClient } from 'mongodb';
-import { defaultAdminSettings } from '../../src/lib/localStore.js';
 import { products as defaultProducts } from '../../src/productsData.js';
 
 function getMongoConfig() {
@@ -16,6 +15,15 @@ function getMongoConfig() {
   }
 
   return { uri, dbName };
+}
+
+function getDefaultAdminSettings() {
+  return {
+    email: process.env.ADMIN_EMAIL || 'admin@eazy1teck.com',
+    phone: process.env.ADMIN_PHONE || '+250783073733',
+    pin: process.env.ADMIN_PIN || '123456',
+    storeName: 'Eazy1teck',
+  };
 }
 
 const globalCache = globalThis.__eazyMongoCache || {
@@ -70,7 +78,7 @@ export async function getDb() {
     if (settingsCount === 0) {
       await db.collection('settings').insertOne({
         key: 'store',
-        ...defaultAdminSettings,
+        ...getDefaultAdminSettings(),
         createdAt: new Date(),
         updatedAt: new Date(),
       });

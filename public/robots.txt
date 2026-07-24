@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /e1t-secure-panel
+
+Sitemap: https://eazy1teck.com/sitemap.xml

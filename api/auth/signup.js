@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { allowMethods, readJson, sendError, sendJson } from '../_lib/http.js';
 import { createSessionToken, getDb, sanitizeUser } from '../_lib/mongodb.js';
 
@@ -23,12 +24,14 @@ export default async function handler(req, res) {
       return;
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = {
       email,
       firstName: payload.firstName?.trim() || '',
       lastName: payload.lastName?.trim() || '',
       phone: payload.phone?.trim() || '',
-      password,
+      password: hashedPassword,
       createdAt: new Date(),
       updatedAt: new Date(),
     };

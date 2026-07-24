@@ -3,7 +3,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { products } from '../src/productsData.js';
-import { defaultAdminSettings } from '../src/lib/localStore.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,6 +46,15 @@ function withTimestamps(document) {
   };
 }
 
+function getDefaultAdminSettings() {
+  return {
+    email: process.env.ADMIN_EMAIL || 'admin@eazy1teck.com',
+    phone: process.env.ADMIN_PHONE || '+250783073733',
+    pin: process.env.ADMIN_PIN || '123456',
+    storeName: 'Eazy1teck',
+  };
+}
+
 loadEnvFile('.env');
 loadEnvFile('.env.local');
 
@@ -84,7 +92,7 @@ try {
   await db.collection('settings').insertOne(
     withTimestamps({
       key: 'store',
-      ...defaultAdminSettings,
+      ...getDefaultAdminSettings(),
     })
   );
 

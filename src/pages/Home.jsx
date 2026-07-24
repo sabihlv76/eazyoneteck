@@ -1,4 +1,5 @@
 import { useMemo, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import {
   ArrowRight,
   BadgeCheck,
@@ -160,7 +161,12 @@ const Home = ({
   };
 
   return (
-    <div className="home-page reference-home">
+    <>
+      <Helmet>
+        <title>Eazy1teck | Electronics & Smartphones in Rwanda</title>
+        <meta name="description" content="Shop premium smartphones, laptops, watches, and accessories in Rwanda. Browse and order on WhatsApp." />
+      </Helmet>
+      <div className="home-page reference-home">
       {heroProduct && (
         <section className="commerce-hero">
           <div className="container commerce-hero-layout">
@@ -370,6 +376,7 @@ const Home = ({
         </div>
       </section>
     </div>
+    </>
   );
 };
 
