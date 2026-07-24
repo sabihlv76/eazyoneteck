@@ -176,24 +176,6 @@ const Home = ({
             </div>
 
             <div className="commerce-hero-right">
-              <div className="commerce-hero-copy">
-                <p className="commerce-hero-kicker">Your tech, ready in Kigali</p>
-                <h1>Find it.<br />Price it.<br />Make it yours.</h1>
-                <p>
-                  Browse all our phones, laptops, watches, audio and accessories. See the RWF price and order directly.
-                </p>
-                <div className="commerce-hero-actions">
-                  <button type="button" className="btn-primary" onClick={() => showCollection('All')}>
-                    Shop all products
-                    <ArrowRight size={17} />
-                  </button>
-                  <Link to={`/product/${heroProduct.id}`} className="commerce-text-link">
-                    View featured product
-                    <ArrowRight size={16} />
-                  </Link>
-                </div>
-              </div>
-
               <Link to={`/product/${heroProduct.id}`} className="commerce-hero-product">
                 <div className="commerce-hero-image">
                   <img
