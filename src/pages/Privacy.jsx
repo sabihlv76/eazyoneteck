@@ -6,6 +6,7 @@ export default function Privacy() {
       <Helmet>
         <title>Privacy Policy - Eazy1teck</title>
         <meta name="description" content="Privacy policy for Eazy1teck online store" />
+        <link rel="canonical" href="https://eazy1teck.com/privacy" />
       </Helmet>
       <div className="container" style={{ maxWidth: '800px', padding: '2rem 1rem', margin: '0 auto' }}>
         <h1>Privacy Policy</h1>

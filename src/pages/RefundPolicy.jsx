@@ -6,6 +6,7 @@ export default function RefundPolicy() {
       <Helmet>
         <title>Refund Policy - Eazy1teck</title>
         <meta name="description" content="Refund and return policy for Eazy1teck products" />
+        <link rel="canonical" href="https://eazy1teck.com/refund-policy" />
       </Helmet>
       <div className="container" style={{ maxWidth: '800px', padding: '2rem 1rem', margin: '0 auto' }}>
         <h1>Refund & Return Policy</h1>

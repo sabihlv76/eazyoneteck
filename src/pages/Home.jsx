@@ -166,6 +166,7 @@ const Home = ({
       <Helmet>
         <title>Eazy1teck | Electronics & Smartphones in Rwanda</title>
         <meta name="description" content="Shop premium smartphones, laptops, watches, and accessories in Rwanda. Browse and order on WhatsApp." />
+        <link rel="canonical" href="https://eazy1teck.com/" />
       </Helmet>
       <div className="home-page reference-home">
       {heroProduct && (

@@ -66,6 +66,7 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
       <Helmet>
         <title>{product.name} | Eazy1teck</title>
         <meta name="description" content={`${product.name} - ${formatRwf(product.price)}. Browse premium electronics in Rwanda on Eazy1teck.`} />
+        <link rel="canonical" href={productUrl} />
         <meta property="og:type" content="product" />
         <meta property="og:url" content={productUrl} />
         <meta property="og:title" content={`${product.name} | Eazy1teck`} />

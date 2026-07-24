@@ -6,6 +6,7 @@ export default function Terms() {
       <Helmet>
         <title>Terms & Conditions - Eazy1teck</title>
         <meta name="description" content="Terms and conditions for using Eazy1teck" />
+        <link rel="canonical" href="https://eazy1teck.com/terms" />
       </Helmet>
       <div className="container" style={{ maxWidth: '800px', padding: '2rem 1rem', margin: '0 auto' }}>
         <h1>Terms & Conditions</h1>
