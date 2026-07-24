@@ -12,6 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import { applyProductImageFallback } from '../lib/productImageFallbacks';
 import lifestyleShoppingImage from '../assets/IMG-20260629-WA0101.jpg';
+import heroShoppingImage from '../assets/ChatGPT Image Jul 2, 2026, 11_00_01 AM.png';
 
 const collectionGroups = [
   {
@@ -170,38 +171,44 @@ const Home = ({
       {heroProduct && (
         <section className="commerce-hero">
           <div className="container commerce-hero-layout">
-            <div className="commerce-hero-copy">
-              <p className="commerce-hero-kicker">Your tech, ready in Kigali</p>
-              <h1>Find it.<br />Price it.<br />Make it yours.</h1>
-              <p>
-                Browse all our phones, laptops, watches, audio and accessories. See the RWF price and order directly.
-              </p>
-              <div className="commerce-hero-actions">
-                <button type="button" className="btn-primary" onClick={() => showCollection('All')}>
-                  Shop all products
-                  <ArrowRight size={17} />
-                </button>
-                <Link to={`/product/${heroProduct.id}`} className="commerce-text-link">
-                  View featured product
-                  <ArrowRight size={16} />
-                </Link>
-              </div>
+            <div className="commerce-hero-shopping">
+              <img src={heroShoppingImage} alt="Shopping for tech products" />
             </div>
 
-            <Link to={`/product/${heroProduct.id}`} className="commerce-hero-product">
-              <div className="commerce-hero-image">
-                <img
-                  src={heroProduct.image}
-                  alt={heroProduct.name}
-                  onError={(event) => applyProductImageFallback(event, heroProduct.category)}
-                />
+            <div className="commerce-hero-right">
+              <div className="commerce-hero-copy">
+                <p className="commerce-hero-kicker">Your tech, ready in Kigali</p>
+                <h1>Find it.<br />Price it.<br />Make it yours.</h1>
+                <p>
+                  Browse all our phones, laptops, watches, audio and accessories. See the RWF price and order directly.
+                </p>
+                <div className="commerce-hero-actions">
+                  <button type="button" className="btn-primary" onClick={() => showCollection('All')}>
+                    Shop all products
+                    <ArrowRight size={17} />
+                  </button>
+                  <Link to={`/product/${heroProduct.id}`} className="commerce-text-link">
+                    View featured product
+                    <ArrowRight size={16} />
+                  </Link>
+                </div>
               </div>
-              <div className="commerce-hero-product-copy">
-                <span>{heroProduct.badge || 'Featured now'}</span>
-                <strong>{heroProduct.name}</strong>
-                <b>{formatRwf(heroProduct.price)}</b>
-              </div>
-            </Link>
+
+              <Link to={`/product/${heroProduct.id}`} className="commerce-hero-product">
+                <div className="commerce-hero-image">
+                  <img
+                    src={heroProduct.image}
+                    alt={heroProduct.name}
+                    onError={(event) => applyProductImageFallback(event, heroProduct.category)}
+                  />
+                </div>
+                <div className="commerce-hero-product-copy">
+                  <span>{heroProduct.badge || 'Featured now'}</span>
+                  <strong>{heroProduct.name}</strong>
+                  <b>{formatRwf(heroProduct.price)}</b>
+                </div>
+              </Link>
+            </div>
           </div>
         </section>
       )}

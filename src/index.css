@@ -3779,8 +3779,26 @@ img {
 .commerce-hero-layout {
   min-height: 530px;
   display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(440px, 1.18fr);
+  grid-template-columns: 1fr 1fr;
   align-items: stretch;
+  gap: 2rem;
+}
+
+.commerce-hero-shopping {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.commerce-hero-shopping img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.commerce-hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .commerce-hero-copy {
@@ -4259,10 +4277,19 @@ img {
   .commerce-hero-layout {
     min-height: auto;
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .commerce-hero-shopping {
+    min-height: 400px;
+  }
+
+  .commerce-hero-right {
+    flex-direction: column;
   }
 
   .commerce-hero-copy {
-    padding: 4rem 1.5rem 3rem;
+    padding: 2rem 1.5rem 0;
   }
 
   .commerce-hero-product {
@@ -4316,8 +4343,17 @@ img {
     padding-bottom: 0.45rem;
   }
 
+  .commerce-hero-layout {
+    gap: 1rem;
+  }
+
+  .commerce-hero-shopping {
+    min-height: 300px;
+    border-radius: 8px;
+  }
+
   .commerce-hero-copy {
-    padding: 3rem 1.25rem 2rem;
+    padding: 2rem 1.25rem 1rem;
   }
 
   .commerce-hero-copy h1 {
@@ -4331,7 +4367,7 @@ img {
   }
 
   .commerce-hero-product {
-    min-height: 320px;
+    min-height: 280px;
   }
 
   .commerce-hero-product-copy {
