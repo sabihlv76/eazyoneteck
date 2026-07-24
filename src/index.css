@@ -400,26 +400,16 @@ img {
   place-items: center;
   position: relative;
   font-weight: 700;
-  color: var(--text-soft);
+  color: #999;
   transition: color 0.18s ease;
 }
 
 .bottom-nav-item.active {
-  color: var(--text);
+  color: var(--gold);
 }
 
-.bottom-nav-item.active::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gold-soft);
-  border-radius: 999px;
-  z-index: -1;
-  max-width: 44px;
-  max-height: 44px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.bottom-nav-item svg {
+  transition: color 0.18s ease;
 }
 
 .bottom-nav-item svg {
