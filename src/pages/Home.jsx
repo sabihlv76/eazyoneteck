@@ -12,6 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import { applyProductImageFallback } from '../lib/productImageFallbacks';
 import lifestyleShoppingImage from '../assets/IMG-20260629-WA0101.jpg';
+import heroShoppingImage from '../assets/hero-shopping.png';
 
 const collectionGroups = [
   {
@@ -170,20 +171,26 @@ const Home = ({
       {heroProduct && (
         <section className="commerce-hero">
           <div className="container commerce-hero-layout">
-            <Link to={`/product/${heroProduct.id}`} className="commerce-hero-product">
-              <div className="commerce-hero-image">
-                <img
-                  src={heroProduct.image}
-                  alt={heroProduct.name}
-                  onError={(event) => applyProductImageFallback(event, heroProduct.category)}
-                />
-              </div>
-              <div className="commerce-hero-product-copy">
-                <span>{heroProduct.badge || 'Featured now'}</span>
-                <strong>{heroProduct.name}</strong>
-                <b>{formatRwf(heroProduct.price)}</b>
-              </div>
-            </Link>
+            <div className="commerce-hero-shopping">
+              <img src={heroShoppingImage} alt="Shopping for tech products" />
+            </div>
+
+            <div className="commerce-hero-right">
+              <Link to={`/product/${heroProduct.id}`} className="commerce-hero-product">
+                <div className="commerce-hero-image">
+                  <img
+                    src={heroProduct.image}
+                    alt={heroProduct.name}
+                    onError={(event) => applyProductImageFallback(event, heroProduct.category)}
+                  />
+                </div>
+                <div className="commerce-hero-product-copy">
+                  <span>{heroProduct.badge || 'Featured now'}</span>
+                  <strong>{heroProduct.name}</strong>
+                  <b>{formatRwf(heroProduct.price)}</b>
+                </div>
+              </Link>
+            </div>
           </div>
         </section>
       )}

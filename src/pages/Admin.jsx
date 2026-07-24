@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { adminSignIn, getAdminSessionToken } from '../lib/api';
 import logoImg from '../assets/logo.svg';
+import adminLifestyleImage from '../assets/hero-shopping.png';
 
 function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
@@ -430,6 +431,7 @@ const Admin = ({
     return (
       <div className="admin-auth-page">
         <section className="admin-auth-story" aria-label="Eazy1teck inventory workspace">
+          <img src={adminLifestyleImage} alt="Eazy1teck customers shopping for technology" />
           <div className="admin-auth-story-copy">
             <img src={logoImg} alt="" className="admin-auth-logo" />
             <span>Inventory workspace</span>
