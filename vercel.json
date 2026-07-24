@@ -21,6 +21,18 @@
       "destination": "/index.html"
     },
     {
+      "source": "/privacy",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/refund-policy",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/index.html"
+    },
+    {
       "source": "/product/:path*",
       "destination": "/index.html"
     }

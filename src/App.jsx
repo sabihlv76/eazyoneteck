@@ -27,6 +27,9 @@ import SignUp from './pages/SignUp';
 import WishlistPage from './pages/WishlistPage';
 import AccountPage from './pages/AccountPage';
 import NotFoundPage from './pages/NotFoundPage';
+import Privacy from './pages/Privacy';
+import RefundPolicy from './pages/RefundPolicy';
+import Terms from './pages/Terms';
 import CartDrawer from './components/CartDrawer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { products as defaultProducts } from './productsData';
@@ -707,6 +710,9 @@ function AppContent() {
               />
             }
           />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
@@ -722,15 +728,9 @@ function AppContent() {
 
             <div className="footer-privacy">
               <h4>Shop policies</h4>
-              <a href="https://eazy1teck.com/privacy" target="_blank" rel="noreferrer">
-                Privacy Policy
-              </a>
-              <a href="https://eazy1teck.com/refund-policy" target="_blank" rel="noreferrer">
-                Refund Policy
-              </a>
-              <a href="https://eazy1teck.com/terms" target="_blank" rel="noreferrer">
-                Terms & Conditions
-              </a>
+              <Link to="/privacy">Privacy Policy</Link>
+              <Link to="/refund-policy">Refund Policy</Link>
+              <Link to="/terms">Terms & Conditions</Link>
             </div>
 
             <div>
