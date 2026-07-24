@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { adminSignIn, getAdminSessionToken } from '../lib/api';
 import logoImg from '../assets/logo.svg';
-import adminLifestyleImage from '../assets/ChatGPT Image Jul 2, 2026, 11_00_01 AM.png';
+import adminLifestyleImage from '../assets/hero-shopping.png';
 
 function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
