@@ -1,5 +1,9 @@
 const USER_SESSION_KEY = 'e1t_user_session';
 const ADMIN_SESSION_KEY = 'e1t_admin_session';
+const SESSION_EXPIRY = {
+  user: 7 * 24 * 60 * 60 * 1000,
+  admin: 24 * 60 * 60 * 1000,
+};
 
 async function request(path, options = {}) {
   const response = await fetch(path, {
@@ -13,39 +17,73 @@ async function request(path, options = {}) {
   const payload = await response.json().catch(() => ({}));
 
   if (!response.ok) {
+    if (response.status === 401) {
+      clearUserSessionToken();
+      clearAdminSessionToken();
+    }
     throw new Error(payload.error || 'Request failed.');
   }
 
   return payload;
 }
 
-function getStoredToken(key) {
-  return window.localStorage.getItem(key) || '';
+function getStoredSession(key) {
+  try {
+    const stored = window.localStorage.getItem(key);
+    if (!stored) return null;
+
+    const session = JSON.parse(stored);
+    const isExpired = Date.now() > session.expiresAt;
+
+    if (isExpired) {
+      window.localStorage.removeItem(key);
+      return null;
+    }
+
+    return session.token;
+  } catch {
+    return null;
+  }
 }
 
-function setStoredToken(key, token) {
-  if (token) {
-    window.localStorage.setItem(key, token);
+function setStoredSession(key, token, type = 'user') {
+  if (!token) {
+    window.localStorage.removeItem(key);
     return;
   }
 
-  window.localStorage.removeItem(key);
+  const expiryMs = type === 'admin' ? SESSION_EXPIRY.admin : SESSION_EXPIRY.user;
+  window.localStorage.setItem(
+    key,
+    JSON.stringify({
+      token,
+      expiresAt: Date.now() + expiryMs,
+    })
+  );
 }
 
 export function getUserSessionToken() {
-  return getStoredToken(USER_SESSION_KEY);
+  return getStoredSession(USER_SESSION_KEY);
 }
 
 export function getAdminSessionToken() {
-  return getStoredToken(ADMIN_SESSION_KEY);
+  return getStoredSession(ADMIN_SESSION_KEY);
 }
 
 export function clearUserSessionToken() {
-  setStoredToken(USER_SESSION_KEY, '');
+  setStoredSession(USER_SESSION_KEY, '', 'user');
 }
 
 export function clearAdminSessionToken() {
-  setStoredToken(ADMIN_SESSION_KEY, '');
+  setStoredSession(ADMIN_SESSION_KEY, '', 'admin');
+}
+
+function setUserSessionToken(token) {
+  setStoredSession(USER_SESSION_KEY, token, 'user');
+}
+
+function setAdminSessionToken(token) {
+  setStoredSession(ADMIN_SESSION_KEY, token, 'admin');
 }
 
 export async function fetchProducts() {
@@ -125,7 +163,7 @@ export async function signIn(payload) {
     body: JSON.stringify(payload),
   });
 
-  setStoredToken(USER_SESSION_KEY, response.token);
+  setUserSessionToken(response.token);
   return response.user;
 }
 
@@ -135,7 +173,7 @@ export async function signUp(payload) {
     body: JSON.stringify(payload),
   });
 
-  setStoredToken(USER_SESSION_KEY, response.token);
+  setUserSessionToken(response.token);
   return response.user;
 }
 
@@ -188,7 +226,7 @@ export async function adminSignIn(payload) {
     body: JSON.stringify(payload),
   });
 
-  setStoredToken(ADMIN_SESSION_KEY, response.token);
+  setAdminSessionToken(response.token);
   return response.settings;
 }
 

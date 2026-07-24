@@ -150,27 +150,6 @@ function buildProductId(name) {
   return `${slugify(name)}-${Date.now()}`;
 }
 
-function normalizeProductImages(items) {
-  return items.map((product) => {
-    if (product.id !== 'airpods-pro-2nd-gen') {
-      return product;
-    }
-
-    const visibleImage =
-      'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=800&q=90';
-
-    return {
-      ...product,
-      image: visibleImage,
-      extraImages: [
-        visibleImage,
-        'https://images.unsplash.com/photo-1588423772273-dfc9ea5313fd?auto=format&fit=crop&w=800&q=90',
-        ...(product.extraImages || []).filter((image) => image !== visibleImage),
-      ],
-    };
-  });
-}
-
 function HeaderAction({
   label,
   count,
@@ -218,7 +197,7 @@ function AppContent() {
   const showStoreChrome = !isAuthPage && !isAdminPage;
 
   const [products, setProducts] = useState(() =>
-    normalizeProductImages(readStorage(PRODUCTS_KEY, defaultProducts))
+    readStorage(PRODUCTS_KEY, defaultProducts)
   );
   const [cart, setCart] = useState(() => readStorage(CART_KEY, []));
   const [wishlist, setWishlist] = useState(() => readStorage(WISHLIST_KEY, []));
@@ -270,7 +249,7 @@ function AppContent() {
           return;
         }
 
-        setProducts(normalizeProductImages(nextProducts));
+        setProducts(nextProducts);
         setAdminSettings((current) => ({
           ...current,
           ...nextSettings,
@@ -441,7 +420,7 @@ function AppContent() {
     }
 
     const nextProducts = await fetchProducts();
-    setProducts(normalizeProductImages(nextProducts));
+    setProducts(nextProducts);
   };
 
   const handleDeleteProduct = async (productId) => {
@@ -459,7 +438,7 @@ function AppContent() {
 
   const handleResetCatalog = async () => {
     const nextProducts = await resetProducts();
-    setProducts(normalizeProductImages(nextProducts));
+    setProducts(nextProducts);
   };
 
   const handleAdminAuthExpired = async () => {
@@ -743,13 +722,13 @@ function AppContent() {
 
             <div className="footer-privacy">
               <h4>Shop policies</h4>
-              <a href="https://thenewspecies.com/privacy-policy-2/" target="_blank" rel="noreferrer">
+              <a href="https://eazy1teck.com/privacy" target="_blank" rel="noreferrer">
                 Privacy Policy
               </a>
-              <a href="https://thenewspecies.com/refund_returns/" target="_blank" rel="noreferrer">
+              <a href="https://eazy1teck.com/refund-policy" target="_blank" rel="noreferrer">
                 Refund Policy
               </a>
-              <a href="https://thenewspecies.com/terms-conditions/" target="_blank" rel="noreferrer">
+              <a href="https://eazy1teck.com/terms" target="_blank" rel="noreferrer">
                 Terms & Conditions
               </a>
             </div>

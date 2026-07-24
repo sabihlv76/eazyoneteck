@@ -58,7 +58,9 @@ export async function getDb() {
     await Promise.all([
       db.collection('users').createIndex({ email: 1 }, { unique: true }),
       db.collection('sessions').createIndex({ token: 1 }, { unique: true }),
+      db.collection('sessions').createIndex({ createdAt: 1 }, { expireAfterSeconds: 604800 }),
       db.collection('adminSessions').createIndex({ token: 1 }, { unique: true }),
+      db.collection('adminSessions').createIndex({ createdAt: 1 }, { expireAfterSeconds: 86400 }),
     ]);
 
     const [productCount, settingsCount] = await Promise.all([
