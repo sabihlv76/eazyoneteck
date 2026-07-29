@@ -8,6 +8,14 @@ function formatRwf(price) {
   return `${Number(price).toLocaleString()} RWF`;
 }
 
+function getYoutubeEmbedUrl(url) {
+  if (!url) return null;
+  const match = url.match(
+    /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/
+  );
+  return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+}
+
 const ProductDetail = ({ products, onAddToCart, phone }) => {
   const { id } = useParams();
   const [activeImage, setActiveImage] = useState({ productId: '', image: '' });
@@ -60,6 +68,7 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
 
   const imageForPreview = product.image || 'https://eazy1teck.com/og-image.jpg';
   const productUrl = `https://eazy1teck.com/product/${product.id}`;
+  const videoEmbedUrl = getYoutubeEmbedUrl(product.videoUrl);
 
   return (
     <>
@@ -136,7 +145,12 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
         <div className="detail-copy">
           <span className="eyebrow">{product.category}</span>
           <h1>{product.name}</h1>
-          <div className="detail-price">{formatRwf(product.price)}</div>
+          <div className="detail-price">
+            {formatRwf(product.price)}
+            {Number(product.oldPrice) > Number(product.price) && (
+              <span className="detail-price-old">{formatRwf(product.oldPrice)}</span>
+            )}
+          </div>
           <p className="detail-description">{product.description}</p>
 
           <div className="detail-meta-list">
@@ -173,6 +187,21 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
         </div>
       </section>
 
+      {videoEmbedUrl && (
+        <section className="detail-video">
+          <span className="eyebrow">Video description</span>
+          <div className="detail-video-frame">
+            <iframe
+              src={videoEmbedUrl}
+              title={`${product.name} video description`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+          {product.videoCaption && <p className="detail-video-caption">{product.videoCaption}</p>}
+        </section>
+      )}
+
       {similarProducts.length > 0 && (
         <section className="detail-similar" aria-labelledby="similar-products-title">
           <div className="detail-similar-head">
@@ -201,7 +230,12 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
                   </Link>
                   <p>{item.size}</p>
                   <div>
-                    <strong>{formatRwf(item.price)}</strong>
+                    <span className="detail-similar-price">
+                      <strong>{formatRwf(item.price)}</strong>
+                      {Number(item.oldPrice) > Number(item.price) && (
+                        <small className="price-old">{formatRwf(item.oldPrice)}</small>
+                      )}
+                    </span>
                     <button type="button" onClick={() => onAddToCart(item)} aria-label={`Add ${item.name} to cart`}>
                       <ShoppingBag size={17} />
                     </button>

@@ -55,7 +55,12 @@ const WishlistPage = ({ products, onAddToCart, onToggleWishlist }) => {
                 </Link>
                 <p className="product-card-size">{product.size}</p>
                 <div className="product-card-footer">
-                  <div className="product-price">{formatRwf(product.price)}</div>
+                  <div className="product-price">
+                    {formatRwf(product.price)}
+                    {Number(product.oldPrice) > Number(product.price) && (
+                      <small className="price-old">{formatRwf(product.oldPrice)}</small>
+                    )}
+                  </div>
                   <div className="card-actions product-card-actions">
                     <Link
                       to={`/product/${product.id}`}

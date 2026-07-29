@@ -37,11 +37,14 @@ function fileToDataUrl(file) {
 const initialForm = {
   name: '',
   price: '',
+  oldPrice: '',
   size: '',
   badge: '',
   color: '',
   image: '',
   extraImages: [],
+  videoUrl: '',
+  videoCaption: '',
   description: '',
   benefits: '',
   ingredients: '',
@@ -256,11 +259,14 @@ const Admin = ({
     setForm({
       name: product.name || '',
       price: String(product.price || ''),
+      oldPrice: product.oldPrice ? String(product.oldPrice) : '',
       size: product.size || '',
       badge: product.badge || '',
       color: product.color || '',
       image: product.image || '',
       extraImages: product.extraImages || product.extra_images || [],
+      videoUrl: product.videoUrl || product.video_url || '',
+      videoCaption: product.videoCaption || '',
       description: product.description || '',
       benefits: (product.benefits || []).join('\n'),
       ingredients: product.ingredients || '',
@@ -326,8 +332,11 @@ const Admin = ({
           instructions: form.instructions.trim() || 'Choose your color and storage, then add the product to your cart or order on WhatsApp.',
           name: form.name.trim(),
           price: Number(form.price),
+          oldPrice: form.oldPrice.trim() ? Number(form.oldPrice) : null,
           size: form.size.trim(),
           subcategory: activeCategory.subcategory,
+          videoUrl: form.videoUrl.trim(),
+          videoCaption: form.videoCaption.trim(),
         },
         editingId
       );
@@ -796,6 +805,17 @@ const Admin = ({
                     </div>
 
                     <div className="form-group">
+                      <label htmlFor="product-old-price">Old price in RWF (optional)</label>
+                      <input
+                        id="product-old-price"
+                        type="number"
+                        value={form.oldPrice}
+                        onChange={updateFormField('oldPrice')}
+                        placeholder="2500000"
+                      />
+                    </div>
+
+                    <div className="form-group">
                       <label htmlFor="product-size">Size or version</label>
                       <input
                         id="product-size"
@@ -898,6 +918,28 @@ const Admin = ({
                           ))}
                         </div>
                       )}
+                    </div>
+
+                    <div className="form-group span-2">
+                      <label htmlFor="product-video">YouTube video URL (phone description)</label>
+                      <input
+                        id="product-video"
+                        type="url"
+                        value={form.videoUrl}
+                        onChange={updateFormField('videoUrl')}
+                        placeholder="https://www.youtube.com/watch?v=..."
+                      />
+                    </div>
+
+                    <div className="form-group span-2">
+                      <label htmlFor="product-video-caption">Video caption (optional)</label>
+                      <input
+                        id="product-video-caption"
+                        type="text"
+                        value={form.videoCaption}
+                        onChange={updateFormField('videoCaption')}
+                        placeholder="e.g. LIVE: AMAKURU ARAMBUYE | Tariki 29 NYAKANGA 2026"
+                      />
                     </div>
 
                     <div className="form-group span-2">
