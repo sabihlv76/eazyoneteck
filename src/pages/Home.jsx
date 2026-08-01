@@ -12,7 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import { applyProductImageFallback } from '../lib/productImageFallbacks';
 import lifestyleShoppingImage from '../assets/IMG-20260629-WA0101.jpg';
-import heroShoppingImage from '../assets/hero-shopping.png';
+import heroShoppingImage from '../assets/hero-speakers.webp';
 
 const collectionGroups = [
   {
