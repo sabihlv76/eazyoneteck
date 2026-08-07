@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { applyProductImageFallback } from '../lib/productImageFallbacks';
-import lifestyleShoppingImage from '../assets/IMG-20260629-WA0101.jpg';
+import lifestyleShoppingImage from '../assets/hero-shopping.webp';
 import heroShoppingImage from '../assets/hero-speakers.webp';
 
 const collectionGroups = [
