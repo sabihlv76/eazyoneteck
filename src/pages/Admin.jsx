@@ -98,10 +98,20 @@ const defaultAdminCategories = [
 
 const badgeOptions = ['New Arrival', 'Best Seller', 'Hot Deal', 'Top Rated', 'Great Value', 'Trending', 'Genuine'];
 
+const builtInCategoryIds = defaultAdminCategories.map((category) => category.id);
+
 function readAdminCategories() {
   try {
     const saved = window.localStorage.getItem(ADMIN_CATEGORY_KEY);
-    return saved ? JSON.parse(saved) : defaultAdminCategories;
+    if (!saved) {
+      return defaultAdminCategories;
+    }
+
+    // Icons are React components, so JSON.stringify drops them. Re-attach by id.
+    return JSON.parse(saved).map((category) => ({
+      ...category,
+      icon: defaultAdminCategories.find((item) => item.id === category.id)?.icon || Tags,
+    }));
   } catch {
     return defaultAdminCategories;
   }
@@ -137,6 +147,13 @@ function getCategoryForProduct(product, categories) {
       );
     }
 
+    // Built-in categories keep the broad match so loose subcategories (Earbuds,
+    // Headphones) still land in a bucket. Custom categories match on their own
+    // subcategory only, otherwise the first one would swallow the whole category.
+    if (!builtInCategoryIds.includes(item.id)) {
+      return productSubcategory.includes(itemSubcategory);
+    }
+
     return productSubcategory.includes(itemSubcategory) || product.category === item.category;
   });
 }
@@ -163,6 +180,7 @@ const Admin = ({
   const [settingsForm, setSettingsForm] = useState(adminSettings);
   const [isSaving, setIsSaving] = useState(false);
   const [isPhoneDropupOpen, setIsPhoneDropupOpen] = useState(false);
+  const [isAccessoryDropupOpen, setIsAccessoryDropupOpen] = useState(false);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [colorFilter, setColorFilter] = useState('all');
   const [sortOption, setSortOption] = useState('name-asc');
@@ -172,6 +190,10 @@ const Admin = ({
   const activeCategory = activeCategoryId === 'all'
     ? { id: 'all', label: 'All Devices', category: 'Catalog', colors: [] }
     : adminCategories.find((category) => category.id === activeCategoryId) || adminCategories[0];
+
+  const customCategories = adminCategories.filter(
+    (category) => !builtInCategoryIds.includes(category.id)
+  );
 
   const filteredProducts = useMemo(() => {
     const query = searchQuery.toLowerCase();
@@ -630,6 +652,22 @@ const Admin = ({
               <span>Accessories</span>
             </button>
 
+            {/* Categories added from the Add category button */}
+            {customCategories.map((cat) => {
+              const Icon = cat.icon || Tags;
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  className={activeView === 'products' && activeCategoryId === cat.id ? 'active' : ''}
+                  onClick={() => selectCategory(cat.id)}
+                >
+                  <Icon size={18} />
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })}
+
             {/* My Devices — all products */}
             <button
               type="button"
@@ -1050,7 +1088,7 @@ const Admin = ({
           <button 
             type="button" 
             className={`bottom-nav-btn ${isPhoneDropupOpen ? 'active' : ''}`}
-            onClick={() => setIsPhoneDropupOpen(!isPhoneDropupOpen)}
+            onClick={() => { setIsPhoneDropupOpen(!isPhoneDropupOpen); setIsAccessoryDropupOpen(false); }}
           >
             <Smartphone size={20} />
             <span>Phone</span>
@@ -1077,10 +1115,44 @@ const Admin = ({
           <Laptop size={20} />
           <span>PC</span>
         </button>
-        <button type="button" className={`bottom-nav-btn ${activeCategoryId === 'speakers' ? 'active' : ''}`} onClick={() => { selectCategory('speakers'); setIsPhoneDropupOpen(false); }}>
-          <Speaker size={20} />
-          <span>Accessories</span>
-        </button>
+        {customCategories.length === 0 ? (
+          <button type="button" className={`bottom-nav-btn ${activeCategoryId === 'speakers' ? 'active' : ''}`} onClick={() => { selectCategory('speakers'); setIsPhoneDropupOpen(false); }}>
+            <Speaker size={20} />
+            <span>Accessories</span>
+          </button>
+        ) : (
+          <div className="bottom-nav-item">
+            <button
+              type="button"
+              className={`bottom-nav-btn ${isAccessoryDropupOpen ? 'active' : ''}`}
+              onClick={() => { setIsAccessoryDropupOpen(!isAccessoryDropupOpen); setIsPhoneDropupOpen(false); }}
+            >
+              <Speaker size={20} />
+              <span>Accessories</span>
+            </button>
+            {isAccessoryDropupOpen && (
+              <div className="admin-phone-dropup">
+                <button type="button" onClick={() => { selectCategory('speakers'); setIsAccessoryDropupOpen(false); }}>
+                  <Speaker size={16} />
+                  <span>Accessories</span>
+                </button>
+                {customCategories.map((cat) => {
+                  const Icon = cat.icon || Tags;
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => { selectCategory(cat.id); setIsAccessoryDropupOpen(false); }}
+                    >
+                      <Icon size={16} />
+                      <span>{cat.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
         <button type="button" className={`bottom-nav-btn ${activeCategoryId === 'all' ? 'active' : ''}`} onClick={() => { selectCategory('all'); setIsPhoneDropupOpen(false); }}>
           <LayoutGrid size={20} />
           <span>My Devices</span>
