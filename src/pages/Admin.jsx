@@ -20,6 +20,7 @@ import {
   Tags,
   Trash2,
   Watch,
+  Wrench,
 } from 'lucide-react';
 import { adminSignIn, getAdminSessionToken } from '../lib/api';
 import logoImg from '../assets/logo.svg';
@@ -50,6 +51,13 @@ const initialForm = {
   ingredients: '',
   instructions: '',
 };
+
+// Temporary read-only lock on the catalogue while a product issue is being fixed.
+// Set to false and redeploy to give admins back add / edit / delete.
+const MAINTENANCE_MODE = true;
+const MAINTENANCE_TITLE = 'IHANGANE MUGIHE TURI GUKEMURA IKIBAZO';
+const MAINTENANCE_BODY =
+  'Kwongeramo no guhindura ibicuruzwa byahagaritswe by’agateganyo. Urashobora kureba ibicuruzwa byose ariko ntushobora kubihindura muri iki gihe.';
 
 const ADMIN_CATEGORY_KEY = 'e1t_admin_categories';
 
@@ -182,6 +190,7 @@ const Admin = ({
   const [isPhoneDropupOpen, setIsPhoneDropupOpen] = useState(false);
   const [isAccessoryDropupOpen, setIsAccessoryDropupOpen] = useState(false);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [isMaintenanceNoticeOpen, setIsMaintenanceNoticeOpen] = useState(false);
   const [colorFilter, setColorFilter] = useState('all');
   const [sortOption, setSortOption] = useState('name-asc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -330,6 +339,11 @@ const Admin = ({
   const handleSaveProduct = async (event) => {
     event.preventDefault();
 
+    if (blockedByMaintenance()) {
+      setIsEditorOpen(false);
+      return;
+    }
+
     setIsSaving(true);
 
     try {
@@ -425,7 +439,21 @@ const Admin = ({
       : [...current, productId]);
   };
 
+  // Returns true when the action was blocked, so callers can bail out early.
+  const blockedByMaintenance = () => {
+    if (!MAINTENANCE_MODE) {
+      return false;
+    }
+
+    setIsMaintenanceNoticeOpen(true);
+    return true;
+  };
+
   const handleLoadCuratedCatalog = async () => {
+    if (blockedByMaintenance()) {
+      return;
+    }
+
     setIsSaving(true);
 
     try {
@@ -447,6 +475,7 @@ const Admin = ({
   };
 
   const handleBulkDelete = async () => {
+    if (blockedByMaintenance()) return;
     if (!selectedProductIds.length || !window.confirm(`Delete ${selectedProductIds.length} selected products?`)) return;
 
     try {
@@ -536,13 +565,14 @@ const Admin = ({
         <strong>{Number(product.price).toLocaleString()} RWF</strong>
       </div>
       <div className="admin-product-actions">
-        <button type="button" className="btn-icon btn-icon-outline" onClick={() => openEditModal(product)} aria-label={`Edit ${product.name}`}>
+        <button type="button" className="btn-icon btn-icon-outline" onClick={() => { if (blockedByMaintenance()) return; openEditModal(product); }} aria-label={`Edit ${product.name}`}>
           <Pencil size={16} />
         </button>
         <button
           type="button"
           className="btn-icon btn-icon-primary danger"
           onClick={async () => {
+            if (blockedByMaintenance()) return;
             try {
               await onDeleteProduct(product.id);
               if (editingId === product.id) {
@@ -794,7 +824,11 @@ const Admin = ({
                     <button
                       type="button"
                       className="btn-accent admin-add-product-button"
-                      onClick={() => { resetProductForm(); setIsEditorOpen(true); }}
+                      onClick={() => {
+                        if (blockedByMaintenance()) return;
+                        resetProductForm();
+                        setIsEditorOpen(true);
+                      }}
                     >
                       <Plus size={17} /> Add product
                     </button>
@@ -1082,6 +1116,32 @@ const Admin = ({
           )}
         </main>
       </div>
+
+      {isMaintenanceNoticeOpen && (
+        <div
+          className="maintenance-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="maintenance-title"
+          onMouseDown={() => setIsMaintenanceNoticeOpen(false)}
+        >
+          <div className="maintenance-card" onMouseDown={(event) => event.stopPropagation()}>
+            <span className="maintenance-icon" aria-hidden="true">
+              <Wrench size={26} />
+            </span>
+            <h2 id="maintenance-title">{MAINTENANCE_TITLE}</h2>
+            <p>{MAINTENANCE_BODY}</p>
+            <button
+              type="button"
+              className="btn-accent maintenance-close"
+              onClick={() => setIsMaintenanceNoticeOpen(false)}
+              autoFocus
+            >
+              Nabyumvise
+            </button>
+          </div>
+        </div>
+      )}
 
       <nav className="admin-mobile-bottom-nav">
         <div className="bottom-nav-item">
