@@ -28,3 +28,4 @@ Thumbs.db
 # Misc
 .cache/
 screenshots/
+migration-backups/

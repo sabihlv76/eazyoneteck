@@ -62,6 +62,7 @@ async function start() {
     { default: productsHandler },
     { default: productsResetHandler },
     { default: settingsHandler },
+    { default: uploadHandler },
   ] = await Promise.all([
     import('../api/auth/account.js'),
     import('../api/auth/signin.js'),
@@ -73,6 +74,7 @@ async function start() {
     import('../api/products/index.js'),
     import('../api/products/reset.js'),
     import('../api/settings.js'),
+    import('../api/upload.js'),
   ]);
 
   const app = express();
@@ -94,6 +96,8 @@ async function start() {
 
   app.get('/api/settings', wrapHandler(settingsHandler));
   app.put('/api/settings', wrapHandler(settingsHandler));
+
+  app.post('/api/upload', wrapHandler(uploadHandler));
 
   app.post('/api/auth/signup', wrapHandler(authSignUpHandler));
   app.post('/api/auth/signin', wrapHandler(authSignInHandler));

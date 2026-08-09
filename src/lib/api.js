@@ -91,6 +91,37 @@ export async function fetchProducts() {
   return payload.products || [];
 }
 
+export async function uploadProductImage(file) {
+  const { cloudName, apiKey, timestamp, folder, signature } = await request('/api/upload', {
+    method: 'POST',
+    headers: {
+      'x-admin-session': getAdminSessionToken(),
+    },
+  });
+
+  const form = new FormData();
+  form.append('file', file);
+  form.append('api_key', apiKey);
+  form.append('timestamp', timestamp);
+  form.append('folder', folder);
+  form.append('signature', signature);
+
+  // Straight to Cloudinary — the image never touches our own API.
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    method: 'POST',
+    body: form,
+  });
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(payload.error?.message || 'The image upload failed. Try again.');
+  }
+
+  // f_auto,q_auto lets Cloudinary serve the smallest format each browser supports.
+  return payload.secure_url.replace('/upload/', '/upload/f_auto,q_auto/');
+}
+
 export async function createProduct(product) {
   const payload = await request('/api/products', {
     method: 'POST',

@@ -22,18 +22,9 @@ import {
   Watch,
   Wrench,
 } from 'lucide-react';
-import { adminSignIn, getAdminSessionToken } from '../lib/api';
+import { adminSignIn, getAdminSessionToken, uploadProductImage } from '../lib/api';
 import logoImg from '../assets/logo.svg';
 import adminLifestyleImage from '../assets/hero-shopping.webp';
-
-function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
 
 const initialForm = {
   name: '',
@@ -54,7 +45,7 @@ const initialForm = {
 
 // Temporary read-only lock on the catalogue while a product issue is being fixed.
 // Set to false and redeploy to give admins back add / edit / delete.
-const MAINTENANCE_MODE = true;
+const MAINTENANCE_MODE = false;
 const MAINTENANCE_TITLE = 'IHANGANE MUGIHE TURI GUKEMURA IKIBAZO';
 const MAINTENANCE_BODY =
   'Kwongeramo no guhindura ibicuruzwa byahagaritswe by’agateganyo. Urashobora kureba ibicuruzwa byose ariko ntushobora kubihindura muri iki gihe.';
@@ -191,6 +182,7 @@ const Admin = ({
   const [isAccessoryDropupOpen, setIsAccessoryDropupOpen] = useState(false);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [isMaintenanceNoticeOpen, setIsMaintenanceNoticeOpen] = useState(false);
+  const [isUploadingImages, setIsUploadingImages] = useState(false);
   const [colorFilter, setColorFilter] = useState('all');
   const [sortOption, setSortOption] = useState('name-asc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -322,8 +314,16 @@ const Admin = ({
       return;
     }
 
-    const image = await fileToDataUrl(file);
-    setForm((current) => ({ ...current, image }));
+    setIsUploadingImages(true);
+
+    try {
+      const image = await uploadProductImage(file);
+      setForm((current) => ({ ...current, image }));
+    } catch (error) {
+      showStatus(error.message || 'The image upload failed. Try again.');
+    } finally {
+      setIsUploadingImages(false);
+    }
   };
 
   const handleExtraImagesUpload = async (event) => {
@@ -332,8 +332,16 @@ const Admin = ({
       return;
     }
 
-    const extraImages = await Promise.all(files.map(fileToDataUrl));
-    setForm((current) => ({ ...current, extraImages }));
+    setIsUploadingImages(true);
+
+    try {
+      const extraImages = await Promise.all(files.map(uploadProductImage));
+      setForm((current) => ({ ...current, extraImages }));
+    } catch (error) {
+      showStatus(error.message || 'The image upload failed. Try again.');
+    } finally {
+      setIsUploadingImages(false);
+    }
   };
 
   const handleSaveProduct = async (event) => {
@@ -954,7 +962,9 @@ const Admin = ({
                     </div>
 
                     <div className="form-group span-2">
-                      <label htmlFor="product-image">Images</label>
+                      <label htmlFor="product-image">
+                        {isUploadingImages ? 'Uploading images…' : 'Images'}
+                      </label>
                       <div className="admin-upload-grid">
                         <label className="upload-field" htmlFor="product-image">
                           <ImagePlus size={18} />
@@ -1026,9 +1036,9 @@ const Admin = ({
                     </div>
                   </div>
 
-                    <button type="submit" className="btn-accent admin-save-button">
+                    <button type="submit" className="btn-accent admin-save-button" disabled={isUploadingImages}>
                       <Plus size={18} />
-                      {isSaving ? 'Saving...' : editingId ? 'Save changes' : 'Save product'}
+                      {isUploadingImages ? 'Uploading images…' : isSaving ? 'Saving...' : editingId ? 'Save changes' : 'Save product'}
                     </button>
                   </form>
                   </div>
