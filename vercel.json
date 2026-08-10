@@ -1,4 +1,5 @@
 {
+  "regions": ["cpt1"],
   "rewrites": [
     {
       "source": "/e1t-secure-panel",
