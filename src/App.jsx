@@ -656,6 +656,7 @@ function AppContent() {
                 wishlist={wishlist}
                 searchQuery={searchQuery}
                 selectedCategory={selectedCategory}
+                featuredProductId={adminSettings.featuredProductId}
                 onAddToCart={handleAddToCart}
                 onToggleWishlist={toggleWishlist}
                 onCategoryChange={setSelectedCategory}

@@ -112,6 +112,7 @@ const Home = ({
   wishlist,
   searchQuery,
   selectedCategory,
+  featuredProductId,
   onAddToCart,
   onCategoryChange,
   onSearchChange,
@@ -165,7 +166,10 @@ const Home = ({
     [products]
   );
 
+  // The admin can pin the hero product in Store settings; without a pin (or if
+  // the pinned product was deleted) fall back to the newest phone with an image.
   const heroProduct =
+    products.find((product) => product.id === featuredProductId && product.image) ||
     products.find((product) => product.category === 'Smartphones' && product.image) ||
     products.find((product) => product.image) ||
     products[0] ||

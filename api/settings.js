@@ -35,6 +35,10 @@ export default async function handler(req, res) {
       email: payload.email,
       phone: payload.phone,
       storeName: payload.storeName || admin.settingsDoc.storeName,
+      featuredProductId:
+        typeof payload.featuredProductId === 'string'
+          ? payload.featuredProductId
+          : admin.settingsDoc.featuredProductId || '',
       updatedAt: new Date(),
     };
 

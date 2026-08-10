@@ -124,6 +124,7 @@ export function sanitizeSettings(settings, includeSensitive = false) {
     email: settings.email,
     phone: settings.phone,
     storeName: settings.storeName,
+    featuredProductId: settings.featuredProductId || '',
   };
 }
 

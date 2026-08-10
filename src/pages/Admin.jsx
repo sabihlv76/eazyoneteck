@@ -813,6 +813,27 @@ const Admin = ({
                   </div>
                 </div>
 
+                <div className="form-group">
+                  <label htmlFor="settings-featured">Hero featured product</label>
+                  <select
+                    id="settings-featured"
+                    value={settingsForm.featuredProductId || ''}
+                    onChange={updateSettingsField('featuredProductId')}
+                  >
+                    <option value="">Automatic (newest phone)</option>
+                    {[...products]
+                      .sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+                      .map((product) => (
+                        <option key={product.id} value={product.id}>
+                          {product.name}
+                        </option>
+                      ))}
+                  </select>
+                  <small className="admin-pin-hint">
+                    Shown in the big box next to the hero poster. Stays fixed until you change it here.
+                  </small>
+                </div>
+
                 <div className="form-group span-2">
                   <label>Change admin PIN (optional)</label>
                   <div className="admin-pin-change-grid">
