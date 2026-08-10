@@ -1,5 +1,5 @@
 import { allowMethods, readJson, sendError, sendJson } from '../_lib/http.js';
-import { createSessionToken, getDb, sanitizeSettings } from '../_lib/mongodb.js';
+import { createSessionToken, getDb, hashAdminPin, sanitizeSettings, verifyAdminPin } from '../_lib/mongodb.js';
 
 const loginAttempts = new Map();
 const MAX_ATTEMPTS = 5;
@@ -66,13 +66,20 @@ export default async function handler(req, res) {
 
     const settings = await db.collection('settings').findOne({ key: 'store' });
 
-    if (
-      email !== settings.email.toLowerCase() ||
-      pin !== settings.pin
-    ) {
+    const pinValid = email === settings.email.toLowerCase() && (await verifyAdminPin(pin, settings));
+
+    if (!pinValid) {
       recordFailedAttempt(email);
       sendError(res, 401, 'Incorrect email or PIN.');
       return;
+    }
+
+    // Upgrade a legacy plaintext PIN to a hash on first successful login.
+    if (!settings.pinHash) {
+      await db.collection('settings').updateOne(
+        { key: 'store' },
+        { $set: { pinHash: await hashAdminPin(pin) }, $unset: { pin: '' } }
+      );
     }
 
     clearAttempts(email);

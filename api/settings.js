@@ -1,6 +1,6 @@
 import { requireAdminSession } from './_lib/auth.js';
 import { allowMethods, readJson, sendError, sendJson } from './_lib/http.js';
-import { getDb, sanitizeSettings } from './_lib/mongodb.js';
+import { getDb, hashAdminPin, sanitizeSettings, verifyAdminPin } from './_lib/mongodb.js';
 
 export default async function handler(req, res) {
   if (!allowMethods(req, res, ['GET', 'PUT'])) {
@@ -34,15 +34,36 @@ export default async function handler(req, res) {
     const update = {
       email: payload.email,
       phone: payload.phone,
-      pin: payload.pin,
       storeName: payload.storeName || admin.settingsDoc.storeName,
       updatedAt: new Date(),
     };
 
-    await db.collection('settings').updateOne(
-      { key: 'store' },
-      { $set: update }
-    );
+    const ops = { $set: update };
+    const newPin = typeof payload.newPin === 'string' ? payload.newPin.trim() : '';
+
+    if (newPin) {
+      const currentPin = typeof payload.currentPin === 'string' ? payload.currentPin.trim() : '';
+
+      if (!currentPin) {
+        sendError(res, 400, 'Enter your current PIN to set a new one.');
+        return;
+      }
+
+      if (!(await verifyAdminPin(currentPin, admin.settingsDoc))) {
+        sendError(res, 401, 'The current PIN is incorrect.');
+        return;
+      }
+
+      if (newPin.length < 8) {
+        sendError(res, 400, 'The new PIN must be at least 8 characters long.');
+        return;
+      }
+
+      update.pinHash = await hashAdminPin(newPin);
+      ops.$unset = { pin: '' };
+    }
+
+    await db.collection('settings').updateOne({ key: 'store' }, ops);
 
     const settings = await db.collection('settings').findOne({ key: 'store' });
     sendJson(res, 200, { settings: sanitizeSettings(settings, true) });

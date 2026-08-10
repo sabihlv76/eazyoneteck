@@ -177,6 +177,7 @@ const Admin = ({
   const [form, setForm] = useState(initialForm);
   const [statusMessage, setStatusMessage] = useState('');
   const [settingsForm, setSettingsForm] = useState(adminSettings);
+  const [pinForm, setPinForm] = useState({ currentPin: '', newPin: '', confirmPin: '' });
   const [isSaving, setIsSaving] = useState(false);
   const [isPhoneDropupOpen, setIsPhoneDropupOpen] = useState(false);
   const [isAccessoryDropupOpen, setIsAccessoryDropupOpen] = useState(false);
@@ -398,16 +399,44 @@ const Admin = ({
 
   const handleSaveSettings = async (event) => {
     event.preventDefault();
+
+    const wantsPinChange = pinForm.newPin.trim() || pinForm.confirmPin.trim() || pinForm.currentPin.trim();
+
+    if (wantsPinChange) {
+      if (!pinForm.currentPin.trim()) {
+        showStatus('Enter your current PIN to change it.');
+        return;
+      }
+      if (pinForm.newPin.trim().length < 8) {
+        showStatus('The new PIN must be at least 8 characters long.');
+        return;
+      }
+      if (pinForm.newPin.trim() !== pinForm.confirmPin.trim()) {
+        showStatus('The new PIN and its confirmation do not match.');
+        return;
+      }
+    }
+
     setIsSaving(true);
 
     try {
-      await onSaveAdminSettings(settingsForm);
-      showStatus('Admin account settings updated.');
+      const payload = wantsPinChange
+        ? { ...settingsForm, currentPin: pinForm.currentPin.trim(), newPin: pinForm.newPin.trim() }
+        : settingsForm;
+
+      await onSaveAdminSettings(payload);
+      setPinForm({ currentPin: '', newPin: '', confirmPin: '' });
+      showStatus(wantsPinChange ? 'Settings saved and admin PIN changed.' : 'Admin account settings updated.');
     } catch (error) {
       showStatus(error.message || 'Unable to save admin settings.');
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const updatePinField = (field) => (event) => {
+    const { value } = event.target;
+    setPinForm((current) => ({ ...current, [field]: value }));
   };
 
   const handleAddCategory = () => {
@@ -784,18 +813,46 @@ const Admin = ({
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="settings-pin">Admin PIN</label>
-                  <div className="field-with-icon">
-                    <KeyRound size={16} />
-                    <input
-                      id="settings-pin"
-                      type="password"
-                      value={settingsForm.pin}
-                      onChange={updateSettingsField('pin')}
-                      required
-                    />
+                <div className="form-group span-2">
+                  <label>Change admin PIN (optional)</label>
+                  <div className="admin-pin-change-grid">
+                    <div className="field-with-icon">
+                      <KeyRound size={16} />
+                      <input
+                        id="settings-current-pin"
+                        type="password"
+                        value={pinForm.currentPin}
+                        onChange={updatePinField('currentPin')}
+                        placeholder="Current PIN"
+                        autoComplete="current-password"
+                      />
+                    </div>
+                    <div className="field-with-icon">
+                      <KeyRound size={16} />
+                      <input
+                        id="settings-new-pin"
+                        type="password"
+                        value={pinForm.newPin}
+                        onChange={updatePinField('newPin')}
+                        placeholder="New PIN (min 8 characters)"
+                        autoComplete="new-password"
+                      />
+                    </div>
+                    <div className="field-with-icon">
+                      <KeyRound size={16} />
+                      <input
+                        id="settings-confirm-pin"
+                        type="password"
+                        value={pinForm.confirmPin}
+                        onChange={updatePinField('confirmPin')}
+                        placeholder="Repeat new PIN"
+                        autoComplete="new-password"
+                      />
+                    </div>
                   </div>
+                  <small className="admin-pin-hint">
+                    Leave these empty to keep your current PIN. The PIN is stored encrypted and can never be shown again.
+                  </small>
                 </div>
 
                 <button type="submit" className="btn-accent admin-save-button">

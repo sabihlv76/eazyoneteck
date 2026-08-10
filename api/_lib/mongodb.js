@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import bcrypt from 'bcryptjs';
 import { MongoClient } from 'mongodb';
 import { products as defaultProducts } from '../../src/productsData.js';
 
@@ -21,7 +22,7 @@ function getDefaultAdminSettings() {
   return {
     email: process.env.ADMIN_EMAIL || 'admin@eazy1teck.com',
     phone: process.env.ADMIN_PHONE || '+250783073733',
-    pin: process.env.ADMIN_PIN || '123456',
+    pinHash: bcrypt.hashSync(process.env.ADMIN_PIN || '123456', 10),
     storeName: 'Eazy1teck',
   };
 }
@@ -109,20 +110,37 @@ export function sanitizeUser(user) {
   };
 }
 
+// The PIN is stored only as a bcrypt hash and is never returned to any client.
+// The includeSensitive flag is kept for call-site compatibility but no longer
+// adds anything.
 export function sanitizeSettings(settings, includeSensitive = false) {
+  void includeSensitive;
+
   if (!settings) {
     return null;
   }
 
-  const payload = {
+  return {
     email: settings.email,
     phone: settings.phone,
     storeName: settings.storeName,
   };
+}
 
-  if (includeSensitive) {
-    payload.pin = settings.pin;
+// Verifies a PIN against the settings doc, supporting the legacy plaintext
+// field. Returns true/false; upgrading legacy docs is the caller's choice.
+export async function verifyAdminPin(pin, settingsDoc) {
+  if (!pin || !settingsDoc) {
+    return false;
   }
 
-  return payload;
+  if (settingsDoc.pinHash) {
+    return bcrypt.compare(pin, settingsDoc.pinHash);
+  }
+
+  return typeof settingsDoc.pin === 'string' && settingsDoc.pin === pin;
+}
+
+export function hashAdminPin(pin) {
+  return bcrypt.hash(pin, 10);
 }
