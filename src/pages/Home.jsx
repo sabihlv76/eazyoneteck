@@ -156,7 +156,7 @@ const Home = ({
         return {
           ...group,
           count: items.length,
-          leadProduct: items[0] || null,
+          leadProduct: items.find((product) => product.image) || items[0] || null,
           minPrice: items.length
             ? Math.min(...items.map((product) => Number(product.price) || 0))
             : 0,
@@ -166,7 +166,10 @@ const Home = ({
   );
 
   const heroProduct =
-    products.find((product) => product.category === 'Smartphones') || products[0] || null;
+    products.find((product) => product.category === 'Smartphones' && product.image) ||
+    products.find((product) => product.image) ||
+    products[0] ||
+    null;
   const newArrivals = products.slice(0, 4);
 
   const showCollection = (category) => {
