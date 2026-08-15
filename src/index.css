@@ -6412,10 +6412,11 @@ img {
   }
 }
 
-/* Static hero override image: show the full photo on the panel's dark ground */
+/* Static hero override image: show the full photo without cropping */
 .commerce-hero-image img.commerce-hero-static-img {
   object-fit: contain;
-  background: #000;
+  background: #fff;
+  padding: 1.5rem;
 }
 
 .admin-pin-change-grid {
