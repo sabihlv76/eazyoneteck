@@ -468,6 +468,27 @@ function AppContent() {
                 </span>
               </Link>
 
+              {/* Desktop nav links, inline in the single header bar */}
+              <div className="site-nav-row" ref={hamburgerRef}>
+                <nav className="site-nav-links">
+                  <button type="button" onClick={() => goHomeAndFilter('All')}>
+                    Home
+                  </button>
+                  <button type="button" onClick={() => goHomeAndFilter('All')}>
+                    All products
+                  </button>
+                  {navCategories.map((category) => (
+                    <NavCategoryDropdown
+                      key={category}
+                      category={category}
+                      label={navCategoryLabels[category] || category}
+                      products={products}
+                      onSelect={goHomeAndFilter}
+                    />
+                  ))}
+                </nav>
+              </div>
+
               <div className="header-search">
                 <input
                   type="search"
@@ -503,27 +524,6 @@ function AppContent() {
                   icon={User}
                 />
               </div>
-            </div>
-
-            {/* Desktop nav row: hamburger + dropdown categories */}
-            <div className="site-nav-row" ref={hamburgerRef}>
-              <nav className="site-nav-links">
-                <button type="button" onClick={() => goHomeAndFilter('All')}>
-                  Home
-                </button>
-                <button type="button" onClick={() => goHomeAndFilter('All')}>
-                  All products
-                </button>
-                {navCategories.map((category) => (
-                  <NavCategoryDropdown
-                    key={category}
-                    category={category}
-                    label={navCategoryLabels[category] || category}
-                    products={products}
-                    onSelect={goHomeAndFilter}
-                  />
-                ))}
-              </nav>
             </div>
 
             {/* Mobile hamburger menu */}
