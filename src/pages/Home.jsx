@@ -113,6 +113,7 @@ const Home = ({
   searchQuery,
   selectedCategory,
   featuredProductId,
+  heroImage,
   onAddToCart,
   onCategoryChange,
   onSearchChange,
@@ -202,8 +203,9 @@ const Home = ({
               <Link to={`/product/${heroProduct.id}`} className="commerce-hero-product">
                 <div className="commerce-hero-image">
                   <img
-                    src={heroProduct.image}
+                    src={heroImage || heroProduct.image}
                     alt={heroProduct.name}
+                    className={heroImage ? 'commerce-hero-static-img' : undefined}
                     onError={(event) => applyProductImageFallback(event, heroProduct.category)}
                   />
                 </div>

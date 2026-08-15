@@ -834,6 +834,20 @@ const Admin = ({
                   </small>
                 </div>
 
+                <div className="form-group">
+                  <label htmlFor="settings-hero-image">Hero image URL (optional)</label>
+                  <input
+                    id="settings-hero-image"
+                    type="url"
+                    value={settingsForm.heroImage || ''}
+                    onChange={updateSettingsField('heroImage')}
+                    placeholder="https://... (leave empty to use the product photo)"
+                  />
+                  <small className="admin-pin-hint">
+                    Overrides the featured product photo in the hero with this exact image.
+                  </small>
+                </div>
+
                 <div className="form-group span-2">
                   <label>Change admin PIN (optional)</label>
                   <div className="admin-pin-change-grid">

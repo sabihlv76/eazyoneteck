@@ -125,6 +125,7 @@ export function sanitizeSettings(settings, includeSensitive = false) {
     phone: settings.phone,
     storeName: settings.storeName,
     featuredProductId: settings.featuredProductId || '',
+    heroImage: settings.heroImage || '',
   };
 }
 

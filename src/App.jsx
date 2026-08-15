@@ -657,6 +657,7 @@ function AppContent() {
                 searchQuery={searchQuery}
                 selectedCategory={selectedCategory}
                 featuredProductId={adminSettings.featuredProductId}
+                heroImage={adminSettings.heroImage}
                 onAddToCart={handleAddToCart}
                 onToggleWishlist={toggleWishlist}
                 onCategoryChange={setSelectedCategory}

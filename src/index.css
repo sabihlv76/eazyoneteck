@@ -6412,6 +6412,12 @@ img {
   }
 }
 
+/* Static hero override image: show the full photo on the panel's dark ground */
+.commerce-hero-image img.commerce-hero-static-img {
+  object-fit: contain;
+  background: #000;
+}
+
 .admin-pin-change-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

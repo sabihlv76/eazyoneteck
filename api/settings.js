@@ -39,6 +39,10 @@ export default async function handler(req, res) {
         typeof payload.featuredProductId === 'string'
           ? payload.featuredProductId
           : admin.settingsDoc.featuredProductId || '',
+      heroImage:
+        typeof payload.heroImage === 'string'
+          ? payload.heroImage.trim()
+          : admin.settingsDoc.heroImage || '',
       updatedAt: new Date(),
     };
 
