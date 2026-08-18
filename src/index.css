@@ -1654,6 +1654,67 @@ img {
   gap: 0.25rem;
 }
 
+.variant-group {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.15rem;
+}
+
+.variant-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-soft);
+}
+
+.variant-label strong {
+  color: var(--text);
+}
+
+.variant-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.variant-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border-strong);
+  background: var(--surface-strong);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.variant-chip:hover {
+  border-color: var(--gold);
+}
+
+.variant-chip.active {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px var(--gold-soft);
+}
+
+.variant-chip small {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold-deep);
+}
+
+.variant-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid rgba(21, 32, 43, 0.2);
+  flex-shrink: 0;
+}
+
 .feature-list {
   margin: 0;
   padding-left: 1.15rem;

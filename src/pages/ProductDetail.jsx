@@ -19,6 +19,7 @@ function getYoutubeEmbedUrl(url) {
 const ProductDetail = ({ products, onAddToCart, phone }) => {
   const { id } = useParams();
   const [activeImage, setActiveImage] = useState({ productId: '', image: '' });
+  const [selection, setSelection] = useState({ productId: '', color: '', storage: '' });
   const product = useMemo(
     () => products.find((item) => item.id === id) || null,
     [id, products]
@@ -55,13 +56,55 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
     );
   }
 
-  const images = [product.image, ...(product.extraImages || [])].filter(Boolean);
+  // Variant-aware selection: colors switch the photo, storages switch the price.
+  const colorOptions = (product.variants?.colors || []).filter((color) => color?.name && color?.image);
+  const storageOptions = (product.variants?.storages || []).filter((storage) => storage?.label);
+  const hasVariants = colorOptions.length > 0 || storageOptions.length > 0;
+  const isSelectionCurrent = selection.productId === id;
+  const selectedColor =
+    (isSelectionCurrent && colorOptions.find((color) => color.name === selection.color)) ||
+    colorOptions[0] ||
+    null;
+  const selectedStorage =
+    (isSelectionCurrent && storageOptions.find((storage) => storage.label === selection.storage)) ||
+    storageOptions[0] ||
+    null;
+  const currentPrice = selectedStorage?.price ?? product.price;
+
+  const baseImage = selectedColor?.image || product.image;
+  const images = [...new Set([baseImage, ...(product.extraImages || [])])].filter(Boolean);
   const selectedImage = activeImage.productId === id ? activeImage.image : '';
-  const displayImage = images.includes(selectedImage) ? selectedImage : product.image;
+  const displayImage = images.includes(selectedImage) ? selectedImage : baseImage;
+
+  const handleSelectColor = (name) => {
+    setSelection({ productId: id, color: name, storage: selectedStorage?.label || '' });
+    setActiveImage({ productId: '', image: '' });
+  };
+
+  const handleSelectStorage = (label) => {
+    setSelection({ productId: id, color: selectedColor?.name || '', storage: label });
+  };
+
+  const handleAddToCart = () => {
+    if (!hasVariants) {
+      onAddToCart(product);
+      return;
+    }
+
+    const variantLabel = [selectedStorage?.label, selectedColor?.name].filter(Boolean).join(' • ');
+    onAddToCart({
+      ...product,
+      price: currentPrice,
+      size: variantLabel || product.size,
+      image: baseImage,
+    });
+  };
 
   const handleWhatsApp = () => {
-    const message = `Hello Eazy1teck, I would like to order ${product.name} for ${formatRwf(
-      product.price
+    const chosenVariant = [selectedStorage?.label, selectedColor?.name].filter(Boolean).join(', ');
+    const orderName = chosenVariant ? `${product.name} (${chosenVariant})` : product.name;
+    const message = `Hello Eazy1teck, I would like to order ${orderName} for ${formatRwf(
+      currentPrice
     )}.`;
     window.open(`https://wa.me/${phone.replace(/[^\d]/g, '')}?text=${encodeURIComponent(message)}`, '_blank');
   };
@@ -100,7 +143,7 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
               '@type': 'Offer',
               'url': productUrl,
               'priceCurrency': 'RWF',
-              'price': product.price,
+              'price': currentPrice,
               'availability': 'https://schema.org/InStock'
             }
           })}
@@ -146,18 +189,64 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
           <span className="eyebrow">{product.category}</span>
           <h1>{product.name}</h1>
           <div className="detail-price">
-            {formatRwf(product.price)}
-            {Number(product.oldPrice) > Number(product.price) && (
+            {formatRwf(currentPrice)}
+            {Number(product.oldPrice) > Number(currentPrice) && (
               <span className="detail-price-old">{formatRwf(product.oldPrice)}</span>
             )}
           </div>
           <p className="detail-description">{product.description}</p>
 
-          <div className="detail-meta-list">
-            <div>
-              <strong>Variant</strong>
-              <span>{product.size}</span>
+          {colorOptions.length > 0 && (
+            <div className="variant-group">
+              <span className="variant-label">
+                Color: <strong>{selectedColor?.name}</strong>
+              </span>
+              <div className="variant-options">
+                {colorOptions.map((color) => (
+                  <button
+                    key={color.name}
+                    type="button"
+                    className={`variant-chip ${selectedColor?.name === color.name ? 'active' : ''}`}
+                    aria-pressed={selectedColor?.name === color.name}
+                    onClick={() => handleSelectColor(color.name)}
+                  >
+                    {color.swatch && <span className="variant-dot" style={{ background: color.swatch }} />}
+                    {color.name}
+                  </button>
+                ))}
+              </div>
             </div>
+          )}
+
+          {storageOptions.length > 0 && (
+            <div className="variant-group">
+              <span className="variant-label">
+                Storage: <strong>{selectedStorage?.label}</strong>
+              </span>
+              <div className="variant-options">
+                {storageOptions.map((storage) => (
+                  <button
+                    key={storage.label}
+                    type="button"
+                    className={`variant-chip ${selectedStorage?.label === storage.label ? 'active' : ''}`}
+                    aria-pressed={selectedStorage?.label === storage.label}
+                    onClick={() => handleSelectStorage(storage.label)}
+                  >
+                    {storage.label}
+                    {Number(storage.price) > 0 && <small>{formatRwf(storage.price)}</small>}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="detail-meta-list">
+            {!hasVariants && (
+              <div>
+                <strong>Variant</strong>
+                <span>{product.size}</span>
+              </div>
+            )}
             {product.ingredients && (
               <div>
                 <strong>Build</strong>
@@ -175,7 +264,7 @@ const ProductDetail = ({ products, onAddToCart, phone }) => {
           )}
 
           <div className="detail-actions">
-            <button type="button" className="btn-primary" onClick={() => onAddToCart(product)}>
+            <button type="button" className="btn-primary" onClick={handleAddToCart}>
               <ShoppingBag size={18} />
               Add to cart
             </button>
