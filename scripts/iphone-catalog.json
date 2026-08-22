@@ -1,0 +1,1488 @@
+{
+  "generatedAt": "2026-08-22T16:05:33.086Z",
+  "source": "Owner price tag, Aug 2026; colors = official Apple renders on Cloudinary",
+  "models": [
+    {
+      "key": "iphone-xr",
+      "id": "iphone-xr-1785342777329",
+      "deleteIds": [],
+      "name": "iPhone XR",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "64GB",
+          "price": 220000
+        },
+        {
+          "label": "128GB",
+          "price": 250000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413978/eazy1teck/products/o8n5bedcfidhcw6rsjmo.png",
+          "swatch": "#1f1f1f",
+          "source": "iphone-xr-black-select-201809"
+        },
+        {
+          "name": "White",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413983/eazy1teck/products/btq366kmj3ucpcyhlqhg.png",
+          "swatch": "#f4f4f2",
+          "source": "iphone-xr-white-select-201809"
+        },
+        {
+          "name": "Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413986/eazy1teck/products/bm6qsbjw4vf7uwf8m2xi.png",
+          "swatch": "#2e6fb8",
+          "source": "iphone-xr-blue-select-201809"
+        },
+        {
+          "name": "(PRODUCT)RED",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413990/eazy1teck/products/agelezqiknt2mrr0jqsa.png",
+          "swatch": "#c8102e",
+          "source": "iphone-xr-red-select-201809"
+        }
+      ],
+      "description": "iPhone XR with the 6.1-inch Liquid Retina display, the A12 Bionic chip, a 12MP wide camera with Portrait mode and Face ID. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "6.1″ Liquid Retina LCD display",
+        "A12 Bionic chip with Neural Engine",
+        "12MP wide camera with Portrait mode and Smart HDR",
+        "7MP TrueDepth front camera with Face ID",
+        "Up to 16 hours video playback, wireless charging",
+        "IP67 splash, water and dust resistance"
+      ],
+      "materials": "Aerospace-grade aluminum frame, durable glass front and back"
+    },
+    {
+      "key": "iphone-11",
+      "id": "iphone-11-1785342489568",
+      "deleteIds": [],
+      "name": "iPhone 11",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "64GB",
+          "price": 260000
+        },
+        {
+          "label": "128GB",
+          "price": 320000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413992/eazy1teck/products/qfaqktaecfglh8lcjakk.png",
+          "swatch": "#1f2022",
+          "source": "iphone11-black-select-2019"
+        },
+        {
+          "name": "White",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413995/eazy1teck/products/j1ljfi9y1wbozzfdeh9t.png",
+          "swatch": "#f5f5f0",
+          "source": "iphone11-white-select-2019"
+        },
+        {
+          "name": "Purple",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413999/eazy1teck/products/lvjuihgnkgiyblfqdbzd.png",
+          "swatch": "#d1cdda",
+          "source": "iphone11-purple-select-2019"
+        },
+        {
+          "name": "Green",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414003/eazy1teck/products/mbnsbnbpokxdz46tothe.png",
+          "swatch": "#aee1cd",
+          "source": "iphone11-green-select-2019"
+        }
+      ],
+      "description": "iPhone 11 with the 6.1-inch Liquid Retina display, the A13 Bionic chip and the dual 12MP Ultra Wide and Wide camera system with Night mode. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "6.1″ Liquid Retina LCD display",
+        "A13 Bionic chip",
+        "Dual 12MP Ultra Wide and Wide cameras with Night mode",
+        "12MP TrueDepth front camera, 4K video",
+        "Up to 17 hours video playback, wireless charging",
+        "Face ID and IP68 water resistance"
+      ],
+      "materials": "Aerospace-grade aluminum frame, durable glass front and back"
+    },
+    {
+      "key": "iphone-11-pro",
+      "id": "iphone-11-pro-1785342679251",
+      "deleteIds": [],
+      "name": "iPhone 11 Pro",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "64GB",
+          "price": 330000
+        },
+        {
+          "label": "256GB",
+          "price": 400000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Midnight Green",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414019/eazy1teck/products/g3qauyxqcjj3l0j2kdeu.png",
+          "swatch": "#4e5851",
+          "source": "refurb-iphone-11-pro-midnight-green-2019"
+        },
+        {
+          "name": "Space Gray",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414033/eazy1teck/products/vywnrhkqsspzazc1aq7e.png",
+          "swatch": "#535150",
+          "source": "refurb-iphone-11-pro-space-gray-2019"
+        },
+        {
+          "name": "Silver",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414044/eazy1teck/products/focpvt2cxklnjquaopmp.png",
+          "swatch": "#ebebe3",
+          "source": "refurb-iphone-11-pro-silver-2019"
+        },
+        {
+          "name": "Gold",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414060/eazy1teck/products/jzge13wsww5lhlhimyhs.png",
+          "swatch": "#fad7bd",
+          "source": "refurb-iphone-11-pro-gold-2019"
+        }
+      ],
+      "description": "iPhone 11 Pro with the 5.8-inch Super Retina XDR OLED display, the A13 Bionic chip and the Pro triple 12MP camera system with 2× telephoto and Night mode. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "5.8″ Super Retina XDR OLED display",
+        "A13 Bionic chip",
+        "Triple 12MP Ultra Wide, Wide and 2× Telephoto cameras",
+        "Night mode, Deep Fusion and 4K 60fps video",
+        "Up to 18 hours video playback, 18W fast charging",
+        "Face ID and IP68 water resistance (4 m)"
+      ],
+      "materials": "Surgical-grade stainless steel frame, textured matte glass back"
+    },
+    {
+      "key": "iphone-11-pro-max",
+      "id": "iphone-11-promax-1785343360557",
+      "deleteIds": [],
+      "name": "iPhone 11 Pro Max",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "64GB",
+          "price": 350000
+        },
+        {
+          "label": "256GB",
+          "price": 450000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Midnight Green",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414075/eazy1teck/products/edidygwi3zqmowzkmkls.png",
+          "swatch": "#4e5851",
+          "source": "refurb-iphone-11-pro-max-midnight-green-2019"
+        },
+        {
+          "name": "Space Gray",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414089/eazy1teck/products/k4gpn3a2hifqkjajavuj.png",
+          "swatch": "#535150",
+          "source": "refurb-iphone-11-pro-max-space-gray-2019"
+        },
+        {
+          "name": "Silver",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414101/eazy1teck/products/mdhpxx8mwipcbb9bofac.png",
+          "swatch": "#ebebe3",
+          "source": "refurb-iphone-11-pro-max-silver-2019"
+        },
+        {
+          "name": "Gold",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414118/eazy1teck/products/q6f4cpgcema5laebetsz.png",
+          "swatch": "#fad7bd",
+          "source": "refurb-iphone-11-pro-max-gold-2019"
+        }
+      ],
+      "description": "iPhone 11 Pro Max with the big 6.5-inch Super Retina XDR OLED display, the A13 Bionic chip and the Pro triple 12MP camera system with 2× telephoto and Night mode. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "6.5″ Super Retina XDR OLED display",
+        "A13 Bionic chip",
+        "Triple 12MP Ultra Wide, Wide and 2× Telephoto cameras",
+        "Night mode, Deep Fusion and 4K 60fps video",
+        "Up to 20 hours video playback, 18W fast charging",
+        "Face ID and IP68 water resistance (4 m)"
+      ],
+      "materials": "Surgical-grade stainless steel frame, textured matte glass back"
+    },
+    {
+      "key": "iphone-12",
+      "id": "iphone-12-128",
+      "deleteIds": [],
+      "name": "iPhone 12",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "64GB",
+          "price": 320000
+        },
+        {
+          "label": "128GB",
+          "price": 400000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414123/eazy1teck/products/notjgfhzp08pbtcleoee.png",
+          "swatch": "#2a2a2c",
+          "source": "iphone-12-black-select-2020"
+        },
+        {
+          "name": "White",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414126/eazy1teck/products/p6ixkpo4x72gfohndkz4.png",
+          "swatch": "#f5f5f0",
+          "source": "iphone-12-white-select-2020"
+        },
+        {
+          "name": "Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414131/eazy1teck/products/w0os4ekplmxhtjajoaor.png",
+          "swatch": "#1c4e80",
+          "source": "iphone-12-blue-select-2020"
+        },
+        {
+          "name": "Purple",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414135/eazy1teck/products/ring06vvubsxksl2bnrc.png",
+          "swatch": "#b7afe6",
+          "source": "iphone-12-purple-select-2021"
+        }
+      ],
+      "description": "iPhone 12 with the 6.1-inch Super Retina XDR OLED display, the A14 Bionic chip, 5G and the dual 12MP camera system with Night mode on every camera. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "6.1″ Super Retina XDR OLED display with Ceramic Shield",
+        "A14 Bionic chip and 5G",
+        "Dual 12MP Ultra Wide and Wide cameras, Night mode on all cameras",
+        "HDR video recording with Dolby Vision",
+        "Up to 17 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, glass back"
+    },
+    {
+      "key": "iphone-12-mini",
+      "id": "iphone-12-mini-1785344531847",
+      "deleteIds": [],
+      "name": "iPhone 12 mini",
+      "keepColors": false,
+      "noTag": true,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 400000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414138/eazy1teck/products/cba6fkvuxvuabn5fmoeo.png",
+          "swatch": "#2a2a2c",
+          "source": "iphone-12-mini-black-select-2020"
+        },
+        {
+          "name": "White",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414141/eazy1teck/products/akjihhxsxdulavvrsu4q.png",
+          "swatch": "#f5f5f0",
+          "source": "iphone-12-mini-white-select-2020"
+        },
+        {
+          "name": "Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414145/eazy1teck/products/wst4kdabo6dh9iszh50t.png",
+          "swatch": "#1c4e80",
+          "source": "iphone-12-mini-blue-select-2020"
+        },
+        {
+          "name": "Purple",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414152/eazy1teck/products/nb4f1fpaaswxvdqq63gq.png",
+          "swatch": "#b7afe6",
+          "source": "iphone-12-mini-purple-select-2021"
+        }
+      ],
+      "description": "iPhone 12 mini — the compact 5.4-inch Super Retina XDR iPhone with the A14 Bionic chip, 5G and the dual 12MP camera system with Night mode. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "Compact 5.4″ Super Retina XDR OLED display with Ceramic Shield",
+        "A14 Bionic chip and 5G",
+        "Dual 12MP Ultra Wide and Wide cameras, Night mode on all cameras",
+        "HDR video recording with Dolby Vision",
+        "Up to 15 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, glass back"
+    },
+    {
+      "key": "iphone-12-pro",
+      "id": "iphone-12-pro-1785343450182",
+      "deleteIds": [],
+      "name": "iPhone 12 Pro",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 450000
+        },
+        {
+          "label": "256GB",
+          "price": 480000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Pacific Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414157/eazy1teck/products/k5tjjrkypvukb1as5a7u.png",
+          "swatch": "#2f4f6a",
+          "source": "iphone-12-pro-blue-hero"
+        },
+        {
+          "name": "Graphite",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414161/eazy1teck/products/zh3vbmq2kpk6rsfu1eox.png",
+          "swatch": "#4e4d4a",
+          "source": "iphone-12-pro-graphite-hero"
+        },
+        {
+          "name": "Silver",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414165/eazy1teck/products/qo5th72edasama9zqlmt.png",
+          "swatch": "#e3e4e0",
+          "source": "iphone-12-pro-silver-hero"
+        },
+        {
+          "name": "Gold",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414169/eazy1teck/products/fkkmczz5rncwoigwujbb.png",
+          "swatch": "#f3d5b6",
+          "source": "iphone-12-pro-gold-hero"
+        }
+      ],
+      "description": "iPhone 12 Pro with the 6.1-inch Super Retina XDR display, the A14 Bionic chip, 5G and the Pro triple 12MP camera system with LiDAR scanner, 2× telephoto and Apple ProRAW. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "6.1″ Super Retina XDR OLED display with Ceramic Shield",
+        "A14 Bionic chip and 5G",
+        "Pro 12MP triple camera: Ultra Wide, Wide and 2× Telephoto, plus LiDAR",
+        "Apple ProRAW and Dolby Vision HDR video recording",
+        "Up to 17 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Surgical-grade stainless steel frame, Ceramic Shield front, textured matte glass back"
+    },
+    {
+      "key": "iphone-12-pro-max",
+      "id": "iphone-12-promax-1785344174794",
+      "deleteIds": [],
+      "name": "iPhone 12 Pro Max",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 600000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Pacific Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414174/eazy1teck/products/z8kyp2mbxjfppsscj3ro.png",
+          "swatch": "#2f4f6a",
+          "source": "iphone-12-pro-max-blue-hero"
+        },
+        {
+          "name": "Graphite",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414177/eazy1teck/products/sf7njb9joyuv4mvsa0l0.png",
+          "swatch": "#4e4d4a",
+          "source": "iphone-12-pro-max-graphite-hero"
+        },
+        {
+          "name": "Silver",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414181/eazy1teck/products/ubadxymnlnw3biwto64n.png",
+          "swatch": "#e3e4e0",
+          "source": "iphone-12-pro-max-silver-hero"
+        },
+        {
+          "name": "Gold",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414184/eazy1teck/products/weyvirqwf63lmus0er96.png",
+          "swatch": "#f3d5b6",
+          "source": "iphone-12-pro-max-gold-hero"
+        }
+      ],
+      "description": "iPhone 12 Pro Max with the big 6.7-inch Super Retina XDR display, the A14 Bionic chip, 5G and the Pro triple 12MP camera system with LiDAR scanner, 2.5× telephoto and sensor-shift stabilization. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.7″ Super Retina XDR OLED display with Ceramic Shield",
+        "A14 Bionic chip and 5G",
+        "Pro 12MP triple camera with 2.5× Telephoto, sensor-shift OIS and LiDAR",
+        "Apple ProRAW and Dolby Vision HDR video recording",
+        "Up to 20 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Surgical-grade stainless steel frame, Ceramic Shield front, textured matte glass back"
+    },
+    {
+      "key": "iphone-13",
+      "id": "iphone-13-128",
+      "deleteIds": [],
+      "name": "iPhone 13",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 500000
+        },
+        {
+          "label": "256GB",
+          "price": 550000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Midnight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414187/eazy1teck/products/qkairrpa8uoy5c0mnsuy.png",
+          "swatch": "#1d2633",
+          "source": "iphone-13-midnight-select-2021"
+        },
+        {
+          "name": "Starlight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414190/eazy1teck/products/revjnzkwe6576bn7uihv.png",
+          "swatch": "#f3ede3",
+          "source": "iphone-13-starlight-select-2021"
+        },
+        {
+          "name": "Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414192/eazy1teck/products/karxskvdrpuwgwpt3ydh.png",
+          "swatch": "#3a5d8f",
+          "source": "iphone-13-blue-select-2021"
+        },
+        {
+          "name": "Pink",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414197/eazy1teck/products/xucyzmndjw0lgzaeegfv.png",
+          "swatch": "#f8e0dc",
+          "source": "iphone-13-pink-select-2021"
+        }
+      ],
+      "description": "iPhone 13 with the 6.1-inch Super Retina XDR display, the A15 Bionic chip, 5G and the dual 12MP camera system with Cinematic mode and Photographic Styles. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "6.1″ Super Retina XDR OLED display with Ceramic Shield",
+        "A15 Bionic chip and 5G",
+        "Dual 12MP Wide and Ultra Wide cameras with sensor-shift OIS",
+        "Cinematic mode and Photographic Styles",
+        "Up to 19 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, glass back"
+    },
+    {
+      "key": "iphone-13-mini",
+      "id": "iphone-13-mini",
+      "deleteIds": [],
+      "name": "iPhone 13 mini",
+      "keepColors": false,
+      "noTag": true,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 500000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Midnight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414198/eazy1teck/products/hit84sazbxryhr6tcfg4.png",
+          "swatch": "#1d2633",
+          "source": "iphone-13-mini-midnight-select-2021"
+        },
+        {
+          "name": "Starlight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414202/eazy1teck/products/a41cncxba7l0uyekzljy.png",
+          "swatch": "#f3ede3",
+          "source": "iphone-13-mini-starlight-select-2021"
+        },
+        {
+          "name": "Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414204/eazy1teck/products/n81xvsgjtzo2v24ulmhj.png",
+          "swatch": "#3a5d8f",
+          "source": "iphone-13-mini-blue-select-2021"
+        },
+        {
+          "name": "Pink",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414207/eazy1teck/products/zxgctltbljwfwvyv64uu.png",
+          "swatch": "#f8e0dc",
+          "source": "iphone-13-mini-pink-select-2021"
+        }
+      ],
+      "description": "iPhone 13 mini — the compact 5.4-inch Super Retina XDR iPhone with the A15 Bionic chip, 5G and the dual 12MP camera system with Cinematic mode. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "Compact 5.4″ Super Retina XDR OLED display with Ceramic Shield",
+        "A15 Bionic chip and 5G",
+        "Dual 12MP Wide and Ultra Wide cameras with sensor-shift OIS",
+        "Cinematic mode and Photographic Styles",
+        "Up to 17 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, glass back"
+    },
+    {
+      "key": "iphone-13-pro",
+      "id": "iphone-13-pro-1785344434607",
+      "deleteIds": [],
+      "name": "iPhone 13 Pro",
+      "keepColors": true,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 620000
+        },
+        {
+          "label": "256GB",
+          "price": 650000
+        }
+      ],
+      "colors": [],
+      "description": "",
+      "benefits": [],
+      "materials": ""
+    },
+    {
+      "key": "iphone-13-pro-max",
+      "id": "iphone-13-promax-1785344333521",
+      "deleteIds": [],
+      "name": "iPhone 13 Pro Max",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 700000
+        },
+        {
+          "label": "256GB",
+          "price": 750000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Sierra Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414211/eazy1teck/products/peeohhk57nbio4igkddi.png",
+          "swatch": "#9bb5ce",
+          "source": "iphone-13-pro-max-blue-select"
+        },
+        {
+          "name": "Graphite",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414213/eazy1teck/products/xoigtst4fdcas6ckrtcl.png",
+          "swatch": "#54524f",
+          "source": "iphone-13-pro-max-graphite-select"
+        },
+        {
+          "name": "Gold",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414217/eazy1teck/products/smppmha8wr9okvxnv9ml.png",
+          "swatch": "#f1e4ce",
+          "source": "iphone-13-pro-max-gold-select"
+        },
+        {
+          "name": "Silver",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414219/eazy1teck/products/npscchljkfdhax4g2srt.png",
+          "swatch": "#eef0eb",
+          "source": "iphone-13-pro-max-silver-select"
+        }
+      ],
+      "description": "iPhone 13 Pro Max with the big 6.7-inch Super Retina XDR display with ProMotion 120Hz, the A15 Bionic chip and the Pro triple 12MP camera system with 3× telephoto, macro photography and ProRes video. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "6.7″ Super Retina XDR OLED, ProMotion 120Hz, 1000 nits",
+        "A15 Bionic chip with 5-core GPU",
+        "Pro 12MP triple camera: 3× Telephoto, Wide and Ultra Wide with macro",
+        "Cinematic mode, ProRAW photo and ProRes video",
+        "Up to 28 hours video playback, 20W fast charging and MagSafe",
+        "5G, Face ID and IP68 water resistance"
+      ],
+      "materials": "Surgical-grade stainless steel frame, Ceramic Shield front, textured matte glass back"
+    },
+    {
+      "key": "iphone-14",
+      "id": "iphone-14-1785344646088",
+      "deleteIds": [],
+      "name": "iPhone 14",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 650000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Midnight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414223/eazy1teck/products/rskai9em3oewkvt5yncz.png",
+          "swatch": "#2e3641",
+          "source": "iphone-14-finish-select-202209-6-1inch-midnight"
+        },
+        {
+          "name": "Starlight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414228/eazy1teck/products/aceftgsx6vkls0684vpv.png",
+          "swatch": "#f0e9dc",
+          "source": "iphone-14-finish-select-202209-6-1inch-starlight"
+        },
+        {
+          "name": "Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414233/eazy1teck/products/lcyvb3ecq7mio18tmehg.png",
+          "swatch": "#a7c1d9",
+          "source": "iphone-14-finish-select-202209-6-1inch-blue"
+        },
+        {
+          "name": "Purple",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414239/eazy1teck/products/rhdzuafy0ppsvv82hnvd.png",
+          "swatch": "#e6dcf0",
+          "source": "iphone-14-finish-select-202209-6-1inch-purple"
+        }
+      ],
+      "description": "iPhone 14 with the 6.1-inch Super Retina XDR display, the A15 Bionic chip with 5-core GPU and the improved 12MP dual camera with Photonic Engine and Action mode. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.1″ Super Retina XDR OLED display with Ceramic Shield",
+        "A15 Bionic chip with 5-core GPU and 5G",
+        "12MP Main camera with larger sensor, Photonic Engine and Action mode",
+        "Crash Detection and Emergency SOS",
+        "Up to 20 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, glass back"
+    },
+    {
+      "key": "iphone-14-plus",
+      "id": "iphone-14-plus-1785344747771",
+      "deleteIds": [],
+      "name": "iPhone 14 Plus",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 700000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Midnight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414246/eazy1teck/products/dsmv3txkvnmghqrr18nr.png",
+          "swatch": "#2e3641",
+          "source": "iphone-14-finish-select-202209-6-7inch-midnight"
+        },
+        {
+          "name": "Starlight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414251/eazy1teck/products/oqdyge3oo32agouisyn0.png",
+          "swatch": "#f0e9dc",
+          "source": "iphone-14-finish-select-202209-6-7inch-starlight"
+        },
+        {
+          "name": "Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414256/eazy1teck/products/rdnj5jotvzpog4r32izz.png",
+          "swatch": "#a7c1d9",
+          "source": "iphone-14-finish-select-202209-6-7inch-blue"
+        },
+        {
+          "name": "Purple",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414264/eazy1teck/products/xjjply0xwo2yqmfjkkju.png",
+          "swatch": "#e6dcf0",
+          "source": "iphone-14-finish-select-202209-6-7inch-purple"
+        }
+      ],
+      "description": "iPhone 14 Plus with the big 6.7-inch Super Retina XDR display, the A15 Bionic chip with 5-core GPU, the improved 12MP dual camera and the longest battery life of any iPhone 14. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.7″ Super Retina XDR OLED display with Ceramic Shield",
+        "A15 Bionic chip with 5-core GPU and 5G",
+        "12MP Main camera with larger sensor, Photonic Engine and Action mode",
+        "Crash Detection and Emergency SOS",
+        "Up to 26 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, glass back"
+    },
+    {
+      "key": "iphone-14-pro",
+      "id": "iphone-14-pro-128gb",
+      "deleteIds": [],
+      "name": "iPhone 14 Pro",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 820000
+        },
+        {
+          "label": "256GB",
+          "price": 850000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Deep Purple",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414269/eazy1teck/products/ybxov9rjz2uifikxtazr.png",
+          "swatch": "#5a4f64",
+          "source": "iphone-14-pro-finish-select-202209-6-1inch-deeppurple"
+        },
+        {
+          "name": "Space Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414273/eazy1teck/products/ea8oh1y2ynvsosvpie1f.png",
+          "swatch": "#3b3a3c",
+          "source": "iphone-14-pro-finish-select-202209-6-1inch-spaceblack"
+        },
+        {
+          "name": "Silver",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414280/eazy1teck/products/opzqtr44pkbb8vpcbonn.png",
+          "swatch": "#e9e8e3",
+          "source": "iphone-14-pro-finish-select-202209-6-1inch-silver"
+        },
+        {
+          "name": "Gold",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414284/eazy1teck/products/ywneiwplvvvik8jkbi3p.png",
+          "swatch": "#f4e3c8",
+          "source": "iphone-14-pro-finish-select-202209-6-1inch-gold"
+        }
+      ],
+      "description": "iPhone 14 Pro with Dynamic Island, the 6.1-inch Always-On Super Retina XDR display with ProMotion, the A16 Bionic chip and the 48MP Pro camera system with 3× telephoto. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "6.1″ Super Retina XDR OLED, ProMotion 120Hz, Always-On display",
+        "Dynamic Island and A16 Bionic chip",
+        "48MP Main camera, 12MP Ultra Wide and 3× Telephoto, ProRAW 48MP",
+        "Cinematic mode 4K and Action mode",
+        "Up to 23 hours video playback, MagSafe charging",
+        "Crash Detection, Face ID and IP68 water resistance"
+      ],
+      "materials": "Surgical-grade stainless steel frame, Ceramic Shield front, textured matte glass back"
+    },
+    {
+      "key": "iphone-14-pro-max",
+      "id": "iphone-14-promax-1786366545177",
+      "deleteIds": [],
+      "name": "iPhone 14 Pro Max",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 1000000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Deep Purple",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414290/eazy1teck/products/renermppq5bfv5rbsl5i.png",
+          "swatch": "#5a4f64",
+          "source": "iphone-14-pro-finish-select-202209-6-7inch-deeppurple"
+        },
+        {
+          "name": "Space Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414294/eazy1teck/products/xqloh29cfbufndekwzvi.png",
+          "swatch": "#3b3a3c",
+          "source": "iphone-14-pro-finish-select-202209-6-7inch-spaceblack"
+        },
+        {
+          "name": "Silver",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414299/eazy1teck/products/leoqn8gfv5xinihezzeo.png",
+          "swatch": "#e9e8e3",
+          "source": "iphone-14-pro-finish-select-202209-6-7inch-silver"
+        },
+        {
+          "name": "Gold",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414304/eazy1teck/products/rujpvfgsfdycqrrq9x9p.png",
+          "swatch": "#f4e3c8",
+          "source": "iphone-14-pro-finish-select-202209-6-7inch-gold"
+        }
+      ],
+      "description": "iPhone 14 Pro Max with Dynamic Island, the big 6.7-inch Always-On Super Retina XDR display with ProMotion, the A16 Bionic chip and the 48MP Pro camera system with 3× telephoto. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.7″ Super Retina XDR OLED, ProMotion 120Hz, Always-On display",
+        "Dynamic Island and A16 Bionic chip",
+        "48MP Main camera, 12MP Ultra Wide and 3× Telephoto, ProRAW 48MP",
+        "Cinematic mode 4K and Action mode",
+        "Up to 29 hours video playback, MagSafe charging",
+        "Crash Detection, Face ID and IP68 water resistance"
+      ],
+      "materials": "Surgical-grade stainless steel frame, Ceramic Shield front, textured matte glass back"
+    },
+    {
+      "key": "iphone-15",
+      "id": "iphone-15-1785344821669",
+      "deleteIds": [],
+      "name": "iPhone 15",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 800000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414308/eazy1teck/products/fmdrm1pfixzjwaiwoaof.png",
+          "swatch": "#3c3c3d",
+          "source": "iphone-15-finish-select-202309-6-1inch-black"
+        },
+        {
+          "name": "Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414312/eazy1teck/products/oagryivl6bowtlcnyxow.png",
+          "swatch": "#d5dde0",
+          "source": "iphone-15-finish-select-202309-6-1inch-blue"
+        },
+        {
+          "name": "Pink",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414318/eazy1teck/products/e2to3dad8dgnhfxnxh0r.png",
+          "swatch": "#f6dddc",
+          "source": "iphone-15-finish-select-202309-6-1inch-pink"
+        },
+        {
+          "name": "Green",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414324/eazy1teck/products/nthohoaxumvzuqvpr5xf.png",
+          "swatch": "#d3e2d1",
+          "source": "iphone-15-finish-select-202309-6-1inch-green"
+        }
+      ],
+      "description": "iPhone 15 with Dynamic Island, the 6.1-inch Super Retina XDR display, the A16 Bionic chip, a 48MP Main camera with 2× telephoto quality and USB-C. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.1″ Super Retina XDR OLED display with Dynamic Island",
+        "A16 Bionic chip and 5G",
+        "48MP Main camera with 2× optical-quality Telephoto, 12MP Ultra Wide",
+        "USB-C charging and Crash Detection",
+        "Up to 20 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, color-infused glass back"
+    },
+    {
+      "key": "iphone-15-plus",
+      "id": "iphone-15-plus-1785344913818",
+      "deleteIds": [],
+      "name": "iPhone 15 Plus",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 850000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414332/eazy1teck/products/ouygcusvbfkdham70fua.png",
+          "swatch": "#3c3c3d",
+          "source": "iphone-15-finish-select-202309-6-7inch-black"
+        },
+        {
+          "name": "Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414339/eazy1teck/products/e8wwpwieb1tfifreumuk.png",
+          "swatch": "#d5dde0",
+          "source": "iphone-15-finish-select-202309-6-7inch-blue"
+        },
+        {
+          "name": "Pink",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414344/eazy1teck/products/x0ef4osckp4u4uygdbwz.png",
+          "swatch": "#f6dddc",
+          "source": "iphone-15-finish-select-202309-6-7inch-pink"
+        },
+        {
+          "name": "Green",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414349/eazy1teck/products/fzxywb47onofbticio8d.png",
+          "swatch": "#d3e2d1",
+          "source": "iphone-15-finish-select-202309-6-7inch-green"
+        }
+      ],
+      "description": "iPhone 15 Plus with Dynamic Island, the big 6.7-inch Super Retina XDR display, the A16 Bionic chip, a 48MP Main camera with 2× telephoto quality, USB-C and all-day battery. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.7″ Super Retina XDR OLED display with Dynamic Island",
+        "A16 Bionic chip and 5G",
+        "48MP Main camera with 2× optical-quality Telephoto, 12MP Ultra Wide",
+        "USB-C charging and Crash Detection",
+        "Up to 26 hours video playback, MagSafe charging",
+        "Face ID and IP68 water resistance (6 m)"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, color-infused glass back"
+    },
+    {
+      "key": "iphone-15-pro",
+      "id": "iphone-15-128",
+      "deleteIds": [],
+      "name": "iPhone 15 Pro",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 1100000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Natural Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414357/eazy1teck/products/cnkcwpgzkjea9pabld9a.png",
+          "swatch": "#c2bcb2",
+          "source": "iphone-15-pro-finish-select-202309-6-1inch-naturaltitanium"
+        },
+        {
+          "name": "Blue Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414366/eazy1teck/products/xuib1uanesw7cburbkvb.png",
+          "swatch": "#3f4a58",
+          "source": "iphone-15-pro-finish-select-202309-6-1inch-bluetitanium"
+        },
+        {
+          "name": "White Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414372/eazy1teck/products/qkoabsqhm2p3dmgsi0lk.png",
+          "swatch": "#e8e6e0",
+          "source": "iphone-15-pro-finish-select-202309-6-1inch-whitetitanium"
+        },
+        {
+          "name": "Black Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414380/eazy1teck/products/lh8vtyn5pqkkihdq3rxw.png",
+          "swatch": "#3b3b3b",
+          "source": "iphone-15-pro-finish-select-202309-6-1inch-blacktitanium"
+        }
+      ],
+      "description": "iPhone 15 Pro in aerospace-grade titanium with the 6.1-inch Always-On Super Retina XDR display with ProMotion, the A17 Pro chip, the 48MP Pro camera system with 3× telephoto, the Action button and USB-C. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.1″ Super Retina XDR OLED, ProMotion 120Hz, Always-On, Dynamic Island",
+        "A17 Pro chip — console-level gaming",
+        "48MP Main, 12MP Ultra Wide and 3× Telephoto cameras, ProRAW 48MP",
+        "Action button and USB-C with USB 3 speeds",
+        "Up to 23 hours video playback, MagSafe charging",
+        "Titanium design, Face ID and IP68 water resistance"
+      ],
+      "materials": "Aerospace-grade titanium frame, Ceramic Shield front, textured matte glass back"
+    },
+    {
+      "key": "iphone-15-pro-max",
+      "id": "iphone-15-pro-max-256gb",
+      "deleteIds": [],
+      "name": "iPhone 15 Pro Max",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 1300000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Natural Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414386/eazy1teck/products/hxswf7vk8864pfrenpuu.png",
+          "swatch": "#c2bcb2",
+          "source": "iphone-15-pro-finish-select-202309-6-7inch-naturaltitanium"
+        },
+        {
+          "name": "Blue Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414391/eazy1teck/products/acxxbrvniukuzxxj4kgl.png",
+          "swatch": "#3f4a58",
+          "source": "iphone-15-pro-finish-select-202309-6-7inch-bluetitanium"
+        },
+        {
+          "name": "White Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414401/eazy1teck/products/aj8cewrefe0jjn88givs.png",
+          "swatch": "#e8e6e0",
+          "source": "iphone-15-pro-finish-select-202309-6-7inch-whitetitanium"
+        },
+        {
+          "name": "Black Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414408/eazy1teck/products/bgma6gqkxafjedmprlgf.png",
+          "swatch": "#3b3b3b",
+          "source": "iphone-15-pro-finish-select-202309-6-7inch-blacktitanium"
+        }
+      ],
+      "description": "iPhone 15 Pro Max in aerospace-grade titanium with the big 6.7-inch Always-On Super Retina XDR display with ProMotion, the A17 Pro chip, the 48MP Pro camera system with 5× tetraprism telephoto, the Action button and USB-C. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.7″ Super Retina XDR OLED, ProMotion 120Hz, Always-On, Dynamic Island",
+        "A17 Pro chip — console-level gaming",
+        "48MP Main, 12MP Ultra Wide and 5× tetraprism Telephoto cameras",
+        "Action button and USB-C with USB 3 speeds",
+        "Up to 29 hours video playback, MagSafe charging",
+        "Titanium design, Face ID and IP68 water resistance"
+      ],
+      "materials": "Aerospace-grade titanium frame, Ceramic Shield front, textured matte glass back"
+    },
+    {
+      "key": "iphone-16e",
+      "id": "iphone-16e-1785345218741",
+      "deleteIds": [],
+      "name": "iPhone 16e",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 650000
+        }
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414415/eazy1teck/products/sqytlgc4euaj3qpygt4u.png",
+          "swatch": "#f2f2ef",
+          "source": "iphone-16e-finish-select-202502-white"
+        },
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414424/eazy1teck/products/nwacrddhkgudmvdlnzgn.png",
+          "swatch": "#2a2b2d",
+          "source": "iphone-16e-finish-select-202502-black"
+        }
+      ],
+      "description": "iPhone 16e with the 6.1-inch Super Retina XDR display, the A18 chip, Apple Intelligence, a 48MP Fusion camera with 2× telephoto quality, Face ID, the Action button and USB-C. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.1″ Super Retina XDR OLED display",
+        "A18 chip with Apple Intelligence",
+        "48MP Fusion camera with 2× optical-quality Telephoto",
+        "Face ID, Action button and USB-C",
+        "Up to 26 hours video playback",
+        "Ceramic Shield front and IP68 water resistance"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, glass back"
+    },
+    {
+      "key": "iphone-16",
+      "id": "iphone-16-128",
+      "deleteIds": [],
+      "name": "iPhone 16",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 1000000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413937/eazy1teck/products/xomhdmmgz0yxcarvrjmt.png",
+          "swatch": "#3a3b3d",
+          "source": "iphone-16-finish-select-202409-6-1inch-black"
+        },
+        {
+          "name": "White",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413942/eazy1teck/products/sbxdw2j94sqclwlccytp.png",
+          "swatch": "#f3f3f1",
+          "source": "iphone-16-finish-select-202409-6-1inch-white"
+        },
+        {
+          "name": "Ultramarine",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413948/eazy1teck/products/xkrochp2ws2yeuoikd5i.png",
+          "swatch": "#9aa8dd",
+          "source": "iphone-16-finish-select-202409-6-1inch-ultramarine"
+        },
+        {
+          "name": "Teal",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787413956/eazy1teck/products/w4xokr0kskaywnbc6qcl.png",
+          "swatch": "#b4d0cf",
+          "source": "iphone-16-finish-select-202409-6-1inch-teal"
+        }
+      ],
+      "description": "iPhone 16 with the 6.1-inch Super Retina XDR display, the A18 chip, Apple Intelligence, Camera Control, a 48MP Fusion camera with 2× telephoto quality and a 12MP Ultra Wide with macro. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.1″ Super Retina XDR OLED display with Dynamic Island",
+        "A18 chip with Apple Intelligence",
+        "48MP Fusion camera with 2× Telephoto, 12MP Ultra Wide with macro",
+        "Camera Control and Action button, USB-C",
+        "Up to 22 hours video playback, MagSafe charging",
+        "Ceramic Shield front and IP68 water resistance"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, color-infused glass back"
+    },
+    {
+      "key": "iphone-16-plus",
+      "id": "iphone-16-plus-128",
+      "deleteIds": [],
+      "name": "iPhone 16 Plus",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 1150000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414431/eazy1teck/products/j1zxkmcwjfdjuqvitw5q.png",
+          "swatch": "#3a3b3d",
+          "source": "iphone-16-finish-select-202409-6-7inch-black"
+        },
+        {
+          "name": "White",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414437/eazy1teck/products/zrlnxctyi46iy6bsmrj9.png",
+          "swatch": "#f3f3f1",
+          "source": "iphone-16-finish-select-202409-6-7inch-white"
+        },
+        {
+          "name": "Ultramarine",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414442/eazy1teck/products/j3cowo49fym8yu5yogw4.png",
+          "swatch": "#9aa8dd",
+          "source": "iphone-16-finish-select-202409-6-7inch-ultramarine"
+        },
+        {
+          "name": "Teal",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414447/eazy1teck/products/yykmjvre4p0pfeyrgq2l.png",
+          "swatch": "#b4d0cf",
+          "source": "iphone-16-finish-select-202409-6-7inch-teal"
+        }
+      ],
+      "description": "iPhone 16 Plus with the big 6.7-inch Super Retina XDR display, the A18 chip, Apple Intelligence, Camera Control, a 48MP Fusion camera with 2× telephoto quality and long battery life. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.7″ Super Retina XDR OLED display with Dynamic Island",
+        "A18 chip with Apple Intelligence",
+        "48MP Fusion camera with 2× Telephoto, 12MP Ultra Wide with macro",
+        "Camera Control and Action button, USB-C",
+        "Up to 27 hours video playback, MagSafe charging",
+        "Ceramic Shield front and IP68 water resistance"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield front, color-infused glass back"
+    },
+    {
+      "key": "iphone-16-pro",
+      "id": "iphone-16-pro-256",
+      "deleteIds": [],
+      "name": "iPhone 16 Pro",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "128GB",
+          "price": 1250000
+        },
+        {
+          "label": "256GB",
+          "price": 1300000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Natural Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414455/eazy1teck/products/zunzwm39wxxg8a4jsnl2.png",
+          "swatch": "#bfb8ad",
+          "source": "iphone-16-pro-finish-select-202409-6-3inch-naturaltitanium"
+        },
+        {
+          "name": "Desert Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414464/eazy1teck/products/dmavnx3ie25twuur6t4f.png",
+          "swatch": "#c2a68a",
+          "source": "iphone-16-pro-finish-select-202409-6-3inch-deserttitanium"
+        },
+        {
+          "name": "White Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414470/eazy1teck/products/kalni37gi7hyxyakd7pt.png",
+          "swatch": "#e9e7e2",
+          "source": "iphone-16-pro-finish-select-202409-6-3inch-whitetitanium"
+        },
+        {
+          "name": "Black Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414477/eazy1teck/products/vu2ivisibg7fwoanrgwj.png",
+          "swatch": "#3c3c3f",
+          "source": "iphone-16-pro-finish-select-202409-6-3inch-blacktitanium"
+        }
+      ],
+      "description": "iPhone 16 Pro in titanium with the 6.3-inch Always-On Super Retina XDR display with ProMotion, the A18 Pro chip, Apple Intelligence, Camera Control and the 48MP Pro camera system with 5× telephoto and 4K 120 fps Dolby Vision video. Pick the color you like and the storage you need below — the photo and the price update as you choose.",
+      "benefits": [
+        "6.3″ Super Retina XDR OLED, ProMotion 120Hz, Always-On, Dynamic Island",
+        "A18 Pro chip with Apple Intelligence",
+        "48MP Fusion, 48MP Ultra Wide and 5× Telephoto cameras, 4K 120 fps Dolby Vision",
+        "Camera Control and Action button, USB-C with USB 3 speeds",
+        "Up to 27 hours video playback, MagSafe charging",
+        "Titanium design, Face ID and IP68 water resistance"
+      ],
+      "materials": "Grade 5 titanium frame, Ceramic Shield front, textured matte glass back"
+    },
+    {
+      "key": "iphone-16-pro-max",
+      "id": "iphone-16-pro-max-256",
+      "deleteIds": [],
+      "name": "iPhone 16 Pro Max",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 1600000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Natural Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414483/eazy1teck/products/cm0tnimqt85fn67cfay9.png",
+          "swatch": "#bfb8ad",
+          "source": "iphone-16-pro-finish-select-202409-6-9inch-naturaltitanium"
+        },
+        {
+          "name": "Desert Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414488/eazy1teck/products/nlifvbr7bhunsnu5ngsg.png",
+          "swatch": "#c2a68a",
+          "source": "iphone-16-pro-finish-select-202409-6-9inch-deserttitanium"
+        },
+        {
+          "name": "White Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414493/eazy1teck/products/fp4lnr6kafppzfshh9ob.png",
+          "swatch": "#e9e7e2",
+          "source": "iphone-16-pro-finish-select-202409-6-9inch-whitetitanium"
+        },
+        {
+          "name": "Black Titanium",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414499/eazy1teck/products/hpiie3qmnvngfgip3p9z.png",
+          "swatch": "#3c3c3f",
+          "source": "iphone-16-pro-finish-select-202409-6-9inch-blacktitanium"
+        }
+      ],
+      "description": "iPhone 16 Pro Max in titanium with the biggest 6.9-inch Always-On Super Retina XDR display with ProMotion, the A18 Pro chip, Apple Intelligence, Camera Control, the 48MP Pro camera system with 5× telephoto and the best iPhone battery life. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.9″ Super Retina XDR OLED, ProMotion 120Hz, Always-On, Dynamic Island",
+        "A18 Pro chip with Apple Intelligence",
+        "48MP Fusion, 48MP Ultra Wide and 5× Telephoto cameras, 4K 120 fps Dolby Vision",
+        "Camera Control and Action button, USB-C with USB 3 speeds",
+        "Up to 33 hours video playback, MagSafe charging",
+        "Titanium design, Face ID and IP68 water resistance"
+      ],
+      "materials": "Grade 5 titanium frame, Ceramic Shield front, textured matte glass back"
+    },
+    {
+      "key": "iphone-17",
+      "id": "iphone-17-1787414694805",
+      "deleteIds": [],
+      "name": "iPhone 17",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 1400000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414504/eazy1teck/products/ipjwsji0qipw18pjxg2o.png",
+          "swatch": "#2b2c2e",
+          "source": "iphone-17-finish-select-202509-black"
+        },
+        {
+          "name": "White",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414508/eazy1teck/products/jabrlgfo288tdaewezq4.png",
+          "swatch": "#f2f2f0",
+          "source": "iphone-17-finish-select-202509-white"
+        },
+        {
+          "name": "Mist Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414512/eazy1teck/products/lyxu1hnxsq6bmftgunhw.png",
+          "swatch": "#b8c7de",
+          "source": "iphone-17-finish-select-202509-mistblue"
+        },
+        {
+          "name": "Lavender",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414516/eazy1teck/products/ggy3m6zmg9deezjhgbwq.png",
+          "swatch": "#d5cfe8",
+          "source": "iphone-17-finish-select-202509-lavender"
+        }
+      ],
+      "description": "Brand new iPhone 17 with the 6.3-inch Super Retina XDR display with ProMotion 120Hz and Always-On, Ceramic Shield 2, the A19 chip, Apple Intelligence, the 48MP Dual Fusion camera system and the 18MP Center Stage front camera. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.3″ Super Retina XDR OLED, ProMotion 120Hz, Always-On, 3000 nits",
+        "A19 chip with Apple Intelligence",
+        "48MP Dual Fusion cameras (Main + Ultra Wide) with 2× optical-quality Telephoto",
+        "18MP Center Stage front camera",
+        "Up to 30 hours video playback, MagSafe and fast charging",
+        "Ceramic Shield 2 front, Camera Control, USB-C, IP68"
+      ],
+      "materials": "Aerospace-grade aluminum frame, Ceramic Shield 2 front, color-infused glass back"
+    },
+    {
+      "key": "iphone-air",
+      "id": "iphone-air-1787414694805",
+      "deleteIds": [],
+      "name": "iPhone Air (17 Air)",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 1500000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Space Black",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414520/eazy1teck/products/mj7qh2sdb2vke75oicgc.png",
+          "swatch": "#2c2c2e",
+          "source": "iphone-air-finish-select-202509-spaceblack"
+        },
+        {
+          "name": "Cloud White",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414528/eazy1teck/products/fr1rwetzpuikp0amznoj.png",
+          "swatch": "#f0efea",
+          "source": "iphone-air-finish-select-202509-cloudwhite"
+        },
+        {
+          "name": "Light Gold",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414535/eazy1teck/products/cptwrdxuzdydrgn5mudf.png",
+          "swatch": "#e8dcc4",
+          "source": "iphone-air-finish-select-202509-lightgold"
+        },
+        {
+          "name": "Sky Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414543/eazy1teck/products/atgwsipltjpaljqlksst.png",
+          "swatch": "#cfe0ec",
+          "source": "iphone-air-finish-select-202509-skyblue"
+        }
+      ],
+      "description": "Brand new iPhone Air (the iPhone 17 Air) — the thinnest iPhone ever at just 5.6 mm, with a titanium frame, the 6.5-inch ProMotion Super Retina XDR display, the A19 Pro chip, Apple Intelligence, a 48MP Fusion camera and the 18MP Center Stage front camera. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "Incredibly thin 5.6 mm titanium design",
+        "6.5″ Super Retina XDR OLED, ProMotion 120Hz, Always-On",
+        "A19 Pro chip with Apple Intelligence",
+        "48MP Fusion camera with 2× optical-quality Telephoto",
+        "18MP Center Stage front camera",
+        "Up to 27 hours video playback, Ceramic Shield 2, eSIM, USB-C, IP68"
+      ],
+      "materials": "Grade 5 titanium frame, Ceramic Shield 2 front and back"
+    },
+    {
+      "key": "iphone-17-pro",
+      "id": "iphone-17-pro-512gb-pro-performance-1786305522847",
+      "deleteIds": [],
+      "name": "iPhone 17 Pro",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 2100000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Cosmic Orange",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414551/eazy1teck/products/caa164gt8hq5bzpz8a93.png",
+          "swatch": "#e0762f",
+          "source": "iphone-17-pro-finish-select-202509-6-3inch-cosmicorange"
+        },
+        {
+          "name": "Deep Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414559/eazy1teck/products/npipcs3jlkbfkdxkykwz.png",
+          "swatch": "#2f3f5e",
+          "source": "iphone-17-pro-finish-select-202509-6-3inch-deepblue"
+        },
+        {
+          "name": "Silver",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414563/eazy1teck/products/c4gvkudviithk5omknib.png",
+          "swatch": "#e6e6e3",
+          "source": "iphone-17-pro-finish-select-202509-6-3inch-silver"
+        }
+      ],
+      "description": "Brand new iPhone 17 Pro with the 6.3-inch Always-On Super Retina XDR display with ProMotion, an aluminum unibody with vapor chamber cooling, the A19 Pro chip, Apple Intelligence and the 48MP Pro Fusion triple camera system with up to 8× optical-quality zoom. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.3″ Super Retina XDR OLED, ProMotion 120Hz, Always-On, 3000 nits",
+        "A19 Pro chip with vapor chamber cooling and Apple Intelligence",
+        "48MP Pro Fusion triple camera: Main, Ultra Wide and 4× / 8× Telephoto",
+        "18MP Center Stage front camera, 4K 120 fps Dolby Vision",
+        "Up to 33 hours video playback, MagSafe and fast charging",
+        "Aluminum unibody, Ceramic Shield 2, Camera Control, USB-C, IP68"
+      ],
+      "materials": "Heat-forged aluminum unibody, Ceramic Shield 2 front and back"
+    },
+    {
+      "key": "iphone-17-pro-max",
+      "id": "iphone-17-pro-max-1787414694805",
+      "deleteIds": [],
+      "name": "iPhone 17 Pro Max",
+      "keepColors": false,
+      "noTag": false,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 2400000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Cosmic Orange",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414568/eazy1teck/products/kemzjaiohwaghb2st5qj.png",
+          "swatch": "#e0762f",
+          "source": "iphone-17-pro-finish-select-202509-6-9inch-cosmicorange"
+        },
+        {
+          "name": "Deep Blue",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414575/eazy1teck/products/ga6fvxnjtjhbjbzltjc9.png",
+          "swatch": "#2f3f5e",
+          "source": "iphone-17-pro-finish-select-202509-6-9inch-deepblue"
+        },
+        {
+          "name": "Silver",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414583/eazy1teck/products/hixzzndqvajuqjlflcmu.png",
+          "swatch": "#e6e6e3",
+          "source": "iphone-17-pro-finish-select-202509-6-9inch-silver"
+        }
+      ],
+      "description": "Brand new iPhone 17 Pro Max with the biggest 6.9-inch Always-On Super Retina XDR display with ProMotion, an aluminum unibody with vapor chamber cooling, the A19 Pro chip, Apple Intelligence, the 48MP Pro Fusion triple camera system with up to 8× optical-quality zoom and the best battery life ever in an iPhone. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "6.9″ Super Retina XDR OLED, ProMotion 120Hz, Always-On, 3000 nits",
+        "A19 Pro chip with vapor chamber cooling and Apple Intelligence",
+        "48MP Pro Fusion triple camera: Main, Ultra Wide and 4× / 8× Telephoto",
+        "18MP Center Stage front camera, 4K 120 fps Dolby Vision",
+        "Up to 39 hours video playback, MagSafe and fast charging",
+        "Aluminum unibody, Ceramic Shield 2, Camera Control, USB-C, IP68"
+      ],
+      "materials": "Heat-forged aluminum unibody, Ceramic Shield 2 front and back"
+    },
+    {
+      "key": "iphone-se-3",
+      "id": "iphone-se-3rd-generation-1785342344357",
+      "deleteIds": [],
+      "name": "iPhone SE (3rd generation)",
+      "keepColors": false,
+      "noTag": true,
+      "storages": [
+        {
+          "label": "256GB",
+          "price": 300000
+        }
+      ],
+      "colors": [
+        {
+          "name": "Midnight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414587/eazy1teck/products/i9iqulpk1y4p4zrlurlx.png",
+          "swatch": "#22272e",
+          "source": "iphone-se-midnight-select-202203"
+        },
+        {
+          "name": "Starlight",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414590/eazy1teck/products/dxwfquli5o4gulbq4hos.png",
+          "swatch": "#f0ebe1",
+          "source": "iphone-se-starlight-select-202203"
+        },
+        {
+          "name": "(PRODUCT)RED",
+          "image": "https://res.cloudinary.com/hgys4ttg/image/upload/f_auto,q_auto,c_pad,w_900,h_900/v1787414592/eazy1teck/products/oalb2laj89bsz04yoy3a.png",
+          "swatch": "#c4161c",
+          "source": "iphone-se-red-select-202203"
+        }
+      ],
+      "description": "iPhone SE (3rd generation) — the compact iPhone with Touch ID, the 4.7-inch Retina HD display, the A15 Bionic chip, 5G and a 12MP camera with Smart HDR 4 and Photographic Styles. Pick the color you like below — the photo updates as you choose.",
+      "benefits": [
+        "Compact 4.7″ Retina HD display with Home button",
+        "A15 Bionic chip and 5G",
+        "12MP Wide camera with Smart HDR 4, Deep Fusion and Photographic Styles",
+        "Touch ID fingerprint sensor",
+        "Up to 15 hours video playback, wireless charging",
+        "IP67 water resistance, tough glass front and back"
+      ],
+      "materials": "Aerospace-grade aluminum frame, glass front and back"
+    }
+  ]
+}
