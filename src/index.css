@@ -6571,3 +6571,50 @@ img {
     animation: none;
   }
 }
+
+/* About page intro — dark stage the trust bar overlaps, mirroring the home hero rhythm */
+.about-hero {
+  padding: 4.5rem 0 5.75rem;
+  background: #17212c;
+  color: #fff;
+}
+
+.about-hero-inner {
+  max-width: 820px;
+}
+
+.about-hero p {
+  margin: 0 0 0.75rem;
+  color: var(--gold);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.about-hero h1 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.about-hero span {
+  display: block;
+  max-width: 640px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .about-hero {
+    padding: 3rem 0 4.5rem;
+  }
+}
+
+.mobile-ham-link {
+  display: block;
+  text-decoration: none;
+}

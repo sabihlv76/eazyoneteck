@@ -30,6 +30,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import Privacy from './pages/Privacy';
 import RefundPolicy from './pages/RefundPolicy';
 import Terms from './pages/Terms';
+import About from './pages/About';
 import CartDrawer from './components/CartDrawer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { products as defaultProducts } from './productsData';
@@ -486,6 +487,9 @@ function AppContent() {
                       onSelect={goHomeAndFilter}
                     />
                   ))}
+                  <NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+                    About
+                  </NavLink>
                 </nav>
               </div>
 
@@ -590,6 +594,13 @@ function AppContent() {
                       )}
                     </div>
                   ))}
+                  <NavLink
+                    to="/about"
+                    className="mobile-ham-item mobile-ham-link"
+                    onClick={() => setIsHamburgerOpen(false)}
+                  >
+                    About Eazy1teck
+                  </NavLink>
                 </div>
               )}
             </div>
@@ -715,6 +726,18 @@ function AppContent() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route
+            path="/about"
+            element={
+              <About
+                products={products}
+                wishlist={wishlist}
+                onAddToCart={handleAddToCart}
+                onToggleWishlist={toggleWishlist}
+                onCategoryChange={setSelectedCategory}
+              />
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
@@ -733,6 +756,7 @@ function AppContent() {
               <Link to="/privacy">Privacy Policy</Link>
               <Link to="/refund-policy">Refund Policy</Link>
               <Link to="/terms">Terms & Conditions</Link>
+              <Link to="/about">About Eazy1teck</Link>
             </div>
 
             <div>

@@ -26,6 +26,7 @@ const today = new Date().toISOString().split('T')[0];
 
 const staticPages = [
   { path: '/', priority: '1.0', changefreq: 'daily' },
+  { path: '/about', priority: '0.6', changefreq: 'monthly' },
   { path: '/wishlist', priority: '0.5', changefreq: 'weekly' },
   { path: '/privacy', priority: '0.3', changefreq: 'yearly' },
   { path: '/refund-policy', priority: '0.3', changefreq: 'yearly' },
